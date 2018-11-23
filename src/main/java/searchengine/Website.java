@@ -56,6 +56,13 @@ public class Website {
         return url;
     }
 
+    /**
+     * returns the list of words that the instance contains
+     * @return List-String- words
+     */
+    public List<String> getWords(){
+        return words;
+    }
 
     /**
      * Checks whether a word is present on the website or not.

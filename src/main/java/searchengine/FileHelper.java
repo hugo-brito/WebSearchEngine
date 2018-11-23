@@ -33,8 +33,8 @@ public class FileHelper {
      *
      * @param filename The filename of the file that we want to
      * load. Needs to include the directory path as well.
-     * @return The list of websites that contain all websites that
-     * were found in the file.
+     * @return The list of websites that contains all the websites that
+     * have both titles and words that were found in the file.
      */
     public static List<Website> parseFile(String filename) {
         // Will contain all the websites that we have found in the file
@@ -59,8 +59,16 @@ public class FileHelper {
             while (sc.hasNext()) {
                 // get the next line from the file
                 String line = sc.nextLine();
+                //create patterns to identify urls and webpage titles
                 Pattern website = Pattern.compile("(https?:\\/\\/\\w+.\\w+.\\w+\\/\\w+\\/\\w+)");
                 Pattern webTitle = Pattern.compile("^([A-Z]\\w+[A-Za-z0-9\\s]+?)^");
+
+                //check to see if the website previous read in lacks a title or words
+                if(listOfWords.size() == 0 || (listOfWords.size() > 0 && title == null)) {
+                    url = null;
+                    title = null;
+                    listOfWords = null;
+                }
 
                 // Check status and the content of the line to figure out if this line is
                 // the url, the title, or a word.
@@ -72,28 +80,20 @@ public class FileHelper {
                     }
 
                     // clear all variables to start new website entry
-                    url = website.matcher(line).group(); //line.substring(6); // 6 is length of "*PAGE:"; get rest of line to capture url
+                    url = website.matcher(line).group(); //use the group defined in the pattern to extract the url
                     title = null;            // title not known
                     listOfWords = null;      // no words are known
 
-                    //foundFirstPage = true;
-                    //isNextLineTitle = true;
                 } else if (webTitle.matcher(line).find()) {
                     // this is the title of the website
                     title = line;
-                    //isNextLineTitle = false; // the subsequent lines are the words of the website
+
                 } else {
                     // if this is the first word on the website, we have to initialize listOfWords
                     if (listOfWords == null) {
                         listOfWords = new ArrayList<String>();
                     }
                     listOfWords.add(line);
-                }
-
-                if(listOfWords.size() == 0 || title == null) {
-                    url = null;
-                    title = null;
-                    listOfWords = null;
                 }
             }
             // When we have read the whole file, we have to create the very last website manually.

@@ -49,6 +49,7 @@ public class IndexBenchmark {
             // Executed each time "# Fork: X of 5" appears in the output.
             List<Website> sites = FileHelper.parseFile("data/enwiki-small.txt");
             searchengine = new SearchEngine(sites);
+            String test = "";
         }
     }
     

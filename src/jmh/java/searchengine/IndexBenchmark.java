@@ -13,6 +13,11 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 // Other Imports
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
 
@@ -47,9 +52,8 @@ public class IndexBenchmark {
         public SearchEngine searchengine;
         public BenchmarkState(){
             // Executed each time "# Fork: X of 5" appears in the output.
-            List<Website> sites = FileHelper.parseFile("data/enwiki-small.txt");
+            List<Website> sites = FileHelper.parseFile(new String[0]);
             searchengine = new SearchEngine(sites);
-            String test = "";
         }
     }
     
@@ -66,9 +70,17 @@ public class IndexBenchmark {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void measureAvgTime(BenchmarkState state) throws InterruptedException {
         // STUDENTS, make your changes here
-        // REMEMBER to vary the size of the data file (see above)
-        state.searchengine.search("denmark");
+        // REMEMBER to vary the size of the data file (see above
+        String[] words= readConfigWords();
+        if (words!=null){
+            for (String s:words) {
+                state.searchengine.search(s);
+            }
+        }
+
+
     }
+
 
     /**
      * JMH-magic. This needs to be here, but this {@code main} is
@@ -83,5 +95,20 @@ public class IndexBenchmark {
                 .build();
 
         new Runner(opt).run();
+    }
+//Helper method to read config file which contain the words that are looked up in search engine
+    public static String[] readConfigWords(){
+        String config   = "config_words.properties";
+        Properties prop = new Properties();
+        String words = null;
+        String[] wordsArray=null;
+        try (InputStream inputStream = new FileInputStream(config)) {
+            prop.load(inputStream);
+            words = prop.getProperty("words");
+            wordsArray= words.split(",");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return wordsArray;
     }
 }

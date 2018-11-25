@@ -1,0 +1,40 @@
+\chapter{Chapter 2: Faster Queries using an Inverted Index}
+
+
+\section{Introduction}
+In this section we are evaluating three different approaches... lists, hash map and tree map \\
+Inverted hash map and tree map...\\
+Runned tests to compare the results, which \\
+
+
+
+
+\section{Test result comparison}
+
+We compared the results of ...
+We made sure that that the environmetn when runnin the different test are as much as possible similar, e.g. no other programms running on the machine during the testing, that could affect the test performance results.\\
+In table \ref{table:result} the result of benchmark can be seen.\\
+
+
+\begin{table}[!htbp]
+\caption{Benchmark results in nanoseconds for three type of indexes and test files }
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Test Files} & \textbf{SimpleIndex} & \textbf{Inv.IndexHashMap} & \textbf{Inv.IndexTreemap} \\ \hline
+EnWiki Tiny &72017.780 ns&ns &ns \\ \hline
+EnWiki Small &9625105.989 ns &ns &ns \\ \hline
+EnWiki Medium &272480512.475 ns  &ns &ns \\ \hline
+\end{tabular}
+\label{table:result}
+\end{table}
+
+\subsection{Search Using Lists}
+\subsection{Search Usnig Inverted Hash Map}
+
+
+How to reference surce\footnotemark. 
+\footnotetext{Oracle \url{https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html}} 
+
+\subsection{Search Using Inverted Tree Map}
+How to reference surce\footnotemark. 
+\footnotetext{Oracle \url{https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html}} 

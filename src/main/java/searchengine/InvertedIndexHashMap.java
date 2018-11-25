@@ -9,7 +9,7 @@ public class InvertedIndexHashMap extends InvertedIndex {
     }
 
     /**
-     * The build method processes a list of websites into the index data structure.
+     * The build method processes a list of websites into the index data structure. It uses as Hashset to add all the words
      *
      * @param sites The list of websites that should be indexed
      */
@@ -23,7 +23,6 @@ public class InvertedIndexHashMap extends InvertedIndex {
 //        for (Website w : sites) {
 //            words.addAll(w.getWords());
 //        }
-//        words.forEach(word -> );
 
         for (String word : words) {
             List<Website> websites = new ArrayList<>();
@@ -36,24 +35,5 @@ public class InvertedIndexHashMap extends InvertedIndex {
             }
             map.put(word, websites);
         }
-    }
-
-    /**
-     * Given a query string, returns a list of all websites that contain the query.
-     *
-     * @param query The query
-     * @return the list of websites that contains the query word.
-     */
-    @Override
-    public List<Website> lookup(String query) {
-        return map.get(query);
-    }
-
-    @Override
-    public String toString() {
-        return "InvertedIndexHashMap{" +
-                "words=" + map.keySet() +
-                "sites=" + map.values() +
-                '}';
     }
 }

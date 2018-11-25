@@ -12,7 +12,6 @@ abstract public class InvertedIndex implements Index {
      */
     @Override
     public void build(List<Website> sites) {
-
     }
 
     /**
@@ -37,5 +36,4 @@ abstract public class InvertedIndex implements Index {
         }
         return returnString;
     }
-
 }

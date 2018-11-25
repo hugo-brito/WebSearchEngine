@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // For reading configuration file
@@ -60,27 +61,29 @@ public class FileHelper {
                 // get the next line from the file
                 String line = sc.nextLine();
                 //create patterns to identify urls and webpage titles
-                Pattern website = Pattern.compile("(https?:\\/\\/\\w+.\\w+.\\w+\\/\\w+\\/\\w+)");
-                Pattern webTitle = Pattern.compile("^([A-Z]\\w+[A-Za-z0-9\\s]+?)^");
-
-                //check to see if the website previous read in lacks a title or words
-                if(listOfWords.size() == 0 || (listOfWords.size() > 0 && title == null)) {
-                    url = null;
-                    title = null;
-                    listOfWords = null;
-                }
+                Pattern website = Pattern.compile("(https?:\\/\\/[A-Za-z0-9.\\/_]+)");
+                Pattern webTitle = Pattern.compile("[A-Z][a-z]+[A-Za-z0-9\\s]+?");
 
                 // Check status and the content of the line to figure out if this line is
                 // the url, the title, or a word.
                 if (website.matcher(line).find()) {
+                    //check to see if the website previous read in lacks a title or words
+                    if (listOfWords == null || title == null) {
+                        url = null;
+                        title = null;
+                        listOfWords = null;
+                    }
+
                     // new website entry starts, so create previous website from data gathered
                     // (if data is correct [Assignment 2])
                     if (url != null) {
                         sites.add(new Website(url, title, listOfWords));
                     }
 
-                    // clear all variables to start new website entry
-                    url = website.matcher(line).group(); //use the group defined in the pattern to extract the url
+                    // clear all fields to start new website entry
+                    Matcher match = website.matcher(line);
+                    match.find();
+                    url = match.group(1); //use the group defined in the pattern to extract the url
                     title = null;            // title not known
                     listOfWords = null;      // no words are known
 

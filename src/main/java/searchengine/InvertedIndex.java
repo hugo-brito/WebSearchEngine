@@ -12,7 +12,6 @@ abstract public class InvertedIndex implements Index {
      */
     @Override
     public void build(List<Website> sites) {
-
     }
 
     /**
@@ -23,6 +22,18 @@ abstract public class InvertedIndex implements Index {
      */
     @Override
     public List<Website> lookup(String query) {
-        return null;
+        return map.get(query);
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "";
+        for (String word : map.keySet()) {
+            returnString = returnString + "Websites with " + word + ":\n";
+            for (Website w : map.get(word)) {
+                returnString = returnString + " - " + w.getTitle() + ": " + w.getUrl() + "\n";
+            }
+        }
+        return returnString;
     }
 }

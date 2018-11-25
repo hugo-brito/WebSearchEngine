@@ -25,4 +25,5 @@ abstract public class InvertedIndex implements Index {
     public List<Website> lookup(String query) {
         return null;
     }
+
 }

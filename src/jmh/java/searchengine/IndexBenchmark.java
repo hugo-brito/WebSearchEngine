@@ -16,7 +16,6 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
@@ -52,8 +51,10 @@ public class IndexBenchmark {
         public SearchEngine searchengine;
         public BenchmarkState(){
             // Executed each time "# Fork: X of 5" appears in the output.
+            //Changed to String array
             List<Website> sites = FileHelper.parseFile(new String[0]);
             searchengine = new SearchEngine(sites);
+            //To switch index go to Main/Java/SearchEngine/SearchEngine
         }
     }
     
@@ -69,18 +70,14 @@ public class IndexBenchmark {
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void measureAvgTime(BenchmarkState state) throws InterruptedException {
-        // STUDENTS, make your changes here
-        // REMEMBER to vary the size of the data file (see above
+        // Loks through array words and calls search for a word s.
         String[] words= readConfigWords();
         if (words!=null){
             for (String s:words) {
                 state.searchengine.search(s);
             }
         }
-
-
     }
-
 
     /**
      * JMH-magic. This needs to be here, but this {@code main} is
@@ -96,8 +93,9 @@ public class IndexBenchmark {
 
         new Runner(opt).run();
     }
-//Helper method to read config file which contain the words that are looked up in search engine
+//Helper method copied form helper class and changed to look up words we will search in our test
     public static String[] readConfigWords(){
+        //Created config_words.properties, where we can type in words we want to search
         String config   = "config_words.properties";
         Properties prop = new Properties();
         String words = null;

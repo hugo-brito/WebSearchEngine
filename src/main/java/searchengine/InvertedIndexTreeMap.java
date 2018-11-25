@@ -10,7 +10,7 @@ public class InvertedIndexTreeMap extends InvertedIndex {
      * to sites
      */
 
-    private Map<String, Map<Website, Integer>> wordToWebsites;
+    private Map<String, Set<Website>> wordToWebsites;
 
     /** the map of words to website, and its rank within that word, which starts empty
      */
@@ -34,27 +34,18 @@ public class InvertedIndexTreeMap extends InvertedIndex {
                 // ok, I'm the website, and I'm iterating through the list of words
                 if (wordToWebsites.containsKey(word)) {
                     // if the word is already in the map
-                    if (wordToWebsites.get(word).containsKey(w)) {
-                        // if the map from website to rank contains the website
-                        wordToWebsites.get(word).put(w, wordToWebsites.get(word).get(w) + 1);
-                        // increase the rank of such website within that word
-                    } else {
-                        // meaning the website hasn't been added to the word
-                        Map <Website, Integer> rankedWebsite = new HashMap<>();
-                        // I have to create a new hashmap
-                        rankedWebsite.put(w, 1);
-                        // starts with the website as key and the ranking 1
-                        wordToWebsites.put(word, rankedWebsite);
-                        // and put it back in the map
-
+                    if (!wordToWebsites.get(word).contains(w)) {
+                        // if the set of word does not contain the website
+                        wordToWebsites.get(word).add(w);
+                        // add it to the set
                     }
                 } else {
                     // meaning, it's not there
-                    Map<Website, Integer> rankedWebsite = new HashMap<>();
-                    // create new hashmap of a certain website mapped to its ranking
-                    rankedWebsite.put(w, 1);
-                    // the ranking starts a 1
-                    wordToWebsites.put(word, rankedWebsite);
+                    TreeSet<Website> newWebsiteSet = new TreeSet<>();
+                    // create new set of a certain website mapped to its ranking
+                    newWebsiteSet.add(w);
+                    // the current website to the set
+                    wordToWebsites.put(word, newWebsiteSet);
                     // put it in the map
                 }
             }
@@ -65,13 +56,18 @@ public class InvertedIndexTreeMap extends InvertedIndex {
     public List<Website> lookup(String query) {
         // this can be smarter (e.g. provide the list already by sorted by the number of occurrences)
         List<Website> result = new ArrayList<>();
-        for (Website w : wordToWebsites.get(query).keySet()) {
+        for (Website w : wordToWebsites.get(query)) {
             result.add(w);
         }
         return result;
     }
 
-    // I need the toString method and to write tests for it
+    @Override
+    public String toString() {
+        return "InvertedIndexTreeMap{" +
+                "wordToWebsites=" + wordToWebsites +
+                '}';
+    }
 
 
 }

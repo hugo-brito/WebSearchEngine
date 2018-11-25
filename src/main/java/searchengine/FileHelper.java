@@ -100,6 +100,13 @@ public class FileHelper {
                 }
             }
             // When we have read the whole file, we have to create the very last website manually.
+            // First check to see if a complete website has been read in
+            if (listOfWords == null || title == null) {
+                url = null;
+                title = null;
+                listOfWords = null;
+            }
+            // Now add the website
             if (url != null) {
                 sites.add(new Website(url, title, listOfWords));
             }

@@ -1,5 +1,4 @@
 package searchengine;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +6,7 @@ import java.util.List;
  *
  * @author Martin Aumüller
  */
-public class Website {
+public class Website implements Comparable<Website> {
 
     /**
      * the website's title
@@ -56,6 +55,13 @@ public class Website {
         return url;
     }
 
+    /**
+     * returns the list of words that the instance contains
+     * @return List-String- words
+     */
+    public List<String> getWords(){
+        return words;
+    }
 
     /**
      * Checks whether a word is present on the website or not.
@@ -74,5 +80,15 @@ public class Website {
                 ", url='" + url + '\'' +
                 ", words=" + words +
                 '}';
+    }
+
+    /**
+     * Implemented this interface so the websites can be sorted in TreeMaps and TreeSets (they gain the ability to compare themselves
+     * @param w - a website to compare itself to
+     * @return
+     */
+    @Override
+    public int compareTo(Website w) {
+        return this.title.compareTo(w.getTitle());
     }
 }

@@ -129,6 +129,7 @@ gradle-app.setting
 
 ### Added by Willard: ###
 config.properties
+
 # Created by https://www.gitignore.io/api/c,c++,java,csharp,clion+iml,visualstudio,intellij+iml
 ### C ###
 # Prerequisites

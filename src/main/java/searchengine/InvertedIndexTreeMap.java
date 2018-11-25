@@ -5,13 +5,8 @@ public class InvertedIndexTreeMap extends InvertedIndex {
 
     /**
      * this class uses the inverted index technique to provide websites given a certain word (opposed to given a word,
-     * search for all websites that contain that word). so words will be mapped to websites. And in this case, since
-     * the natural order of the "words" is alphabetical, the map will be sorted alphabetically by key -word-
-     * to sites
+     * search for all websites that contain that word). so words will be mapped to websites.
      */
-
-
-//    protected Map<String, List<Website>> map;
 
     /**
      * initialize the treemap
@@ -35,24 +30,18 @@ public class InvertedIndexTreeMap extends InvertedIndex {
                     if (!map.get(word).contains(w)) {
                         // if the set of word does not contain the website
                         map.get(word).add(w);
-                        // add it to the set
+                        // add it to the list
                     }
                 } else {
                     // meaning, it's not there
-                    TreeSet<Website> newWebsiteSet = new TreeSet<>();
-                    // create new set of a certain website mapped to its ranking
-                    newWebsiteSet.add(w);
+                    List<Website> newWebsiteList = new ArrayList<>();
+                    // create new list of a certain website
+                    newWebsiteList.add(w);
                     // the current website to the set
-                    map.put(word, newWebsiteSet);
+                    map.put(word, newWebsiteList);
                     // put it in the map
                 }
             }
         }
     }
-
-//    @Override
-//    public List<Website> lookup(String query) {
-//        return map.get(query);
-//    }
-
 }

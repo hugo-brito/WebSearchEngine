@@ -40,7 +40,7 @@ class IndexTest {
     }
 
     @Test
-    void buildTreeIndex() {
+        void buildTreeIndex() {
         assertEquals("InvertedIndexTreeMap{sites=[Website{title='example1', url='example1.com', words=[word1, word2, word1]}, Website{title='example2', url='example2.com', words=[word2, word3]}]}", treeIndex.toString());
     }
 

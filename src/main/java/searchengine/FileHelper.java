@@ -52,10 +52,10 @@ public class FileHelper {
         // set it to true after reading a line starting with *PAGE:, set it to false in the next line.
         // boolean isNextLineTitle = false;
 
-        try {
-            // load the file, will throw a FileNotFoundException if the
-            // filename doesn't point to an existing file.
-            Scanner sc = new Scanner(new File(filename), "UTF-8");
+        // load the file, will throw a FileNotFoundException if the
+        // filename doesn't point to an existing file.
+        // try-with-resources will close the scanner after the method is done.
+        try( Scanner sc = new Scanner(new File(filename), "UTF-8")) {
             // as long as we are not done with reading the file
             while (sc.hasNext()) {
                 // get the next line from the file

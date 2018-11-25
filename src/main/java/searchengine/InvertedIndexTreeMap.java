@@ -64,10 +64,13 @@ public class InvertedIndexTreeMap extends InvertedIndex {
 
     @Override
     public String toString() {
-        return "InvertedIndexTreeMap{" +
-                "wordToWebsites=" + wordToWebsites +
-                '}';
+        String returnString = "";
+        for (String word : wordToWebsites.keySet()) {
+            returnString = returnString + "Word =" + word + "\n + Websites with " + word + ":\n";
+            for (Website w : wordToWebsites.get(word)) {
+                returnString = returnString + " - " + w.getTitle() + ": " + w.getUrl() + "\n";
+            }
+        }
+        return returnString;
     }
-
-
 }

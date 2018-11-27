@@ -49,12 +49,20 @@ public class IndexBenchmark {
     @State(Scope.Benchmark)
     public static class BenchmarkState {
         public SearchEngine searchengine;
+        public String[] words;
         public BenchmarkState(){
             // Executed each time "# Fork: X of 5" appears in the output.
             //Changed to String array
             List<Website> sites = FileHelper.parseFile(new String[0]);
             searchengine = new SearchEngine(sites);
             //To switch index go to Main/Java/SearchEngine/SearchEngine
+
+            //moved the reading of the config file of words to here, which is where the
+            // initial setup of th test takes place.
+            // If the readConfigWords() was called in the measureAvgTime as before
+            // the readConfigWords will have an effect on the test result, and
+            // we only want to test the searchengine.search(s) method.
+            words = readConfigWords();
         }
     }
     
@@ -71,7 +79,7 @@ public class IndexBenchmark {
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void measureAvgTime(BenchmarkState state) throws InterruptedException {
         // Loks through array words and calls search for a word s.
-        String[] words= readConfigWords();
+        String[] words= state.words;
         if (words!=null){
             for (String s:words) {
                 state.searchengine.search(s);

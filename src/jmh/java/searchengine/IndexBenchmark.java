@@ -13,6 +13,10 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 // Other Imports
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
 
@@ -45,10 +49,20 @@ public class IndexBenchmark {
     @State(Scope.Benchmark)
     public static class BenchmarkState {
         public SearchEngine searchengine;
+        public String[] words;
         public BenchmarkState(){
             // Executed each time "# Fork: X of 5" appears in the output.
-            List<Website> sites = FileHelper.parseFile("data/enwiki-small.txt");
+            //Changed to String array
+            List<Website> sites = FileHelper.parseFile(new String[0]);
             searchengine = new SearchEngine(sites);
+            //To switch index go to Main/Java/SearchEngine/SearchEngine
+
+            //moved the reading of the config file of words to here, which is where the
+            // initial setup of th test takes place.
+            // If the readConfigWords() was called in the measureAvgTime as before
+            // the readConfigWords will have an effect on the test result, and
+            // we only want to test the searchengine.search(s) method.
+            words = readConfigWords();
         }
     }
     
@@ -64,9 +78,13 @@ public class IndexBenchmark {
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.NANOSECONDS)
     public void measureAvgTime(BenchmarkState state) throws InterruptedException {
-        // STUDENTS, make your changes here
-        // REMEMBER to vary the size of the data file (see above)
-        state.searchengine.search("denmark");
+        // Loks through array words and calls search for a word s.
+        String[] words= state.words;
+        if (words!=null){
+            for (String s:words) {
+                state.searchengine.search(s);
+            }
+        }
     }
 
     /**
@@ -82,5 +100,21 @@ public class IndexBenchmark {
                 .build();
 
         new Runner(opt).run();
+    }
+//Helper method copied form helper class and changed to look up words we will search in our test
+    public static String[] readConfigWords(){
+        //Created config_words.properties, where we can type in words we want to search
+        String config   = "config_words.properties";
+        Properties prop = new Properties();
+        String words = null;
+        String[] wordsArray=null;
+        try (InputStream inputStream = new FileInputStream(config)) {
+            prop.load(inputStream);
+            words = prop.getProperty("words");
+            wordsArray= words.split(",");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return wordsArray;
     }
 }

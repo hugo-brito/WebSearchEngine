@@ -141,6 +141,7 @@ public class FileHelper {
     public static List<Website> parseFile(String[] args) {
         String database;
         if (args.length < 1) {
+            System.out.println("NO PROGRAM ARGUMENTS; READING CONFIG...");
             database = FileHelper.readConfig();
             if (database == null || database.isEmpty() ) {
                 System.out.println("Error: Filename is missing");

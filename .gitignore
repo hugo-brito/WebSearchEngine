@@ -1,20 +1,7 @@
 # Willard's simplified version of what was originally
 # Created by https://www.gitignore.io/api/java,maven,gradle,intellij,visualstudiocode
 
-### Intellij ###
-.idea/
-out/
-cmake-build-*/
-.idea_modules/
-*.iws
-*.iml
-*.ipr
-modules.xml
-atlassian-ide-plugin.xml
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
+
 
 ### Java ###
 *.class

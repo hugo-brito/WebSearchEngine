@@ -4,21 +4,28 @@ import java.util.List;
 
 public class TFIDFScore implements Score{
 
+    /**
+     * 
+     * @param word
+     * @param site
+     * @param index
+     * @return
+     */
     @Override
-    public float getScore(String word, Website site, Index index) {
-        float IDF = IDF(word, index);
+    public double getScore(String word, Website site, Index index) {
+        double IDF = IDF(word, index);
         TFScore termFrequency = new TFScore();
-        float TF = termFrequency.getScore(word, site, index);
+        double TF = termFrequency.getScore(word, site, index);
         return IDF*TF;
     }
 
-    public float IDF(String term, Index index) {
+    public double IDF(String term, Index index) {
         List<Website> containsWord = index.lookup(term);
-        float x = containsWord.size();
-        float websiteCollectionSize = FileHelper.getNumberOfWebsites();
-        if(x == 0) {
+        double x = containsWord.size();
+        double websiteCollectionSize = FileHelper.getNumberOfWebsites();
+        if(x == 0.0) {
             return 0;
         }
-        return (float)Math.log10(websiteCollectionSize/x);
+        return Math.log10(websiteCollectionSize/x);
     }
 }

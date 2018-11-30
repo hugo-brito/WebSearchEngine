@@ -34,6 +34,15 @@ public class QueryHandler {
         // store the give query in a auxiliary query
         List<String> query = new ArrayList<>(Arrays.asList(line.split(" ")));
         // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
+        int indexOfOR = query.indexOf("OR");
+        // let's check if there's any "OR" in our query
+        while (query.indexOf("OR") > 0){
+            query query.indexOf("OR")
+        }
+        if (indexOfOR == -1){
+            // if the index is -1, then there's no "OR"
+
+        }
         List<Website> results;
         if (query.size() == 1) {
             // if the query consists of one word, nothing changes

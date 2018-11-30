@@ -40,7 +40,7 @@ public class WebApplication {
         
         System.out.println("Reading database...");
         List<Website> sites = FileHelper.parseFile(args);
-        
+
         System.out.println("Building the search engine...");
         searchengine = new SearchEngine(sites);
 

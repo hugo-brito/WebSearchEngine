@@ -1,4 +1,5 @@
 package searchengine;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ abstract public class InvertedIndex implements Index {
      */
     @Override
     public void build(List<Website> sites) {
+
     }
 
     /**
@@ -22,7 +24,12 @@ abstract public class InvertedIndex implements Index {
      */
     @Override
     public List<Website> lookup(String query) {
-        return map.get(query);
+        if (map.containsKey(query)) {
+            return map.get(query);
+            // added these lines so it returns an empty list when testing (avoinding the null pointer exception)
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override
@@ -36,4 +43,5 @@ abstract public class InvertedIndex implements Index {
         }
         return returnString;
     }
+
 }

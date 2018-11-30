@@ -1,5 +1,5 @@
-
 package searchengine;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IndexTest {
     Index simpleIndex = null;
+    // adding testing units for the treemap index
+    Index treeIndex = null;
+    // adding testing units for the hashmap index
+    Index hashIndex = null;
+
 
     @BeforeEach
     void setUp() {
@@ -20,11 +25,20 @@ class IndexTest {
         sites.add(new Website("example2.com", "example2", Arrays.asList("word2", "word3")));
         simpleIndex = new SimpleIndex();
         simpleIndex.build(sites);
+        // do the same for the treeIndex
+        treeIndex = new InvertedIndexTreeMap();
+        treeIndex.build(sites);
+        // and again for the hashIndex
+        hashIndex = new InvertedIndexHashMap();
+        hashIndex.build(sites);
+
     }
 
     @AfterEach
     void tearDown() {
         simpleIndex = null;
+        treeIndex = null;
+        hashIndex = null;
     }
 
     @Test
@@ -33,8 +47,40 @@ class IndexTest {
     }
 
     @Test
+        void buildTreeIndex() {
+        assertEquals("Websites with word1:\n - example1: example1.com\nWebsites with word2:\n - example1: example1.com\n - example2: example2.com\nWebsites with word3:\n - example2: example2.com\n", treeIndex.toString());
+    }
+
+    @Test
+        void buildHashIndex() {
+        assertEquals("Websites with word1:\n - example1: example1.com\nWebsites with word3:\n - example2: example2.com\nWebsites with word2:\n - example1: example1.com\n - example2: example2.com\n", hashIndex.toString());
+    }
+
+//    @Override
+//    public String toString() {
+//        String returnString = "";
+//        for (String word : map.keySet()) {
+//            returnString = returnString + "Websites with " + word + ":\n";
+//            for (Website w : map.get(word)) {
+//                returnString = returnString + " - " + w.getTitle() + ": " + w.getUrl() + "\n";
+//            }
+//        }
+//        return returnString;
+//    }
+
+    @Test
     void lookupSimpleIndex() {
         lookup(simpleIndex);
+    }
+
+    @Test
+    void lookupTreeIndex() {
+        lookup(treeIndex);
+    }
+
+    @Test
+    void lookupHashIndex() {
+        lookup(hashIndex);
     }
 
     private void lookup(Index index) {

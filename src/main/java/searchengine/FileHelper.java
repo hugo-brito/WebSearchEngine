@@ -21,6 +21,8 @@ import java.util.Properties;
  * websites from a file.
  */
 public class FileHelper {
+    private static int numberOfWebsites;
+
     /**
      * Parses a file and extracts all the websites that are contained
      * in the file.
@@ -113,8 +115,12 @@ public class FileHelper {
         } catch (FileNotFoundException e) {
            e.printStackTrace();
         }
-
+        numberOfWebsites = sites.size();
         return sites;
+    }
+
+    public static int getNumberOfWebsites() {
+        return numberOfWebsites;
     }
 
     /**

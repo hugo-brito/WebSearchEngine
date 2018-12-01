@@ -28,12 +28,12 @@ class QueryHandlerTest {
         assertEquals(2, qh.getMatchingWebsites("word2").size());
     }
 
-    // @Test
-    // void testMultipleWords() {
-    //     assertEquals(1, qh.getMatchingWebsites("word1 word2").size());
-    //     assertEquals(1, qh.getMatchingWebsites("word3 word4").size());
-    //     assertEquals(1, qh.getMatchingWebsites("word4 word3 word5").size());
-    // }
+//     @Test
+//     void testMultipleWords() {
+//         assertEquals(1, qh.getMatchingWebsites("word1 word2").size());
+//         assertEquals(1, qh.getMatchingWebsites("word3 word4").size());
+//         assertEquals(1, qh.getMatchingWebsites("word4 word3 word5").size());
+//     }
 
     // @Test
     // void testORQueries() {
@@ -45,10 +45,10 @@ class QueryHandlerTest {
     // }
 
     // Test for problematic input
-    @Test
-    void testCornerCases() {
+    // @Test
+    // void testCornerCases() {
 
-    }
+    //}
 
 
 }

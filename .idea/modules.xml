@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/REPORT.iml" filepath="$PROJECT_DIR$/.idea/modules/REPORT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/REPORT_jmh.iml" filepath="$PROJECT_DIR$/.idea/modules/REPORT_jmh.iml" group="REPORT" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/REPORT_main.iml" filepath="$PROJECT_DIR$/.idea/modules/REPORT_main.iml" group="REPORT" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/REPORT_test.iml" filepath="$PROJECT_DIR$/.idea/modules/REPORT_test.iml" group="REPORT" />
       <module fileurl="file://$PROJECT_DIR$/ip18groupR.iml" filepath="$PROJECT_DIR$/ip18groupR.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ip18groupR_jmh.iml" filepath="$PROJECT_DIR$/.idea/modules/ip18groupR_jmh.iml" group="ip18groupR" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ip18groupR_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ip18groupR_main.iml" group="ip18groupR" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ip18groupR_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ip18groupR_test.iml" group="ip18groupR" />
     </modules>
   </component>
 </project>

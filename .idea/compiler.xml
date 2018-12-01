@@ -5,6 +5,9 @@
       <module name="ip18groupR_jmh" target="1.8" />
       <module name="ip18groupR_main" target="1.8" />
       <module name="ip18groupR_test" target="1.8" />
+      <module name="REPORT_jmh" target="1.8" />
+      <module name="REPORT_main" target="1.8" />
+      <module name="REPORT_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

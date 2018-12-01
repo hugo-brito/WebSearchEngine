@@ -1,6 +1,5 @@
 package searchengine;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class is responsible for answering queries to our search engine.
@@ -34,6 +33,32 @@ public class QueryHandler {
     public List<Website> getMatchingWebsites(String line) {
         List<Website> results = new ArrayList<>();
         results.addAll(idx.lookup(line));
-        return results;
+        List<Website> rankedResults = rankWebsites(results, line, idx);
+        return rankedResults;
     }
+
+    public List<Website> rankWebsites(List<Website> sites, String query, Index index) {
+        Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
+        String[] terms = query.split(" OR ");
+        for (Website site : sites) {
+            double siteScore = 0;
+            for(String term : terms) {
+                String[] words = term.split(" ");
+                double termScore = 0.0;
+                for (String word : words) {
+                    Score score = new TFScore();
+                    double tfScore = score.getScore(word, site, index);
+                    termScore += tfScore;
+                }
+                if(termScore > siteScore) {
+                    siteScore = termScore;
+                }
+            }
+            scoredWebsites.put(siteScore, site);
+        }
+        List<Website> rankedWebsites = new ArrayList<>();
+        rankedWebsites.addAll(scoredWebsites.values());
+        return rankedWebsites;
+    }
+
 }

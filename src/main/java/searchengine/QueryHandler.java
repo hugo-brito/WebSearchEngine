@@ -31,22 +31,18 @@ public class QueryHandler {
      * @return the list of websites that matches the query
      */
     public List<Website> getMatchingWebsites(String line) {
-        // store the give query in a auxiliary query
-        List<String> query = new ArrayList<>(Arrays.asList(line.split(" ")));
-        // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
-        if (query.get(0).equals("OR")) query.remove(0);
-        // if the first word is "OR", just remove it
+        List<String> query = queryTrimmer(line);
+        // clean the input of any "funky" input, return a list of strings
+
         Set<Website> results = new HashSet<>();
         // an hashset will prevent duplicates
-        while (query.indexOf("OR") > 0){
-            // this means that it exists an "OR" in my query
-            results.addAll(search(query.subList(0, query.indexOf("OR")))); // this one is a set, and I should keep adding it
-            // get all the words until you find "OR", make a list with it, call the search method on it, add to the set of results
-            query.removeAll(query.subList(0, query.indexOf("OR")));
-            // and then remove previous search from the list and restart
+
+        for (String inputs : query) {
+                results.addAll(intersectedSearch(inputs));
         }
         return new ArrayList<>(results);
     }
+
 
     /**
      * Auxiliary private method that returns websites that match simultaneously all the words in the list provided in the parameter.
@@ -54,12 +50,18 @@ public class QueryHandler {
      * @query
      * @return the list of websites that matches the query
      */
-    private Set<Website> search(List<String> query){
+    private Set<Website> intersectedSearch(String input){
         // provide a method that retrieves websites that contain ALL the words provided in the list
-        Set<Website> matches = new HashSet<>(idx.lookup(query.get(0)));
+        List<String> queriedWords = new ArrayList<>(Arrays.asList(input.split(" ")));
+        // get the list of words
+        // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
+        Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
         // using an hashset to prevent duplicates
-        for (String queriedWord : query){
-            matches.retainAll(idx.lookup(queriedWord));
+        if (queriedWords.size() > 1) {
+            // do this only if there's more than one word
+            for (String queriedWord : queriedWords){
+                matches.retainAll(idx.lookup(queriedWord));
+            }
         }
         return matches;
 
@@ -68,6 +70,35 @@ public class QueryHandler {
 //        a collection of lists must be checked for websites that appear in all lists.
 
     }
+
+    /**
+     * Helper method to make sure that the input is free from unaccounted of irrelevant input
+     * @param input the input from the query
+     * @return returns a list of words to looks for. Every entry of the list consists of a separated intersected query
+     */
+    private List<String> queryTrimmer (String input){
+        input = input.trim();
+        // clean the input
+        if (input.startsWith("OR ")){
+            input = input.substring(3);
+        } // delete the or at the beginning if any
+        if (input.endsWith(" OR")){
+            input = input.substring(0, input.length()-3);
+        } // delete the or at the end if any
+        List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
+        searches.replaceAll(String::trim);
+        // clean all white spaces in the beginning and in the end
+//        searches.removeAll(Arrays.asList(""));
+
+        while(searches.remove(""))
+            // delete all empty entries
+        System.out.println(searches);
+        return searches;
+    }
+
+//    public static void main(String[] args) {
+//        queryTrimmer("   OR this and that  OR ORlalal OR OR LALA OR that OR something else OR   ");
+//    }
 
 
 //    public List<Website> getMatchingWebsites(String line) {

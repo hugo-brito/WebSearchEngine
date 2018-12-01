@@ -1,17 +1,30 @@
 \chapter{Chapter 4: Ranking Algorithms}
 
+\section{Introduction}
+Typically, results returned from search engines are ranked in some way so as to return the more relevant search results first. For this task,  the following ranking algorithms were introduced:
 
-\section{Section 4.1}
-Text \\
+\begin{itemize}
+
+\item Term frequency
+
+\item Inverse document - term frequency
+
+\item Okapi BM25
+
+which are different implementations of the same general idea: assigning a score to a search term based on some metric of relevance.
+
+\end{itemize}
+
+\section{Analysis}
+A Score interface was created with only one method: getScore(String, Website, Index), and each of the following classes implemented this interface.
+ 
+\subsection{IFScore class}
 
 
+\subsection{IFIDFScore class}
+
+\subsection{OkapiBM25 class}
 
 
-\section{Section 4.2}
-Text\\
-
-
-
-
-\subsection{Subsection 4.2.1}
+\subsection{Testing}
 Text\\

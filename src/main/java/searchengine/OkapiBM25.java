@@ -35,22 +35,29 @@ public class OkapiBM25 implements Score {
      */
     @Override
     public double getScore(String query, Website site, Index index) {
+        // since this algorithm works for one or more words in the search string, need to split the string first to get
+        // the individual words
         String[] words = query.split(" ");
+        // the count for the summation goes from 1 to the number of words in the string, but as the count variable will
+        // used as the index of the array, subtract one from the length of the array
         int count = words.length-1;
+        // calculate the Okapi score, using a recursive method okapiScore for the summation
         double score = okapiScore(count, words, site, index);
         return score;
     }
 
     /**
-     * Calculates the mean numbers of words per website and assigns it to the
-     * static variable AVERAGE_DOC_LENGTH.
+     * Takes the list of the total number of websites created from the database and calculates the mean numbers of words
+     * per website to assign it to the static variable AVERAGE_DOC_LENGTH.
      * @param sites
      */
     public void setAverageDocLength(List<Website> sites) {
         int totalWords = 0;
         for(Website site : sites) {
+            // creates a running total of the number of words from each website created from the database
             totalWords+= site.getWords().size();
         }
+        // divides the running total number of words by the number of websites to get the mean
         this.AVERAGE_DOC_LENGTH = totalWords/sites.size();
     }
 
@@ -64,7 +71,11 @@ public class OkapiBM25 implements Score {
      * @return
      */
     public double okapiScore(int count, String[] words, Website site, Index index) {
+        // the numbers of words on the website
         int docLength = site.getWords().size();
+        // the recursive part of the method. if the count is 1 then just calculate the score for the one word making up
+        // the query string. if the count is greater than one then it adds the Okapi score of the count to the Okapi
+        // of the count - 1 until it gets back down to count = 1.
         if(count == 1) {
             double IDF = new TFIDFScore().IDF(words[count], index);
             double termFrequency = new TFIDFScore().getScore(words[count], site, index);

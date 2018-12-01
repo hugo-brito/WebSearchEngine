@@ -37,7 +37,18 @@ public class QueryHandler {
         return rankedResults;
     }
 
+    /**
+     * The rankWebsites method takes query (which may be in the form "term1 OR term2 OR term3...", where term can have
+     * the form "word1 word2 word3" and then calculates a score for each term (the sum of the scores for each word). The
+     * score for the website is the maximum of each term score.
+     * @param sites
+     * @param query
+     * @param index
+     * @return a list of websites, ranked from highest score to lowest score
+     */
     public List<Website> rankWebsites(List<Website> sites, String query, Index index) {
+        // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
+        // put the highest score first (descending order)
         Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
         String[] terms = query.split(" OR ");
         for (Website site : sites) {
@@ -46,7 +57,7 @@ public class QueryHandler {
                 String[] words = term.split(" ");
                 double termScore = 0.0;
                 for (String word : words) {
-                    Score score = new TFScore();
+                    Score score = new TFScore(); //update here to change what ranking algorithm is used
                     double tfScore = score.getScore(word, site, index);
                     termScore += tfScore;
                 }

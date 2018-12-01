@@ -37,7 +37,7 @@ public class QueryHandler {
         if (query.get(0).equals("OR")) query.remove(0);
         // if the first word is "OR", just remove it
         Set<Website> results = new HashSet<>();
-        //
+        // an hashset will prevent duplicates
         while (query.indexOf("OR") > 0){
             // this means that it exists an "OR" in my query
             results.addAll(search(query.subList(0, query.indexOf("OR")))); // this one is a set, and I should keep adding it
@@ -55,16 +55,24 @@ public class QueryHandler {
      * @return the list of websites that matches the query
      */
     private Set<Website> search(List<String> query){
-// provide a method that retrieves websites that contain ALL the words provided in the list
-        results;
-
-        // then there is definitely more than word
-        Set<Website> matches = new HashSet<>();
+        // provide a method that retrieves websites that contain ALL the words provided in the list
+        Set<Website> matches = new HashSet<>(idx.lookup(query.get(0)));
         // using an hashset to prevent duplicates
         for (String queriedWord : query){
-            matches.addAll(idx.lookup(queriedWord));
+            matches.retainAll(idx.lookup(queriedWord));
         }
-        results = new ArrayList<>(matches);
+        return matches;
+
+//        In the getMatchingWebsites method, first, decompose the query into its components. For a single word,
+//        the query still retrieves lists of websites from the inverted index. For the multiple words feature,
+//        a collection of lists must be checked for websites that appear in all lists.
 
     }
+
+
+//    public List<Website> getMatchingWebsites(String line) {
+//        List<Website> results = new ArrayList<>();
+//        results.addAll(idx.lookup(line));
+//        return results;
+//    }
 }

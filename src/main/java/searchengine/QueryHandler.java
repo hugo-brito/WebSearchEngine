@@ -34,56 +34,37 @@ public class QueryHandler {
         // store the give query in a auxiliary query
         List<String> query = new ArrayList<>(Arrays.asList(line.split(" ")));
         // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
-        int indexOfOR = query.indexOf("OR");
-        // let's check if there's any "OR" in our query
+        if (query.get(0).equals("OR")) query.remove(0);
+        // if the first word is "OR", just remove it
+        Set<Website> results = new HashSet<>();
+        //
         while (query.indexOf("OR") > 0){
-            query query.indexOf("OR")
+            // this means that it exists an "OR" in my query
+            results.addAll(search(query.subList(0, query.indexOf("OR")))); // this one is a set, and I should keep adding it
+            // get all the words until you find "OR", make a list with it, call the search method on it, add to the set of results
+            query.removeAll(query.subList(0, query.indexOf("OR")));
+            // and then remove previous search from the list and restart
         }
-        if (indexOfOR == -1){
-            // if the index is -1, then there's no "OR"
-
-        }
-        List<Website> results;
-        if (query.size() == 1) {
-            // if the query consists of one word, nothing changes
-            results = new ArrayList<>();
-            results.addAll(idx.lookup(line));
-            // i can just take the parameter because I know it's a string on only one word
-        } else {
-            if (query.contains("OR")){
-                for (int i = 0; i < query.size(); i++){
-
-                }
-            }
-            // then there is definitely more than word
-            Set<Website> matches = new HashSet<>();
-            // using an hashset to prevent duplicates
-            for (String queriedWord : query){
-                matches.addAll(idx.lookup(queriedWord));
-            }
-            results = new ArrayList<>(matches);
-        }
-
-        return results;
+        return new ArrayList<>(results);
     }
 
     /**
-     * Auxiliary private method that returns websites that match simultaneously all the words in the list provided in the parameter
+     * Auxiliary private method that returns websites that match simultaneously all the words in the list provided in the parameter.
+     * Since it returns a set, it won't have duplicates
      * @query
      * @return the list of websites that matches the query
      */
-    private List<Website> multiQuery(List<String> query){
+    private Set<Website> search(List<String> query){
+// provide a method that retrieves websites that contain ALL the words provided in the list
+        results;
+
+        // then there is definitely more than word
+        Set<Website> matches = new HashSet<>();
+        // using an hashset to prevent duplicates
+        for (String queriedWord : query){
+            matches.addAll(idx.lookup(queriedWord));
+        }
+        results = new ArrayList<>(matches);
 
     }
-
-    /**
-     * Auxiliary private method that returns websites that match the word provided in the parameter
-     * @param query
-     * @return the list of websites that matches the query
-     */
-    private List<Website> singleQuery(String query){
-
-    }
-
-
 }

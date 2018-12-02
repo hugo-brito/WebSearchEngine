@@ -1,12 +1,20 @@
 package searchengine;
 
 
+import searchengine.WebCrawler.WebCrawler;
+import searchengine.WebCrawler.WebScraper;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
 
 public class TestClass {
     public static void main(String[] args) {
-        System.out.println("Welcome to the SearchEngine!");
+      /*  System.out.println("Welcome to the SearchEngine!");
         args = new String[]{"C:\\Users\\ieva.kangsepa\\IdeaProjects\\TEST\\data\\enwiki-small.txt"};
         System.out.println("Reading database...");
         List<Website> sites = FileHelper.parseFile(new String[0]);
@@ -31,10 +39,7 @@ public class TestClass {
                 System.out.println("Found " + resultList.size() + " websites.");
             }
 
-        }
-
-
-        // run the search engine
+        }*/
 
     }
 }

@@ -4,7 +4,7 @@ buildscript {
   }
   dependencies {
     classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE')
-  }
+}
 }
 
 plugins {
@@ -28,6 +28,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    /* jsoup HTML parser library @ https://jsoup.org
+    jsoup is a HTML parser " is a Java library for working
+    with real-world HTML. It provides a very convenient API for
+    extracting and manipulating data../*/
+    compile('org.jsoup:jsoup:1.11.3')
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompileOnly('junit:junit:4.12')

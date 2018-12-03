@@ -2,7 +2,7 @@
 
 
 \section{Introduction}
-In this section we are evaluating three different approaches... lists, hash map and tree map \\
+In this section we are evaluating three different approaches for storing the search indexes, namely array lists, hash map and tree map.\\
 Inverted hash map and tree map...\\
 Ran tests to compare the results, which \\
 
@@ -20,16 +20,47 @@ and the methods of the Matcher class. Though it doesn’t look to be that big of
 
 \section{Indexes and Data Structures}
 \subsection{SimpleIndex}
-bla bla bla
-\subsection{InvertedHashMap}
-bla bla bla \cite{oracle:hashmap}
-\subsection{InvertedTreeMap}
-bla bla bla
+The provided default way of storing indexes was called SimpleIndex. This solution is implemented using an ArrayList<website>, which contains all of the sites and eash site than have their own ArrayList<String>  containing all the words on the sites. \\
 
-\section{Analysis} 
-\subsection{Search Using Lists}
-\subsection{Search Usnig InvertedHashMap}
-\subsection{Search Usnig InvertedTreeMap}
+\subsection{InvertedIndexTreeMap}
+The second approach to store indexes was called InvertedIndexTreeMap. Here the relationship between site and it's words is inverted, meaning that each word knows to which sites it belongs to. The underlying data structure of the TreeMap is a Red-Black tree based NavigableMap implementation, sorted either by the natural ordering of it's keys or by a Comparator. TreeMap provides \textit{guaranteed log(n) time} performance for the operations \textbf{containsKey, get, put, remove}.\cite{oracle:treemap} TreeMap use only the amount of memory needed to hold it's items, therefore this solution is suited when it is not known how many items have to be sorted in memory and threre are memory limitations. Solutions is also suited when the order in which items have been stored is important and O(log n) search time is acceptable. \cite{baeldung:HashTreeCompared} 
+
+\subsection{InvertedIndexHashMap}
+The third approach to store indexes was called InvertedIndexHashMap. Also in the HashMap the relationship between the site and it's words is inverted. To accomplish this a HashMap was used, where the words were used as Keys and  a List of websites as a Value. 
+The underlying data structure of the HashMap is a Hash table based implementation. This implementation gives \textit{constant-time} performance for the basic operations such as \textbf{get} and \textbf{put}. \cite{oracle:hashmap} However this is true under assumpton that there are not too many colisions. This is becaseu this Map implementation acts as a busket hash table and when buckets get too large, they get transformed into node of TreeNodes, similar to those in TreeMap. \cite{baeldung:HashTreeCompared} Some of the downsides of building the HashMap are that it requires more memory than it is necessary to hold it's data and when a HashMap becomes full, it gets resized and rehashed, which is costly. HashMap solutions should be chosen in cases when the approximate amount of items have to be maintained in the collection is known and the order in which items have been stored is not important. \cite{baeldung:HashTreeCompared} 
+
+
+\section{Benchmark} 
+
+In order to choose one of the implementations, namely ArrayList, TreeMap or HashMap, for the Search Engine, the benchamrk test was performed to gain empirical data of the performance of each of the implementations. For the benchmark test JMH, a Java harness for building, running, and analysing nano/micro/milli/macro benchmarks, was used. {OpenJDK:jmh} The bechmark test was carried out using 20 words (random nouns, verbs, adjectives and conjunctions), which were looked-up using the three different indexes implementations and in three difrernt size databases: enwiki-tiny, enwiki-small, enwiki-medium. JMH provides information about an avrage Score, measured in nanoseconds per operation, see results in  table \ref{table:result}\\
+During the benchmark it was assured that the test environment is as similar as possible among the different tirals, meaning that all tests were performed on the same machine and no other applications running on the background.
+
+\begin{table}[!htbp]
+\caption{\textbf{Benchmark Score in ns/op for SimpleIndext, InvertedIndexHashMap and InvertedIndexTreeMap using enwiki-tiny, enwiki-small and enwiki-medium data sets on average}}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Data sets} & \textbf{SimpleIndext} & \textbf{Inv.IndexHashMap} & \textbf{Inv.IndexTreemap} \\ \hline
+\textbf{} & \textbf{avgt Score ns/op} & \textbf{avgt Score ns/op} & \textbf{avgt Score ns/op} \\ \hline
+enwiki-tiny &18944.884&1052.067&1591.311 \\ \hline
+enwiki-small &8819338.592&1883.776&3622.582\\ \hline
+enwiki-medium &233498546.571&27451.020&30176.993 \\ \hline
+\end{tabular}
+\label{table:result}
+\end{table}
+
+
+The benchmark results shows that the SimpleIndex is significantly slower than both of the Inverted Map implementations, 233498546.571 ns/op versus 27451.020 ns/op for the InvertedIndexHashMap and 30176.993 ns/op for the InvertedIndexTreeMap using the enwiki-medium dataset, respectively. 
+In order to describe the reulsts let the number of websites be m and words be n. 
+The difference in performance can be explainde as fallows: \\
+When the SimpeIndex is looking up the search word, it looks though all the sites, which takes \textit{O(m)} time, and for each site it looks through all the words which takes \textit{O(n)} time, therefore total search time is \textit{O($m\cdot n$)}. Two other methods provides faster performance time. InvertedIndexTreeMap provides a  \textit{guaranteed} performance of \textit{O(log(n))}. InvertedIndexTreeMap provides best-case performance of constant time \textit{O(1)} and the worst-case performance since the Java8 of \textit{O(log(n))} time. Worst-case performance occurs, when hash function is not implemented correctly, values are are distributed poorly in buckets and there is high hash collision.
+
+
+
+%$2 \cdot log(n) + occ$\
+\subsection{Conclusion}
+There are several considerations when choosing the implementation for storing the data for the Search Engine. 
+HashMap seams to be better fit than a TreeMap for Search Engine solution, becasue in this case the order of data is not important versus the performance looking up the websites corresponding tho the search word is. The HashMap can be expected to perform  in constant time which is better than TreeMap's  \textit{log(n)} time, and only HashMap's worst-perofmance is be \textit{log(n)} time. The given data sets are fixed, therefore the costly resizing and rehashing is not going to occure implementing Hashmap. HashMap performed the best on all of the given different size datasets in benchmark test. This is the reasoning for choosing HashMap implementation ovet the TreeMap implementation for this Search Engine project.
+
 
 
 \section{Testing}
@@ -112,26 +143,6 @@ As you can see from the Actual Output column of \ref{FH:result}, the updated cod
 
 \subsubsection{InvertedIndexTreeMap Class}
 
-\subsection{Comparison Benchmarking Results}
-We compared the results of ...
-We made sure that that the environmetn when runnin the different test are as much as possible similar, e.g. no other programms running on the machine during the testing, that could affect the test performance results.\\
-In table \ref{table:result} the result of benchmark can be seen.\\
-JMH/ avg/ ns/op
-link to it
-
-
-\begin{table}[!htbp]
-\caption{Benchmark results in nanoseconds for three type of indexes and test files }
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Test Files} & \textbf{SimpleIndext} & \textbf{Inv.IndexHashMap} & \textbf{Inv.IndexTreemap} \\ \hline
-\textbf{} & \textbf{avgt Score ns/op} & \textbf{avgt Score ns/op} & \textbf{avgt Score ns/op} \\ \hline
-EnWiki Tiny &18944.884&1052.067&1591.311 \\ \hline
-EnWiki Small &8819338.592&1883.776&3622.582\\ \hline
-EnWiki Medium &233498546.571&27451.020&30176.993 \\ \hline
-\end{tabular}
-\label{table:result}
-\end{table}
 
 
 

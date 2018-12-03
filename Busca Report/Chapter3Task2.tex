@@ -1,11 +1,53 @@
-\chapter{Chapter 3: Refines Queries}
+\chapter{Refines Queries}
 
+%• Task: A short review on the task that we had to solve.
+%• Basic Approach: A basic description on how we solved the task.
+%• Technical description: Description of software architecture used in the solution.
+%• Testing considerations: Description of considerations for testing the correctness
+%of our solution.
+%• Benchmarking/Reection: Benchmarking results for experiments that allowed us
+%choose the best data structure for the search engine.
 
-\section{Section 3.1}
+%Checklist for Mandatory Tasks
+%Use the following checklist to make sure your project fulfills all mandatory tasks.
+% Tasks 1–3 have correspondent Java code that solve them, in particular,
+% you have implemented the inverted indexes, and benchmarked them,
+% your searchengine understands complex queries,
+% your searchengine is able to rank results to a query, using dierent scores.
+% each class and each method is documented using Javadoc
+% each class is accompanied with a unit test, in which you test the public methods
+%exposed by the class (no tests need to be provided for main and “getter” methods)
+
+Responsible group member: \textbf{Hugo Brito}
+
+Typically, a every search engine understands complex queries. This means that, the user, when searching for a website, might type in more than one search term. Moreover, there should also be possible for the user to aggregate results from different queries into one big one using a certain keyword (in our case "OR").
+This chapter describes how we enabled our search engine to do so.
+
+\section{Task}
+Overview:
+\itemizer
+Class: QueryHandler
+/**
+* getMachingWebsites answers queries of the type
+* "subquery1 OR subquery2 OR subquery3 ...". A "subquery"
+* has the form "word1 word2 word3 ...". A website matches
+* a subquery if all the words occur on the website. A website
+* matches the whole query, if it matches at least one subquery.
+*
+* @param line the query string
+* @return the list of websites that matches the query
+*/
+public List<Website> getMatchingWebsites(String line) {
+
+\subsection{Basic Approach}
+There is a multitude of possibilities when providing a search term on a search engine. There is no way to predict that the term will comply with what we were expecting. So it seems relevant to implement
 Text \\
+\subsection{Intersected Search}
 
 
+\subsection{Aggregating results}
 
+\subsection{Providing the results}
 
 \section{Section 3.2}
 Text\\

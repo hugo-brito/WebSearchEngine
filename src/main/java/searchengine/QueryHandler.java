@@ -31,7 +31,7 @@ public class QueryHandler {
      * @return the list of websites that matches the query
      */
     public List<Website> getMatchingWebsites(String line) {
-        List<String> query = queryTrimmer(line);
+        List<String> query = cleanQuery(line);
         // clean the input of any "funky" input, return a list of strings
 
         Set<Website> results = new HashSet<>();
@@ -41,6 +41,7 @@ public class QueryHandler {
                 results.addAll(intersectedSearch(inputs));
         }
         return new ArrayList<>(results);
+        // this will return the final result as a list.
     }
 
 
@@ -53,6 +54,8 @@ public class QueryHandler {
     private Set<Website> intersectedSearch(String input){
         // provide a method that retrieves websites that contain ALL the words provided in the list
         List<String> queriedWords = new ArrayList<>(Arrays.asList(input.split(" ")));
+
+        System.out.println(queriedWords);
         // get the list of words
         // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
         Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
@@ -76,34 +79,37 @@ public class QueryHandler {
      * @param input the input from the query
      * @return returns a list of words to looks for. Every entry of the list consists of a separated intersected query
      */
-    private List<String> queryTrimmer (String input){
-        input = input.trim();
-        // clean the input
+    private List<String> cleanQuery (String input){
+        input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
+        // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character
+
         if (input.startsWith("OR ")){
             input = input.substring(3);
-        } // delete the or at the beginning if any
+        } // delete the "OR" at the beginning if any
         if (input.endsWith(" OR")){
             input = input.substring(0, input.length()-3);
-        } // delete the or at the end if any
-        List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
-        searches.replaceAll(String::trim);
-        // clean all white spaces in the beginning and in the end
-//        searches.removeAll(Arrays.asList(""));
+        } // delete the "OR" at the end if any
 
-        while(searches.remove(""))
-            // delete all empty entries
+        List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
+        // make a list of terms to search for, the criteria for making a new term search is the "OR" keyword
+        // Every element of the list will be an intersected search and
+
+        searches.replaceAll(String::trim);
+        // trim all the searches, just in case they start or end with empty spaces
+
+        while(searches.remove("")){}
+        // delete all empty entries
+        // searches.removeAll(Arrays.asList("")); this is an alternative method to the above
+
+        searches.replaceAll(String::toLowerCase);
+        // make everything lower case, because of the way the websites are crawled
+
         System.out.println(searches);
         return searches;
     }
 
 //    public static void main(String[] args) {
-//        queryTrimmer("   OR this and that  OR ORlalal OR OR LALA OR that OR something else OR   ");
-//    }
-
-
-//    public List<Website> getMatchingWebsites(String line) {
-//        List<Website> results = new ArrayList<>();
-//        results.addAll(idx.lookup(line));
-//        return results;
+//        // a really bad query, just to see how it behaves
+//        cleanQuery(" .  OR ?this ? and?that this!is%something&ORORthese_are_some_wordsOROR OR ORlalal OR OR LALA OR th)at OR something ORme&youOR      else OR   ");
 //    }
 }

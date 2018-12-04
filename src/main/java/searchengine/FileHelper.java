@@ -1,6 +1,7 @@
 package searchengine;
 
 // For reading database file
+import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -111,8 +112,8 @@ public class FileHelper {
             if (url != null) {
                 sites.add(new Website(url, title, listOfWords));
             }
-        } catch (FileNotFoundException e) {
-           e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return sites;
     }

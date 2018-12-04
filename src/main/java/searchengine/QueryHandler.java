@@ -30,7 +30,7 @@ public class QueryHandler {
      * @param line the query string
      * @return the list of websites that matches the query
      */
-    public List<Website> getMatchingWebsites(String line) {
+    public List<Website> getMatchingWebsites(String line){
         List<String> query = cleanQuery(line);
         // clean the input of any "funky" input, return a list of strings
 
@@ -38,7 +38,7 @@ public class QueryHandler {
         // an hashset will prevent duplicates
 
         for (String inputs : query) {
-                results.addAll(intersectedSearch(inputs));
+            results.addAll(intersectedSearch(inputs));
         }
         return new ArrayList<>(results);
         // this will return the final result as a list.
@@ -53,13 +53,14 @@ public class QueryHandler {
      */
     private Set<Website> intersectedSearch(String input){
         // provide a method that retrieves websites that contain ALL the words provided in the list
-        List<String> queriedWords = new ArrayList<>(Arrays.asList(input.split(" ")));
 
-        System.out.println(queriedWords);
+        List<String> queriedWords = new ArrayList<>(Arrays.asList(input.split(" ")));
         // get the list of words
         // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
+
         Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
         // using an hashset to prevent duplicates
+
         if (queriedWords.size() > 1) {
             // do this only if there's more than one word
             for (String queriedWord : queriedWords){
@@ -75,7 +76,7 @@ public class QueryHandler {
     }
 
     /**
-     * Helper method to make sure that the input is free from unaccounted of irrelevant input
+     * Auxiliary private method to make sure that the input is free from unaccounted of irrelevant input
      * @param input the input from the query
      * @return returns a list of words to looks for. Every entry of the list consists of a separated intersected query
      */
@@ -83,12 +84,13 @@ public class QueryHandler {
         input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
         // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character
 
-        if (input.startsWith("OR ")){
-            input = input.substring(3);
-        } // delete the "OR" at the beginning if any
-        if (input.endsWith(" OR")){
-            input = input.substring(0, input.length()-3);
-        } // delete the "OR" at the end if any
+//        if (input.startsWith("OR ")){
+//            input = input.substring(3);
+//        } // delete the "OR" at the beginning if any
+//        if (input.endsWith(" OR")){
+//            input = input.substring(0, input.length()-3);
+//        } // delete the "OR" at the end if any
+//        unnecessary code as later the empty entries will be deleted anyway
 
         List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
         // make a list of terms to search for, the criteria for making a new term search is the "OR" keyword

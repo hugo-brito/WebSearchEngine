@@ -20,5 +20,5 @@ public interface Score {
      * to the query word
      */
 
-    double getScore(String word, Website site, Index index);
+    double getScore(String word, Website site, InvertedIndex index);
 }

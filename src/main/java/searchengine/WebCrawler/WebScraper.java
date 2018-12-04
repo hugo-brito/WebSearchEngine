@@ -8,13 +8,20 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-
+/**
+ * Class that can recursively traverse a single web site and exploring it's links.
+ * It "Scrapes" the Title, words and links from a DOCTYPE html file
+ */
 public class WebScraper {
 
 
-/*Recursive method for traversing single website and exploring it's links
-* It takes in url string to look at and a HahsSet of pages already visited.
-**/
+    /**
+     * Recursive method for traversing a single web site and exploring it's links
+     * It takes in url string to look at and a HahsSet of pages already visited.
+     * For each web site it will create Website object and append it to the index file.
+     * @param url String value of the url address that should be visited
+     * @param visitedSites HashSet of already visited url addresses.
+     */
     public void fetchWebsiteRecursive(String url, HashSet<String> visitedSites){
 
         //Using https://jsoup.org/download
@@ -49,7 +56,7 @@ public class WebScraper {
                        if (!linkUrl.getPath().isEmpty() && !linkUrl.getPath().equals(("/")))
                            urlValue += linkUrl.getPath();
 
-                       if (urlValue != null && visitedSites.contains(urlValue) == false) {
+                       if (urlValue != null && visitedSites.contains(urlValue) == false ) {
                            Thread.sleep(30000);
                            visitedSites.add(urlValue);
                            fetchWebsiteRecursive(newLink, visitedSites);
@@ -70,6 +77,10 @@ public class WebScraper {
        }
     }
 
+    /**
+     * Appending the values of a Website object to the file real_data_file.txt in the data folder
+     * @param site Object of type Website that should be added to the file.
+     */
     public void AppendSiteToFile(Website site){
 
       /*  *PAGE:https://en.wikipedia.org/wiki/United_States   *PAGE:url

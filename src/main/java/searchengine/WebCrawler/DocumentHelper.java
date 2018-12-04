@@ -10,7 +10,19 @@ import searchengine.Website;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class to extract information from a DOCTYPE html file represented by a org.jsoup.nodes.Document object.
+ *
+ */
 public class DocumentHelper {
+    /**
+     * Static method that creates a Website object from information that is located in the DOCTYPE html file represented by
+     * a org.jsoup.nodes.Document object. The html file is downloaded from the given url, and the
+     * Website object will get this url.
+     * @param doc A org.jsoup.nodes.Document object that has parsed in the DOCTYPE html file from the given URL
+     * @param url URL of the site where the DOCTYPE html file was loaded from.
+     * @return A Website object that has the first title and words found in the DOCTYPE html file
+     */
     public static Website extractWebsiteFromDoc(Document doc, String url){
         /*Retreived head tag element of the document, where the title should be contained. */
         Element headElement = doc.getElementsByTag("head").first();
@@ -23,23 +35,25 @@ public class DocumentHelper {
         /*If the document has a title, it is a valid page for us to store and use further.*/
         if(title!=null && title.isEmpty()==false) {
             /*Retreived all the header tag elements from h1-h3 in the body, */
-            ArrayList<Element> allElements = new ArrayList<>();
-            allElements.addAll(bodyElement.getElementsByTag("h1"));
-            allElements.addAll(bodyElement.getElementsByTag("h2"));
-            allElements.addAll(bodyElement.getElementsByTag("h3"));
+            ArrayList<Element> allHeaderElements = new ArrayList<>();
+            allHeaderElements.addAll(bodyElement.getElementsByTag("h1"));
+            allHeaderElements.addAll(bodyElement.getElementsByTag("h2"));
+            allHeaderElements.addAll(bodyElement.getElementsByTag("h3"));
             /*For each header split it's text into list of words, by splitting by space between them.*/
             List<String> words = new ArrayList<>();
-            for (Element header : allElements) {
+            for (Element header : allHeaderElements) {
                 if(header.hasText() && header.childNodeSize() > 0){
                     for (Node child: header.childNodes()) {
                         //there could be multiple nodes in a header,
                         // but we only want the words from the TextNode child.
-                        // Should only be one direct child there is TextNode
+                        // Should only be one direct child which is a TextNode
                         if(child.getClass() == TextNode.class){
                             String headerText = child.toString();
                             String[] wordsInHeader = headerText.split(" ");
-                            for (String word : wordsInHeader)
+                            for (String word : wordsInHeader){
+                                //TODO reqex or string operations on the word to filter out symbols
                                 words.add(word);
+                            }
                         }
                     }
 
@@ -54,6 +68,11 @@ public class DocumentHelper {
             return null;
     }
 
+    /**
+     * Extracts links in the DOCTYPE html file represented by a org.jsoup.nodes.Document object.
+     * @param doc A org.jsoup.nodes.Document object that has parsed in the DOCTYPE html file from a given url address.
+     * @return a org.jsoup.select.Elements list of links.
+     */
     public static Elements extractLinksFromDoc(Document doc){
         Element bodyElement = doc.getElementsByTag("body").first();
         /*Looking for all the a tag elements in the body, a tag is the element that has href*/

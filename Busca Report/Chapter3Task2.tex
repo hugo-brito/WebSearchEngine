@@ -18,29 +18,94 @@
 % each class is accompanied with a unit test, in which you test the public methods
 %exposed by the class (no tests need to be provided for main and “getter” methods)
 
-Responsible group member: \textbf{Hugo Brito}
+\section{Task} % A short review on the task that we had to solve.
+This task enables complex query handling. This is a basic feature that is expected from a search engine: to be able to understand queries that consist of more than just one word. Additionally, we were asked to enable a feature that aggregates results from different (possibly) multi-word queries when the ``{\tt OR}'' keyword is present.
 
-Typically, a every search engine understands complex queries. This means that, the user, when searching for a website, might type in more than one search term. Moreover, there should also be possible for the user to aggregate results from different queries into one big one using a certain keyword (in our case "OR").
-This chapter describes how we enabled our search engine to do so.
+\section{Basic Approach} % A basic description on how we solved the task.
+All the logic necessary to handle the queries was implemented in the class {\tt QueryHandler}.
+When considering what needs to be accomplished as well as what the user can input in the search field, the present task is accomplished by following these steps:
+\begin{enumerate}
+    \item Sanitise the query: this comprises of checking if the query is meaningful and fulfils basic criteria in morphological terms, and to enforce it in the cases it does not.
+    \item Separate the query into sub-queries whenever the ``{\tt OR}'' keyword is present.
+    \item For each of the sub-queries, find websites that contain all the words in that sub-query.
+    \item Aggregate all the results of the multiple sub-queries on a list.
+\end{enumerate}
+In order to achieve encapsulation and responsibility-driven design, the following methods were implemented in the above-mentioned class:
+\begin{itemize}
+    \item {\tt getMatchingWebsites}: Core method of the class. It is responsible for:
+    \begin{itemize}
+        \item Receiving the input and passing it to the {\tt cleanQuery} helper method.
+        \item Receiving the input from the {\tt cleanQuery} method in a meaningful and orderly fashion, passing it then, element by element, to the {\tt intersectedSearch} method.
+        \item Receiving every result of the {\tt intersectedSearch} method and store it, so that when every element of the list is processed, it returns the matching websites.
+    \end{itemize}
+    \item {\tt cleanQuery}: Auxiliary private method to make sure that the input is free from unaccounted of irrelevant input.
+    \item {\tt intersectedSearch}: Auxiliary private method that returns websites that match simultaneously all the words in the input {\tt String} parameter.
+\end{itemize}
 
-\section{Task}
-Overview:
-\itemizer
-Class: QueryHandler
-/**
-* getMachingWebsites answers queries of the type
-* "subquery1 OR subquery2 OR subquery3 ...". A "subquery"
-* has the form "word1 word2 word3 ...". A website matches
-* a subquery if all the words occur on the website. A website
-* matches the whole query, if it matches at least one subquery.
-*
-* @param line the query string
-* @return the list of websites that matches the query
-*/
+\section{Technical description} % Description of software architecture used in the solution.
+\subsection{Field}
+The {\tt QueryHandler} class takes an {\tt Index} object as the initialising parameter. This {\tt Index} can be any of the indexes described in the previous chapter, as it consists of an {\tt interface}. This was achieved with the following piece of code:
+\begin{lstlisting}[language=Java]
+public class QueryHandler {
+private Index idx = null;
+public QueryHandler(Index idx) {
+this.idx = idx;
+}
+\end{lstlisting}
+\subsection{{\tt getMatchingWebsites} core method}
+As soon as this class is instantiated, it's intended use expects the {\tt getMatchingWebsites} method to be called. This method takes in a {\tt String} as parameter, which consists of the search terms; and returns a {\tt List<Website>}, which consists of the matching results. The signature is as follows:
+\begin{lstlisting}[language=Java]
 public List<Website> getMatchingWebsites(String line) {
+\end{lstlisting}
+As the description in the Basic Approach reads, this method uses two auxiliary methods to process the data as necessary. The first data processing happens when the parameter is passed to {\tt cleanQuery} method, which then returns a list of Strings that can be used to proceed with the search. The code used to achieve this is the following:
+\begin{lstlisting}[language=Java]
+List<String> query = cleanQuery(line);
+\end{lstlisting}
+\subsection{{\tt cleanQuery} auxiliary method}
+This method takes an important role in the whole process, as it enforces consistency in the input to be later on used to search for results. The first steps of this process consist of:
+\begin{itemize}
+\item Replacing all the punctuation character by spaces
+\item Replacing every 1 or more space characters by a single space character
+\end{itemize}
+The above mentioned steps are achieved with the following code:
+\begin{lstlisting}[language=Java]
+private List<String> cleanQuery (String input) {
+input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
+\end{lstlisting}
+After this, the ``{\tt OR}'' keyword is used as criteria for splitting the input {\tt String}, which is then used to create a {\tt List<String> searches}. The idea is that every element of the list will consist of an intersected search, and the results of each search will then be aggregated to achieve the final result. The code that allows for the described step is as follows:
+\begin{lstlisting}[language=Java]
+List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
+\end{lstlisting}
+What follows is a sequence of steps that enforces consistency in our {\tt List<String> searches}. This can elegantly be achieved by using lambdas. You can find below the remaining steps, followed by a small description.
+\begin{lstlisting}
+        searches.replaceAll(String::trim);
+        // trim all the searches, just in case they start or end with empty spaces
 
-\subsection{Basic Approach}
-There is a multitude of possibilities when providing a search term on a search engine. There is no way to predict that the term will comply with what we were expecting. So it seems relevant to implement
+        searches.removeAll(Arrays.asList(""));
+        // delete all empty entries
+
+        searches.replaceAll(String::toLowerCase);
+        // make everything lower case, because of the way the websites are crawled
+\end{lstlisting}
+Lastly, the result is returned:
+\begin{lstlisting}
+return searches;
+}
+\end{lstlisting}
+\subsection{Intermediate steps in the {\tt getMatchingWebsites} method}
+After having our input refined and organised on a list, it is time to
+\begin{lstlisting}
+Set<Website> results = new HashSet<>();
+// an hashset will prevent duplicates
+
+for (String inputs : query) {
+results.addAll(intersectedSearch(inputs));
+}
+\end{lstlisting}
+\section{Testing considerations} % Description of considerations for testing the correctness of our solution.
+
+\section{Reflection} % Benchmarking results for experiments that allowed us choose the best data structure for the search engine.
+
 Text \\
 \subsection{Intersected Search}
 

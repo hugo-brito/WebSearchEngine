@@ -99,14 +99,14 @@ public class QueryHandler {
         searches.replaceAll(String::trim);
         // trim all the searches, just in case they start or end with empty spaces
 
-        while(searches.remove("")){}
+        searches.removeAll(Arrays.asList(""));
         // delete all empty entries
-        // searches.removeAll(Arrays.asList("")); this is an alternative method to the above
+        // while(searches.remove("")){} // this is an alternative method to the above
 
         searches.replaceAll(String::toLowerCase);
         // make everything lower case, because of the way the websites are crawled
 
-        System.out.println(searches);
+//        System.out.println(searches);
         return searches;
     }
 

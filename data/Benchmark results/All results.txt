@@ -1,0 +1,50 @@
+Medium
+InvertedIndexTreeMap Medium
+Benchmark                      Mode  Cnt      Score     Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  30176.993 ± 415.305  ns/op
+
+InvertedIndexHashMap Medium
+Benchmark                      Mode  Cnt      Score     Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  27451.020 ± 390.336  ns/op
+
+simple medium
+Benchmark                      Mode  Cnt          Score         Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  233498546.571 ± 4376354.480  ns/op
+
+-------------------------------------------------------------------------------------------
+Small
+SimpleIndex small
+Benchmark                      Mode  Cnt        Score        Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  8819338.592 ± 459629.261  ns/op
+
+InvertedIndexTreeMap small
+Benchmark                      Mode  Cnt     Score    Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  3622.582 ± 74.249  ns/op
+
+InvertedIndexHashMap Small
+Benchmark                      Mode  Cnt     Score    Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  1883.776 ± 37.409  ns/op
+
+
+-----------------------------------------------------------------------------------------------
+Tiny
+SimpleIndex Tiny
+
+Benchmark                      Mode  Cnt      Score     Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  18944.884 ± 277.782  ns/op
+--------------------------------------------------------------------
+
+InvertedIndexTreeMap Tiny
+
+Benchmark                      Mode  Cnt     Score    Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  1591.311 ± 64.279  ns/op
+------------------------------------------------------------------
+
+InvertedIndexHashMap Tiny
+T1 without re-build
+Benchmark                      Mode  Cnt     Score    Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  1078.681 ± 20.934  ns/op
+T2 with re-build
+Benchmark                      Mode  Cnt     Score    Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  1052.067 ± 22.917  ns/op
+

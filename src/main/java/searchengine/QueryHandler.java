@@ -30,20 +30,71 @@ public class QueryHandler {
      * @param line the query string
      * @return the list of websites that matches the query
      */
-    public List<Website> getMatchingWebsites(String line){
+
+    public List<Website> getMatchingWebsites(String line) {
         List<String> query = cleanQuery(line);
         // clean the input of any "funky" input, return a list of strings
 
         Set<Website> results = new HashSet<>();
-        // an hashset will prevent duplicates
+        //        // an hashset will prevent duplicates
 
+//        List<Website> results = new ArrayList<>();
+//        results.addAll(idx.lookup(line));
         for (String inputs : query) {
             results.addAll(intersectedSearch(inputs));
         }
-        return new ArrayList<>(results);
+
+//        return rankedResults;
+
+        return rankWebsites(results, query);
         // this will return the final result as a list.
     }
 
+    /**
+     * The rankWebsites method takes query (which may be in the form "term1 OR term2 OR term3...", where term can have
+     * the form "word1 word2 word3" and then calculates a score for each term (the sum of the scores for each word). The
+     * score for the website is the maximum of each term score.
+     * @param sites
+     * @param query
+     * @return a list of websites, ranked from highest score to lowest score
+     */
+
+    //as far as I understand, this is just an extra helper method on the QueryHandler class to order the results.
+    //perhaps it should be a private method then...
+    //check for repeated code, I tried take it as much methods and variables from other classes as I could but do not
+    //consider it polishec
+    public List<Website> rankWebsites(Set<Website> sites, List<String> query) {
+        // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
+        // put the highest score first (descending order)
+        Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
+        // there's a problem here with this Map -- what if 2 websites have the same score
+
+        //Willard suggests this piece of code to solve the above problem:
+        //Convert Map<Website, Float> map to List<Website> sorted by value
+//        map.entrySet().stream().sorted((x,y) -> y.getValue().compareTo(x.getValue())).map(
+//                Map.Entry::getKey).collect(Collectors.toList());
+
+//        String[] terms = query.split(" OR ");
+        for (Website site : sites) {
+            double siteScore = 0;
+            for(String intersectedSearch : query) {
+                String[] words = intersectedSearch.split(" ");
+                double termScore = 0.0;
+                for (String word : words) {
+                    Score score = new TFScore(); //update here to change what ranking algorithm is used
+                    double tfScore = score.getScore(word, site, this.idx);
+                    // the score should be a field, so the query handler constructor takes it in as a parameter
+                    termScore += tfScore;
+                }
+                if(termScore > siteScore) {
+                    siteScore = termScore;
+                }
+            }
+            scoredWebsites.put(siteScore, site);
+        }
+
+        return new ArrayList<>(scoredWebsites.values());
+    }
 
     /**
      * Auxiliary private method that returns websites that match simultaneously all the words in the list provided in the parameter.
@@ -83,14 +134,6 @@ public class QueryHandler {
     private List<String> cleanQuery (String input){
         input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
         // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character
-
-//        if (input.startsWith("OR ")){
-//            input = input.substring(3);
-//        } // delete the "OR" at the beginning if any
-//        if (input.endsWith(" OR")){
-//            input = input.substring(0, input.length()-3);
-//        } // delete the "OR" at the end if any
-//        unnecessary code as later the empty entries will be deleted anyway
 
         List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
         // make a list of terms to search for, the criteria for making a new term search is the "OR" keyword

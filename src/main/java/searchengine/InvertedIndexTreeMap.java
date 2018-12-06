@@ -19,7 +19,7 @@ public class InvertedIndexTreeMap extends InvertedIndex {
      * let's populate that nice-looking treeMap
      * @param sites The list of websites that should be indexed
      */
-    @Override
+   /* @Override
     public void build(List<Website> sites) {
         for (Website w: sites) {
             // go through every website in the list fetched by the FileHelper
@@ -43,5 +43,5 @@ public class InvertedIndexTreeMap extends InvertedIndex {
                 }
             }
         }
-    }
+    }*/
 }

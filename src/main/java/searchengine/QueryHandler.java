@@ -10,16 +10,17 @@ public class QueryHandler {
     /**
      * The index the QueryHandler uses for answering queries.
      */
-    private Index idx = null;
+    private Index idx;
+    private Score score;
 
     /**
      * The constructor
      * @param idx The index used by the QueryHandler.
      */
-    public QueryHandler(Index idx) {
+    public QueryHandler(Index idx, Score score) {
         this.idx = idx;
+        this.score = score;
     }
-
     /**
      * getMachingWebsites answers queries of the type
      * "subquery1 OR subquery2 OR subquery3 ...". A "subquery"
@@ -35,7 +36,7 @@ public class QueryHandler {
         // clean the input of any "funky" input, return a list of strings
 
         Set<Website> results = new HashSet<>();
-        //        // an hashset will prevent duplicates
+        //an hashset will prevent duplicates
 
 //        List<Website> results = new ArrayList<>();
 //        results.addAll(idx.lookup(line));
@@ -66,7 +67,7 @@ public class QueryHandler {
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
         Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
-        // there's a problem here with this Map -- what if 2 websites have the same score
+        // there's a problem here with this Map -- what if 2 websites have the same score (key), treeMap keeps unique keys
 
         //Willard suggests this piece of code to solve the above problem:
         //Convert Map<Website, Float> map to List<Website> sorted by value
@@ -80,8 +81,8 @@ public class QueryHandler {
                 String[] words = intersectedSearch.split(" ");
                 double termScore = 0.0;
                 for (String word : words) {
-                    Score score = new TFScore(); //update here to change what ranking algorithm is used
-                    double tfScore = score.getScore(word, site, this.idx);
+                    //Score score = new TFScore(); //update here to change what ranking algorithm is used
+                    double tfScore = this.score.getScore(word, site, this.idx);
                     // the score should be a field, so the query handler constructor takes it in as a parameter
                     termScore += tfScore;
                 }
@@ -112,6 +113,9 @@ public class QueryHandler {
         // using an hashset to prevent duplicates
 
         if (queriedWords.size() > 1) {
+            //this for each loop should be replace by a while loop where you start from the 2nd element in the list
+            //instead of the first. the way it is implemented now, it will always compare the first element with itself
+            // = waste of computing power
             // do this only if there's more than one word
             for (String queriedWord : queriedWords){
                 matches.retainAll(idx.lookup(queriedWord));

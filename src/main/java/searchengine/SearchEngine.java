@@ -23,7 +23,8 @@ public class SearchEngine {
     public SearchEngine(List<Website> sites) {
         Index idx = new SimpleIndex();//Change to InvertedHashMap or TreeMap
         idx.build(sites);
-        queryHandler = new QueryHandler(idx);
+        Score score= new TFScore();//Change to the score you want to use
+        queryHandler = new QueryHandler(idx,score);
     }
 
     /**

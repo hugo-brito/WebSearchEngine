@@ -31,10 +31,22 @@ public class QueryHandler {
      * @return the list of websites that matches the query
      */
     public List<Website> getMatchingWebsites(String line) {
-        List<Website> results = new ArrayList<>();
-        results.addAll(idx.lookup(line));
-        List<Website> rankedResults = rankWebsites(results, line, idx);
-        return rankedResults;
+        List<String> query = cleanQuery(line);
+        // clean the input of any "funky" input, return a list of strings
+
+        Set<Website> results = new HashSet<>();
+        // an hashset will prevent duplicates
+
+//        List<Website> results = new ArrayList<>();
+//        results.addAll(idx.lookup(line));
+        for (String inputs : query) {
+            results.addAll(intersectedSearch(inputs));
+        }
+
+//        return rankedResults;
+
+        return rankWebsites(results, query);
+        // this will return the final result as a list.
     }
 
     /**
@@ -43,22 +55,22 @@ public class QueryHandler {
      * score for the website is the maximum of each term score.
      * @param sites
      * @param query
-     * @param index
      * @return a list of websites, ranked from highest score to lowest score
      */
-    public List<Website> rankWebsites(List<Website> sites, String query, Index index) {
+    public List<Website> rankWebsites(Set<Website> sites, List<String> query) {
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
         Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
-        String[] terms = query.split(" OR ");
+
+//        String[] terms = query.split(" OR ");
         for (Website site : sites) {
             double siteScore = 0;
-            for(String term : terms) {
-                String[] words = term.split(" ");
+            for(String intersectedSearch : query) {
+                String[] words = intersectedSearch.split(" ");
                 double termScore = 0.0;
                 for (String word : words) {
                     Score score = new TFScore(); //update here to change what ranking algorithm is used
-                    double tfScore = score.getScore(word, site, index);
+                    double tfScore = score.getScore(word, site, this.idx);
                     termScore += tfScore;
                 }
                 if(termScore > siteScore) {
@@ -67,9 +79,64 @@ public class QueryHandler {
             }
             scoredWebsites.put(siteScore, site);
         }
-        List<Website> rankedWebsites = new ArrayList<>();
-        rankedWebsites.addAll(scoredWebsites.values());
-        return rankedWebsites;
+
+        return new ArrayList<>(scoredWebsites.values());
+    }
+
+    /**
+     * Auxiliary private method that returns websites that match simultaneously all the words in the list provided in the parameter.
+     * Since it returns a set, it won't have duplicates
+     * @query
+     * @return the list of websites that matches the query
+     */
+    private Set<Website> intersectedSearch(String input){
+        // provide a method that retrieves websites that contain ALL the words provided in the list
+
+        List<String> queriedWords = new ArrayList<>(Arrays.asList(input.split(" ")));
+        // get the list of words
+        // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
+
+        Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
+        // using an hashset to prevent duplicates
+
+        if (queriedWords.size() > 1) {
+            // do this only if there's more than one word
+            for (String queriedWord : queriedWords){
+                matches.retainAll(idx.lookup(queriedWord));
+            }
+        }
+        return matches;
+
+//        In the getMatchingWebsites method, first, decompose the query into its components. For a single word,
+//        the query still retrieves lists of websites from the inverted index. For the multiple words feature,
+//        a collection of lists must be checked for websites that appear in all lists.
+
+    }
+
+    /**
+     * Auxiliary private method to make sure that the input is free from unaccounted of irrelevant input
+     * @param input the input from the query
+     * @return returns a list of words to looks for. Every entry of the list consists of a separated intersected query
+     */
+    private List<String> cleanQuery (String input){
+        input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
+        // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character
+
+        List<String> searches = new ArrayList<>(Arrays.asList(input.split("OR")));
+        // make a list of terms to search for, the criteria for making a new term search is the "OR" keyword
+        // Every element of the list will be an intersected search and
+
+        searches.replaceAll(String::trim);
+        // trim all the searches, just in case they start or end with empty spaces
+
+        searches.removeAll(Arrays.asList(""));
+        // delete all empty entries
+        // while(searches.remove("")){} // this is an alternative method to the above
+
+        searches.replaceAll(String::toLowerCase);
+        // make everything lower case, because of the way the websites are crawled
+
+        return searches;
     }
 
 }

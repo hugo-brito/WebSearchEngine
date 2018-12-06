@@ -35,7 +35,7 @@ public class QueryHandler {
         // clean the input of any "funky" input, return a list of strings
 
         Set<Website> results = new HashSet<>();
-        // an hashset will prevent duplicates
+        //        // an hashset will prevent duplicates
 
 //        List<Website> results = new ArrayList<>();
 //        results.addAll(idx.lookup(line));
@@ -57,10 +57,21 @@ public class QueryHandler {
      * @param query
      * @return a list of websites, ranked from highest score to lowest score
      */
+
+    //as far as I understand, this is just an extra helper method on the QueryHandler class to order the results.
+    //perhaps it should be a private method then...
+    //check for repeated code, I tried take it as much methods and variables from other classes as I could but do not
+    //consider it polishec
     public List<Website> rankWebsites(Set<Website> sites, List<String> query) {
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
         Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
+        // there's a problem here with this Map -- what if 2 websites have the same score
+
+        //Willard suggests this piece of code to solve the above problem:
+        //Convert Map<Website, Float> map to List<Website> sorted by value
+//        map.entrySet().stream().sorted((x,y) -> y.getValue().compareTo(x.getValue())).map(
+//                Map.Entry::getKey).collect(Collectors.toList());
 
 //        String[] terms = query.split(" OR ");
         for (Website site : sites) {
@@ -71,6 +82,7 @@ public class QueryHandler {
                 for (String word : words) {
                     Score score = new TFScore(); //update here to change what ranking algorithm is used
                     double tfScore = score.getScore(word, site, this.idx);
+                    // the score should be a field, so the query handler constructor takes it in as a parameter
                     termScore += tfScore;
                 }
                 if(termScore > siteScore) {

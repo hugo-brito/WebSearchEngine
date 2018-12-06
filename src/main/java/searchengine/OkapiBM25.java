@@ -1,6 +1,5 @@
 package searchengine;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,7 +64,7 @@ public class OkapiBM25 implements Score {
             List<Website> sites = index.getIndexMap().get(word);
             siteCollection.addAll(sites);
         }
-        int totalWords = 0;
+        double totalWords = 0;
         for(Website site : siteCollection) {
             totalWords+= site.getWords().size();
         }

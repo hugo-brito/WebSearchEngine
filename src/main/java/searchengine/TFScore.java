@@ -32,7 +32,7 @@ public class TFScore implements Score{
      * @param term
      * @return
      */
-    public double termFrequency(Website site, String term) {
+    private double termFrequency(Website site, String term) {
         // creates a local variable to store the frequency count
         double frequency = 0;
         // loops through each word in the site's list of words

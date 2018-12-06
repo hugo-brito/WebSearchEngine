@@ -17,6 +17,9 @@ class IndexTest {
     // adding testing units for the hashmap index
     Index hashIndex = null;
 
+    // What if the word start with a capital letter? Can it tell the difference?
+
+    // Use the parseFile to create a method that reads in a lot of words, to test the index. Maybe add that to benchmark. To stresstest.
 
     @BeforeEach
     void setUp() {

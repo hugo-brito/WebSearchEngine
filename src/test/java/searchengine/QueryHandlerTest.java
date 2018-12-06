@@ -16,7 +16,7 @@ class QueryHandlerTest {
         sites.add(new Website("1.com","example1", Arrays.asList("word1", "word2")));
         sites.add(new Website("2.com","example2", Arrays.asList("word2", "word3")));
         sites.add(new Website("3.com","example3", Arrays.asList("word3", "word4", "word5")));
-        Index idx = new SimpleIndex();
+        InvertedIndex idx = new InvertedIndexHashMap();
         idx.build(sites);
         qh = new QueryHandler(idx);
     }

@@ -10,13 +10,13 @@ public class QueryHandler {
     /**
      * The index the QueryHandler uses for answering queries.
      */
-    private Index idx = null;
+    private InvertedIndex idx = null;
 
     /**
      * The constructor
      * @param idx The index used by the QueryHandler.
      */
-    public QueryHandler(Index idx) {
+    public QueryHandler(InvertedIndex idx) {
         this.idx = idx;
     }
 
@@ -46,7 +46,7 @@ public class QueryHandler {
      * @param index
      * @return a list of websites, ranked from highest score to lowest score
      */
-    public List<Website> rankWebsites(List<Website> sites, String query, Index index) {
+    public List<Website> rankWebsites(List<Website> sites, String query, InvertedIndex index) {
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
         Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());

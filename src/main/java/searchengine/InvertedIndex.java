@@ -65,4 +65,8 @@ abstract public class InvertedIndex implements Index {
         return returnString;
     }
 
+    public Map<String, List<Website>> getIndexMap() {
+        return map;
+    }
+
 }

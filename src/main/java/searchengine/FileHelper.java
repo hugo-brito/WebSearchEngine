@@ -1,6 +1,7 @@
 package searchengine;
 
 // For reading database file
+import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import java.util.Properties;
  * websites from a file.
  */
 public class FileHelper {
-    private static int numberOfWebsites;
 
     /**
      * Parses a file and extracts all the websites that are contained
@@ -112,15 +112,10 @@ public class FileHelper {
             if (url != null) {
                 sites.add(new Website(url, title, listOfWords));
             }
-        } catch (FileNotFoundException e) {
-           e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        numberOfWebsites = sites.size();
         return sites;
-    }
-
-    public static int getNumberOfWebsites() {
-        return numberOfWebsites;
     }
 
     /**

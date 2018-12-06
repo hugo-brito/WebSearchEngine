@@ -18,7 +18,8 @@ class QueryHandlerTest {
         sites.add(new Website("3.com","example3", Arrays.asList("word3", "word4", "word5")));
         Index idx = new InvertedIndexHashMap();
         idx.build(sites);
-        qh = new QueryHandler(idx);
+        Score score = new TFScore();
+        qh = new QueryHandler(idx,score);
     }
 
     @Test

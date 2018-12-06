@@ -118,9 +118,14 @@ public class QueryHandler {
             //instead of the first. the way it is implemented now, it will always compare the first element with itself
             // = waste of computing power
             // do this only if there's more than one word
+
             for (String queriedWord : queriedWords){
                 matches.retainAll(idx.lookup(queriedWord));
             }
+
+/*            for (int i = 1; i < queriedWords.size(); i++){
+                matches.retainAll(idx.lookup(queriedWords.get(i)));
+            }*/
         }
         return matches;
 

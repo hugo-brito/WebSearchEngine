@@ -31,6 +31,7 @@ public class QueryHandler {
      * @param line the query string
      * @return the list of websites that matches the query
      */
+
     public List<Website> getMatchingWebsites(String line) {
         List<String> query = cleanQuery(line);
         // clean the input of any "funky" input, return a list of strings
@@ -152,7 +153,12 @@ public class QueryHandler {
         searches.replaceAll(String::toLowerCase);
         // make everything lower case, because of the way the websites are crawled
 
+//        System.out.println(searches);
         return searches;
     }
 
+//    public static void main(String[] args) {
+//        // a really bad query, just to see how it behaves
+//        cleanQuery(" .  OR ?this ? and?that this!is%something&ORORthese_are_some_wordsOROR OR ORlalal OR OR LALA OR th)at OR something ORme&youOR      else OR   ");
+//    }
 }

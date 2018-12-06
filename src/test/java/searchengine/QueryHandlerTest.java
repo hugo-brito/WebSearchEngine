@@ -41,7 +41,6 @@ class QueryHandlerTest {
         assertEquals(2, qh.getMatchingWebsites("word1 OR word4").size());
         // Corner case: Does code remove duplicates?
         assertEquals(1, qh.getMatchingWebsites("word1 OR word1").size());
-
     }
 
     //     Test for problematic input
@@ -52,6 +51,4 @@ class QueryHandlerTest {
         assertEquals(0, qh.getMatchingWebsites("OR").size());
         assertEquals(1, qh.getMatchingWebsites("       OR word1 OR something funky OR").size());
     }
-
-
 }

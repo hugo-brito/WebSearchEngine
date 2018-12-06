@@ -1,5 +1,6 @@
 package searchengine;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class is responsible for answering queries to our search engine.
@@ -67,13 +68,13 @@ public class QueryHandler {
     public List<Website> rankWebsites(Set<Website> sites, List<String> query) {
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
-        Map<Double, Website> scoredWebsites = new TreeMap<>(Comparator.reverseOrder());
+        //!!!!!!!!!!!!Hash map is faster than treeMap, and therefore there is no good reason to use treeMap,
+        // !!!!if it does not put sites in order. Swithced the key and value around, becasue Website objects are unique
+        // !!!!!!!!and Doubæe objects are not. That is also how it was arranged in Willards code.
+        //!!!!!!! We put Wllards code, when it is time to return sorted scores.
+        Map<Website, Double> scoredWebsites = new HashMap<>();
         // there's a problem here with this Map -- what if 2 websites have the same score (key), treeMap keeps unique keys
 
-        //Willard suggests this piece of code to solve the above problem:
-        //Convert Map<Website, Float> map to List<Website> sorted by value
-//        map.entrySet().stream().sorted((x,y) -> y.getValue().compareTo(x.getValue())).map(
-//                Map.Entry::getKey).collect(Collectors.toList());
 
 //        String[] terms = query.split(" OR ");
         for (Website site : sites) {
@@ -83,7 +84,7 @@ public class QueryHandler {
                 double termScore = 0.0;
                 for (String word : words) {
                     //Score score = new TFScore(); //update here to change what ranking algorithm is used
-                    double tfScore = this.score.getScore(word, site, this.idx);
+                    double tfScore = score.getScore(word, site, this.idx);
                     // the score should be a field, so the query handler constructor takes it in as a parameter
                     termScore += tfScore;
                 }
@@ -91,10 +92,13 @@ public class QueryHandler {
                     siteScore = termScore;
                 }
             }
-            scoredWebsites.put(siteScore, site);
+            scoredWebsites.put(site, siteScore);
         }
-
-        return new ArrayList<>(scoredWebsites.values());
+        //!!!!!Here comes the Willard's code. It uses bruthforce, comparing every two Entry sets(Entry(K,V)) x and y
+        //!!!!they are compared. Than form Map it gets all the keys (which is Website) and returns Websites
+        //!!!!!as a List.
+        return scoredWebsites.entrySet().stream().sorted((x,y) -> y.getValue().compareTo(x.getValue())).map(
+                Map.Entry::getKey).collect(Collectors.toList());
     }
 
     /**
@@ -110,23 +114,31 @@ public class QueryHandler {
         // get the list of words
         // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
 
-        Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
+       Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
         // using an hashset to prevent duplicates
-
         if (queriedWords.size() > 1) {
             //this for each loop should be replace by a while loop where you start from the 2nd element in the list
             //instead of the first. the way it is implemented now, it will always compare the first element with itself
             // = waste of computing power
             // do this only if there's more than one word
-
-            for (String queriedWord : queriedWords){
+            
+            /*for (String queriedWord : queriedWords){
                 matches.retainAll(idx.lookup(queriedWord));
-            }
-
-/*            for (int i = 1; i < queriedWords.size(); i++){
-                matches.retainAll(idx.lookup(queriedWords.get(i)));
             }*/
+           for (int i = 1; i < queriedWords.size(); i++) {
+               matches.retainAll(idx.lookup(queriedWords.get(i)));
+           }
         }
+
+        /*Set<Website> matches = new HashSet<>();
+        for (String queriedWord : queriedWords){
+            List<Website> matchedSites = idx.lookup(queriedWord);
+            //If the matches is empty, than just add all of them (so there is something to work with intersection,
+            //in the next loop).
+            if(matches.size() == 0)
+                matches.addAll(matchedSites);
+            matches.retainAll(matchedSites);
+        }*/
         return matches;
 
 //        In the getMatchingWebsites method, first, decompose the query into its components. For a single word,

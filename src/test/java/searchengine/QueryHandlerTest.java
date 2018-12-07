@@ -28,27 +28,27 @@ class QueryHandlerTest {
         assertEquals(2, qh.getMatchingWebsites("word2").size());
     }
 
+     @Test
+     void testMultipleWords() {
+         assertEquals(1, qh.getMatchingWebsites("word1 word2").size());
+         assertEquals(1, qh.getMatchingWebsites("word3 word4").size());
+         assertEquals(1, qh.getMatchingWebsites("word4 word3 word5").size());
+     }
+
+     @Test
+     void testORQueries() {
+         assertEquals(3, qh.getMatchingWebsites("word2 OR word3").size());
+         assertEquals(2, qh.getMatchingWebsites("word1 OR word4").size());
+         // Corner case: Does code remove duplicates?
+         assertEquals(1, qh.getMatchingWebsites("word1 OR word1").size());
+
+     }
+
+//     Test for problematic input
 //     @Test
-//     void testMultipleWords() {
-//         assertEquals(1, qh.getMatchingWebsites("word1 word2").size());
-//         assertEquals(1, qh.getMatchingWebsites("word3 word4").size());
-//         assertEquals(1, qh.getMatchingWebsites("word4 word3 word5").size());
-//     }
-
-    // @Test
-    // void testORQueries() {
-    //     assertEquals(3, qh.getMatchingWebsites("word2 OR word3").size());
-    //     assertEquals(2, qh.getMatchingWebsites("word1 OR word4").size());
-    //     // Corner case: Does code remove duplicates?
-    //     assertEquals(1, qh.getMatchingWebsites("word1 OR word1").size());
-
-    // }
-
-    // Test for problematic input
-    // @Test
-    // void testCornerCases() {
-
-    //}
+////     void testCornerCases() {
+//
+//    }
 
 
 }

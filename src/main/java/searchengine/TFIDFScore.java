@@ -32,7 +32,7 @@ public class TFIDFScore implements Score{
         // calculating the IDF
         double IDF = IDF(word, index);
         // calculating the TF using the TFScore class
-        double TF = tfScore.getScore(word, site, index);
+        double TF = this.tfScore.getScore(word, site, index);
         //calculating the TFIDF score
         return IDF*TF;
     }

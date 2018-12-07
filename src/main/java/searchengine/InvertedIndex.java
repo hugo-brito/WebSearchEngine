@@ -47,7 +47,7 @@ abstract public class InvertedIndex implements Index {
     public List<Website> lookup(String query) {
         if (map.containsKey(query)) {
             return map.get(query);
-            // added these lines so it returns an empty list when testing (avoinding the null pointer exception)
+            // added these lines so it returns an empty list when testing (avoiding the null pointer exception)
         } else {
             return new ArrayList<>();
         }

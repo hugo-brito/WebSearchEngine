@@ -12,7 +12,7 @@ public class QueryHandler {
      * The index the QueryHandler uses for answering queries.
      */
 
-    private Index idx;
+    private InvertedIndex idx;
     private Score score;
 
     /**
@@ -20,7 +20,7 @@ public class QueryHandler {
      * @param idx The index used by the QueryHandler.
      */
 
-    public QueryHandler(Index idx, Score score) {
+    public QueryHandler(InvertedIndex idx, Score score) {
         this.idx = idx;
         this.score = score;
     }
@@ -58,8 +58,8 @@ public class QueryHandler {
      * The rankWebsites method takes query (which may be in the form "term1 OR term2 OR term3...", where term can have
      * the form "word1 word2 word3" and then calculates a score for each term (the sum of the scores for each word). The
      * score for the website is the maximum of each term score.
-     * @param sites
-     * @param query
+     * @param sites Set of websites
+     * @param query A list of the query, split by or.
      * @return a list of websites, ranked from highest score to lowest score
      */
 
@@ -67,7 +67,7 @@ public class QueryHandler {
     //perhaps it should be a private method then...
     //check for repeated code, I tried take it as much methods and variables from other classes as I could but do not
     //consider it polishec
-    public List<Website> rankWebsites(Set<Website> sites, List<String> query) {
+    private List<Website> rankWebsites(Set<Website> sites, List<String> query) {
 
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
@@ -86,7 +86,7 @@ public class QueryHandler {
                 String[] words = intersectedSearch.split(" ");
                 double termScore = 0.0;
                 for (String word : words) {
-                    //Score score = new TFScore(); //update here to change what ranking algorithm is used
+                    //Score score = new TFScore(); //(changed to field and searchengine)update here to change what ranking algorithm is used
                     double tfScore = score.getScore(word, site, this.idx);
                     // the score should be a field, so the query handler constructor takes it in as a parameter
                     termScore += tfScore;
@@ -150,7 +150,7 @@ public class QueryHandler {
     }
 
     /**
-     * Auxiliary private method to make sure that the input is free from unaccounted of irrelevant input
+     * Auxiliary private method to make sure that the input is free from unaccounted or irrelevant input
      * @param input the input from the query
      * @return returns a list of words to looks for. Every entry of the list consists of a separated intersected query
      */

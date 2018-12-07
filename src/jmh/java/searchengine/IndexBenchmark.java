@@ -53,7 +53,10 @@ public class IndexBenchmark {
         public BenchmarkState(){
             // Executed each time "# Fork: X of 5" appears in the output.
             //Changed to String array
-            List<Website> sites = FileHelper.parseFile(new String[0]); //is this return empty element of the string array?
+
+            List<Website> sites = FileHelper.parseFile(new String[0]);
+            System.out.println(">>>>> WEBSITES READ:" + sites.size());
+
             searchengine = new SearchEngine(sites);
             //To switch index go to Main/Java/SearchEngine/SearchEngine
 

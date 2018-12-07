@@ -22,9 +22,9 @@ public class TFIDFScore implements Score{
 
     /**
      * The getScore method performs the TFIDF score calculation for the given word with the given website.
-     * @param word
-     * @param site
-     * @param index
+     * @param word a word from the search query
+     * @param site the website being scored against the search string
+     * @param index the index of websites
      * @return The TFIDF score for the word on the given website
      */
     @Override
@@ -38,14 +38,15 @@ public class TFIDFScore implements Score{
     }
 
     /**
-     * This method calculates the IDF score for the given word over the collection of websites that contain that word.
-     * @param term
-     * @param index
-     * @return
+     * This method calculates the IDF (inverse document frequency) score for the given word over the collection of
+     * websites that contain that word.
+     * @param word a word from the search query
+     * @param index the index of websites
+     * @return the IDF value for that word over the website collection
      */
-    public double IDF(String term, InvertedIndex index) {
+    public double IDF(String word, InvertedIndex index) {
         // creating a list of websites in which the search term is present
-        List<Website> resultsContainingWord = index.lookup(term);
+        List<Website> resultsContainingWord = index.lookup(word);
         // getting the size of this list
         double numberOfResults = resultsContainingWord.size();
         // as the IDF calculation involves a division and it's possible for the denominator to be zero,
@@ -57,9 +58,18 @@ public class TFIDFScore implements Score{
         return Math.log10(this.websiteCollectionSize/numberOfResults);
     }
 
+    /**
+     * The setWebsiteCollectionSize method uses the search engine index to calculate how many websites in total
+     * there are in the collection
+     * @param index the index of websites
+     */
     private void setWebsiteCollectionSize(InvertedIndex index) {
+        // a new hashset to store the websites in
         Set<Website> siteCollection = new HashSet<>();
+        // getting the keys (words) from the index map
         Set<String> words = index.getIndexMap().keySet();
+        // Looping through the words to get the mapped list of websites and add it to the hashset of websites
+        // hashset removes all duplicates
         for(String word : words) {
             List<Website> sites = index.getIndexMap().get(word);
             siteCollection.addAll(sites);

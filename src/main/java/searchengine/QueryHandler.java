@@ -11,6 +11,7 @@ public class QueryHandler {
     /**
      * The index the QueryHandler uses for answering queries.
      */
+
     private Index idx;
     private Score score;
 
@@ -18,6 +19,7 @@ public class QueryHandler {
      * The constructor
      * @param idx The index used by the QueryHandler.
      */
+
     public QueryHandler(Index idx, Score score) {
         this.idx = idx;
         this.score = score;
@@ -66,6 +68,7 @@ public class QueryHandler {
     //check for repeated code, I tried take it as much methods and variables from other classes as I could but do not
     //consider it polishec
     public List<Website> rankWebsites(Set<Website> sites, List<String> query) {
+
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
         // put the highest score first (descending order)
         //!!!!!!!!!!!!Hash map is faster than treeMap, and therefore there is no good reason to use treeMap,

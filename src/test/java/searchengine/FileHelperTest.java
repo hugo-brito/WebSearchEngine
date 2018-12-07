@@ -2,20 +2,28 @@ package searchengine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FileHelperTest {
 
     @Test
     void parseNoFile() {
-        Assertions.assertThrows(FileNotFoundException.class, () -> {
-            FileHelper.parseFile("wrongfilename.txt");
-        });
+        assertTrue(FileHelper.parseFile("wrongfilename.txt").isEmpty());
+//        Throwable throwable;
+//        throwable = assertThrows(IOException.class, () ->
+//            FileHelper.parseFile("wrongfilename.txt"));
+//
+//        assertAll(
+//                () -> assertEquals("wrongfilename.txt (The system cannot find the file specified)" ,throwable.getMessage()),
+//                () -> assertNull(throwable.getCause())
+//        );
     }
 
     // file is empty

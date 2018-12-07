@@ -16,7 +16,7 @@ public class TFScore implements Score{
      * @param index
      * @return The TF score for the word on the given website
      */
-    public double getScore(String word, Website site, Index index) {
+    public double getScore(String word, Website site, InvertedIndex index) {
         // calculates the term frequency
         double frequency = termFrequency(site, word);
         // the document length will be equal to how many words are stored in the website's word List

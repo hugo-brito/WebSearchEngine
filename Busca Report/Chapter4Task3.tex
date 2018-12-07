@@ -76,46 +76,76 @@ It was also decided that the various permutations of Score classes created would
 Any required logic was to be handled by the QueryHelper class.
 
 \section{Technical Description}
-As per the task description, a generalised {\tt Score} interface was created with only one method: {\tt getScore(String, Website, Index)} which
+As per the task description, a generalised {\tt Score} interface was created with only one method: {\tt getScore} which performs the score calculation for the given word with the given website, taking the following parameters:
 
-%INSERT JAVADOC DESCRIPTION HERE
+\begin{itemize}
+    \item @param word a word from the search query
+    \item @param site the website being scored against the search string
+    \item @param index the index of websites
+\end{itemize}
 
-, and each of the following classes implement this interface.
+and each of the below classes implement this interface.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/diagram-index}
+    \includegraphics[width=\textwidth]{figures/diagram-score}
     \caption{UML Diagram for the Software Architecture of Score data structures.}
     \label{fig:score:uml}
 \end{figure}
 
 \subsection{IFScore class}
 The {\tt TFScore} class was the simplest of the three classes to implement, as shown in Figure \ref{fig:score:uml}.
-Due to the version of the term frequency formula used in this project, there is a helper method to supplement the required {\tt getScore} method.
+Due to the version of the term frequency formula used in this project, there is a helper method to supplement the required {\tt getScore} method, leaving the {\tt getScore} method to only handle the division.
 Due to the changes made to the {\tt FileHelper} class - namely, that no website that lacks a title or words can be created - it's not possible
 for there to be a divide by zero error, so no steps were made in this method to account for it.
 
 \subsection{TFIDFScore class}
-As the TFIDF makes use of the TF calculation, the {\tt TFIDFScore} class was given a field of type {\tt TFScore} with which to call methods on as needed, rather than creating s new object each time it was required.
+As the TFIDF makes use of the TF calculation, the {\tt TFIDFScore} class was given a field of type {\tt TFScore} with which to call methods on as needed, rather than creating a new object each time it was required.
 Again, helper methods were added to deal with the different aspects of the calculation i.e. the IDF and the number of websites in the search engine index.
 The number of websites in the index was built from the index {\tt Map<String, Website>} as below,
 
 \begin{lstlisting}[language=Java]
-    CODE HERE
+    private void setWebsiteCollectionSize(InvertedIndex index) {
+        Set<Website> siteCollection = new HashSet<>();
+        Set<String> words = index.getIndexMap().keySet();
+            for(String word : words) {
+                List<Website> sites = index.getIndexMap().get(word);
+                siteCollection.addAll(sites);
+            }
+        this.websiteCollectionSize = siteCollection.size();
+    }
 \end{lstlisting}
 
 making use of the fact that a HashSet allows no duplicates in order to calculate the number of distinct websites in the index.
+Again, the {\tt getScore method} only handles the multiplication
 
 \subsection{OkapiBM25 class}
 Again, as the Okapi BM25 algorithm makes use of both the TF calculation and the TFIDF calculation, these objects were stored as fields in the {\tt OkapiBM25Score} class as before.
+The optimisation constants and the average document length set as static fields.
+Two helper methods were added: {\tt setAverageDocLength} and {\tt okapiScore}. {\tt setAverageDocLength} calculates the mean number of words per website based on the websites in the index, and {\tt okapiScore} is a recursive method to perform the summation of all the individual scores of all the words in the search query to return to the {\tt getScore} method.
 
+\begin{lstlisting}[language=Java]
+    private double okapiScore(int count, String[] words, Website site, InvertedIndex index) {
+        int docLength = site.getWords().size();
+        if(count != 0) {
+            double IDF = this.tfidfScore.IDF(words[count], index);
+            double termFrequency = this.tfScore.getScore(words[count], site, index);
+            double score = IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
+            return score + okapiScore(count-1, words, site, index);
+        } else {
+            double IDF = this.tfidfScore.IDF(words[0], index);
+            double termFrequency = this.tfScore.getScore(words[0], site, index);
+            return IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
+        }
+    }
+\end{lstlisting}
 
 \section{Testing considerations}
 The correctness of the score calculations were verified using unit tests, which can be found in the ScoreTest.java file.
 The set up comprised of building a small index of websites, which allowed for the score values of various words on various
 websites to be calculated manually and compared to the results of the {\tt getScore} method.
-Each test covered one class.
-TF - word occurs once on website, word occurs more than once on website, word doesn't occur on website
-TFIDF - word occurs on website and only on website, word occurs on website and on others, word doesn't occur on website. SHOULD DO SOME KIND OF ORDERING
+Each test covered one class, and the individual tests were determined using the standard white-box coverage considerations.
+For the tests on the {\tt TFIDFScore} class, a comparison was also included to confirm that a word occurring once on more than one site will have a lower score than a word occurring once on just one site.
+For the tests on the {\tt OkapiBM25Score} class, single word and multi word query tests were constructed.
 
 \section{Reflection}

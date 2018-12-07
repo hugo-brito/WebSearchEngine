@@ -1,4 +1,5 @@
 package searchengine;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +17,12 @@ class QueryHandlerTest {
         sites.add(new Website("1.com","example1", Arrays.asList("word1", "word2")));
         sites.add(new Website("2.com","example2", Arrays.asList("word2", "word3")));
         sites.add(new Website("3.com","example3", Arrays.asList("word3", "word4", "word5")));
+
         InvertedIndex idx = new InvertedIndexHashMap();
+
         idx.build(sites);
-        qh = new QueryHandler(idx);
+        Score score = new TFScore();
+        qh = new QueryHandler(idx, score);
     }
 
     @Test
@@ -50,5 +54,12 @@ class QueryHandlerTest {
 //
 //    }
 
-
+    //     Test for problematic input
+    @Test
+    void testCornerCases() {
+        assertEquals(0, qh.getMatchingWebsites("").size());
+        assertEquals(1, qh.getMatchingWebsites("   OR word1 OR word1").size());
+        assertEquals(0, qh.getMatchingWebsites("OR").size());
+        assertEquals(1, qh.getMatchingWebsites("       OR word1 OR something funky OR").size());
+    }
 }

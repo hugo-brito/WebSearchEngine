@@ -16,6 +16,7 @@ class FileHelperTest {
     @Test
     void parseNoFile() {
         assertTrue(FileHelper.parseFile("wrongfilename.txt").isEmpty());
+        // Can make it read what the thingy says.
 //        Throwable throwable;
 //        throwable = assertThrows(IOException.class, () ->
 //            FileHelper.parseFile("wrongfilename.txt"));

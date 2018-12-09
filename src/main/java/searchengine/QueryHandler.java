@@ -9,15 +9,16 @@ import java.util.stream.Collectors;
 public class QueryHandler {
 
     /**
-     * The index the QueryHandler uses for answering queries.
+     * The index and score the QueryHandler uses for answering queries.
      */
 
     private InvertedIndex idx;
     private Score score;
 
     /**
-     * The constructor
-     * @param idx The index used by the QueryHandler.
+     * The constructor of the queryhandler.
+     * @param idx The index used by the SearchEngine.
+     * @param score The ranking algorithm used for scoring.
      */
 
     public QueryHandler(InvertedIndex idx, Score score) {
@@ -37,10 +38,10 @@ public class QueryHandler {
 
     public List<Website> getMatchingWebsites(String line) {
         List<String> query = cleanQuery(line);
-        // clean the input of any "funky" input, return a list of strings
+        // cleans the input of any "funky" input, return a list of strings
 
         Set<Website> results = new HashSet<>();
-        //an hashset will prevent duplicates
+        //a Hashset will prevent duplicates
 
 //        List<Website> results = new ArrayList<>();
 //        results.addAll(idx.lookup(line));
@@ -59,14 +60,14 @@ public class QueryHandler {
      * the form "word1 word2 word3" and then calculates a score for each term (the sum of the scores for each word). The
      * score for the website is the maximum of each term score.
      * @param sites Set of websites
-     * @param query A list of the query, split by or.
+     * @param query A list of the query, split by OR.
      * @return a list of websites, ranked from highest score to lowest score
      */
 
     //as far as I understand, this is just an extra helper method on the QueryHandler class to order the results.
     //perhaps it should be a private method then...
     //check for repeated code, I tried take it as much methods and variables from other classes as I could but do not
-    //consider it polishec
+    //consider it polished.
     private List<Website> rankWebsites(Set<Website> sites, List<String> query) {
 
         // a TreeMap to so that the keys (the scores) are automatically ordered, using the reverse order comparator to
@@ -86,7 +87,7 @@ public class QueryHandler {
                 String[] words = intersectedSearch.split(" ");
                 double termScore = 0.0;
                 for (String word : words) {
-                    //Score score = new TFScore(); //(changed to field and searchengine)update here to change what ranking algorithm is used
+                    //Score score = new TFScore(); //(changed to field, updated in SearchEngine)update here to change what ranking algorithm is used
                     double tfScore = score.getScore(word, site, this.idx);
                     // the score should be a field, so the query handler constructor takes it in as a parameter
                     termScore += tfScore;
@@ -97,7 +98,7 @@ public class QueryHandler {
             }
             scoredWebsites.put(site, siteScore);
         }
-        //!!!!!Here comes the Willard's code. It uses bruthforce, comparing every two Entry sets(Entry(K,V)) x and y
+        //!!!!!Here comes the Willard's code. It uses bruteforce, comparing every two Entry sets(Entry(K,V)) x and y
         //!!!!they are compared. Than form Map it gets all the keys (which is Website) and returns Websites
         //!!!!!as a List.
         return scoredWebsites.entrySet().stream().sorted((x,y) -> y.getValue().compareTo(x.getValue())).map(
@@ -107,7 +108,7 @@ public class QueryHandler {
     /**
      * Auxiliary private method that returns websites that match simultaneously all the words in the list provided in the parameter.
      * Since it returns a set, it won't have duplicates
-     * @query
+     * @param input the query provided by the client.
      * @return the list of websites that matches the query
      */
     private Set<Website> intersectedSearch(String input){
@@ -118,7 +119,7 @@ public class QueryHandler {
         // line.split would give me an Array to work with. but an arraylist is a lot more convenient.
 
        Set<Website> matches = new HashSet<>(idx.lookup(queriedWords.get(0)));
-        // using an hashset to prevent duplicates
+        // using a hashset to prevent duplicates
         if (queriedWords.size() > 1) {
             //this for each loop should be replace by a while loop where you start from the 2nd element in the list
             //instead of the first. the way it is implemented now, it will always compare the first element with itself

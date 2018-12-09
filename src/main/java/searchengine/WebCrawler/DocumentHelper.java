@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import searchengine.Website;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,8 +52,8 @@ public class DocumentHelper {
                             String headerText = child.toString();
                             String[] wordsInHeader = headerText.split(" ");
                             for (String word : wordsInHeader){
-                                //TODO reqex or string operations on the word to filter out symbols
-                                words.add(word);
+
+                                words.add(cleanWord(word));
                             }
                         }
                     }
@@ -78,5 +79,12 @@ public class DocumentHelper {
         /*Looking for all the a tag elements in the body, a tag is the element that has href*/
         Elements links = bodyElement.getElementsByTag("a");
         return links;
+    }
+    //TODO reqex or string operations on the word to filter out symbols
+    private static String cleanWord(String input){
+        input = input.replaceAll("\\p{Punct}", "");
+        // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character
+
+        return input;
     }
 }

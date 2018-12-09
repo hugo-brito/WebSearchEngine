@@ -42,4 +42,8 @@ public class SimpleIndex implements Index {
                 "sites=" + sites +
                 '}';
     }
+
+    public List<Website> getIndex() {
+        return this.sites;
+    }
 }

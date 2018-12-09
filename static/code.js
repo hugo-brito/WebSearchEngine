@@ -11,8 +11,11 @@ $(document).ready(function() {
             data: {query: $('#searchbox').val()}
         }).success( function (data) {
             console.log("Received response " + data);
+			
             $("#responsesize").html("<p>Your busca for <strong>" + $('#searchbox').val() + "</strong> retrieved <strong>" + data.length + "</strong> results.</p>");
-            var buffer = "<ul>\n";
+            var buffer = "";
+			
+//			if data.length>10
             $.each(data, function(index, value) {
                 buffer += "<a href=\"" + value.url + "\">" + value.title + "</a><br>";
             });

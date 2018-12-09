@@ -6,6 +6,32 @@
 	font-family: "Kodchasan", sans-serif;
 }
 
+a { /* the aspect of links */
+	text-decoration: none;
+}
+
+/* unvisited link */
+a:link {
+	color: aliceblue;
+}
+
+/* visited link */
+a:visited {
+	color: grey;
+}
+
+/* mouse over link */
+a:hover {
+	font-weight: 1000;
+	text-decoration: underline;
+}
+
+/* selected link */
+a:active {
+	color: blue;
+}
+
+
 body {
 	color: white;
     margin-bottom: 10%;
@@ -15,7 +41,7 @@ body {
 input[type="text"] {
     padding: 10px;
     margin: 10px;
-    border: solid 1px #dcdcdc;
+/*    border: solid 1px #dcdcdc;*/
     border-radius: 4px;
     min-width: 200px;
     transition: box-shadow 0.3s, border 0.3s;
@@ -23,25 +49,44 @@ input[type="text"] {
 
 input[type="text"]:focus,
 input[type="text"].focus {
-    border: solid 1px #707070;
+/*    border: solid 1px #707070;*/
     box-shadow: 0 0 5px 1px #969696;
 }
 
 #content {
-	padding-top: 10%;
+	min-width: 75%;
+	margin-top: 10%;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	text-align: center;
 }
 
-#urllist {
-    color: #969696;
-    border: 1px solid #dcdcdc;
-    border-radius: 3px;
+#responsesize { /* informative message about the search */
+	text-align: center;
+	
+}
+
+#urllist { /* the results */
+	border-radius: 75px;
+	align-content: center;
+	margin: auto;
+/*	min-width: 75%;*/
+/*	padding: 20px;*/
+/*    background-color: rgba(0,0,0,0.70);*/
+	max-width: 600px;
+	text-align: center;
+/*    border: 1px solid #dcdcdc;*/
+}
+
+#urllist:link {
+	
 }
 
 
 /* styling the search button */
 #searchbutton {
 	font-size: 1.2em;
+	font-weight: 500;
 	color: aliceblue;
     background-color: rgba(0,0,0,0.70);
     border-radius: 45px;
@@ -52,6 +97,8 @@ input[type="text"].focus {
 
 /* styling the search box */
 #searchbox {
+	color: aliceblue;
+	font-weight: 500;
 	font-size: 1.3em;
 	text-align: center;
 	border-radius: 75px;
@@ -70,7 +117,7 @@ input[type="text"].focus {
 	padding: 0;
 	height: 100%;
 	left: 0px;
-	position: absolute;
+	position: fixed; /* makes the background fixed when scrolling */
 	top: 0px;
 	width: 100%;
 	z-index: -100; /* go in the back */
@@ -103,18 +150,18 @@ imageAnimation {  0% {
 	animation-timing-function: ease-in;
 	opacity: 0;
 }
- 8% {
+	8% {
 	animation-timing-function: ease-out;
 	opacity: 1;
 }
- 17% {
+	17% {
 	opacity: 1
 }
- 25% {
+	25% {
 	opacity: 0
 }
- 100% {
- opacity: 0
+	100% {
+	opacity: 0
 }
 }
 

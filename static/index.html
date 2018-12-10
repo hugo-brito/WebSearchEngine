@@ -15,13 +15,19 @@
 <div id="front">
 	<div id="content">
 		<input id="searchbox" type="text" placeholder="Busca anything..."/><button id="searchbutton">Busca</button>
+		<!--enable enter as a search trigger-->
+		<script>document.getElementById("searchbox").addEventListener("change", myFunction);
+		function myFunction() {
+			document.getElementById("searchbutton").click();
+		}</script>
 	</div>
 
-	<div id="responsesize">
+	<div id="responseSize">
 	</div>
 
-	<div id="urllist">
+	<div id="resultWrapper">
 	</div>
+	
 </div>
 
 <div class="background">

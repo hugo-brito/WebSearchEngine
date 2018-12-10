@@ -23,8 +23,6 @@ class IndexTest {
     @Rule
     private InvertedIndex hashIndex = new InvertedIndexHashMap();
 
-    // What if the word start with a capital letter? Can it tell the difference?
-
     // Use the parseFile to create a method that reads in a lot of words, to test the index. Maybe add that to benchmark. To stresstest.
 
     @Rule
@@ -87,7 +85,13 @@ class IndexTest {
     // checks whether the index has all websites given by fileHelper.
     @Test
     void checkingSimpleIndex() {
-        checkIndex(this.simpleIndex);
+        List<Website> tiny = readFile("data/enwiki-tiny.txt");
+        List<Website> small = readFile("data/enwiki-small.txt");
+        List<Website> medium = readFile("data/enwiki-medium.txt");
+
+        checkIndex(new SimpleIndex(), tiny);
+        checkIndex(new SimpleIndex(), small);
+        checkIndex(new SimpleIndex(), medium);
         this.simpleIndex.build(sites);
         assertIterableEquals(sites, this.simpleIndex.provideIndex());
     }
@@ -95,27 +99,30 @@ class IndexTest {
     // checks whether the index has all websites given by fileHelper.
     @Test
     void checkingHashMapIndex() {
-        checkIndex(this.hashIndex);
+        List<Website> tiny = readFile("data/enwiki-tiny.txt");
+        List<Website> small = readFile("data/enwiki-small.txt");
+        List<Website> medium = readFile("data/enwiki-medium.txt");
+
+        checkIndex(new InvertedIndexHashMap(), tiny);
+        checkIndex(new InvertedIndexHashMap(), small);
+        checkIndex(new InvertedIndexHashMap(), medium);
     }
 
     // checks whether the index has all websites given by fileHelper.
     @Test
     void checkingTreeMapIndex() {
-        checkIndex(this.treeIndex);
+        List<Website> tiny = readFile("data/enwiki-tiny.txt");
+        List<Website> small = readFile("data/enwiki-small.txt");
+        List<Website> medium = readFile("data/enwiki-medium.txt");
+
+        checkIndex(new InvertedIndexTreeMap(), tiny);
+        checkIndex(new InvertedIndexTreeMap(), small);
+        checkIndex(new InvertedIndexTreeMap(), medium);
     }
 
-    private void checkIndex(Index index) {
-        String tinyFile = "data/enwiki-tiny.txt", smallFile = "data/enwiki-small.txt",
-        mediumFile = "data/enwiki-medium.txt";
-
-        index.build(readFile(tinyFile));
-        assertEquals(readFile(tinyFile).size(), index.provideIndex().size());
-        index.clear();
-        index.build(readFile(smallFile));
-        assertEquals(readFile(smallFile).size(), index.provideIndex().size());
-        index.clear();
-        index.build(readFile(mediumFile));
-        assertEquals(readFile(mediumFile).size(), index.provideIndex().size());
+    private void checkIndex(Index index, List<Website> readFile) {
+        index.build(readFile);
+        assertEquals(readFile.size(), index.provideIndex().size());
     }
 
 // Takes all the websites read and adds them to a list, the hash set deletes duplicates.

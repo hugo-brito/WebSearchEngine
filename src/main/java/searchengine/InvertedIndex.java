@@ -82,9 +82,4 @@ abstract public class InvertedIndex implements Index {
         }
         return siteCollection;
     }
-
-    @Override
-    public void clear() {
-        map.clear();
-    }
 }

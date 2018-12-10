@@ -28,6 +28,4 @@ public interface Index {
      * @return a collection of all websites contained by the index.
      */
     Collection<Website> provideIndex();
-
-    void clear();
 }

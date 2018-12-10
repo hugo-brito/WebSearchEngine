@@ -51,9 +51,4 @@ public class SimpleIndex implements Index {
     public List<Website> provideIndex() {
         return this.sites;
     }
-
-    @Override
-    public void clear() {
-        sites.clear();
-    }
 }

@@ -18,7 +18,7 @@ $(document).ready(function() {
 			
 //			if data.length>10
             $.each(data, function(index, value) {
-                buffer += "<a href=\"" + value.url + "\">" + value.title + "</a><br>";
+                buffer += "<p><a href=\"" + value.url + "\">" + value.title + "</a></p>";
             });
             $("#urllist").html(buffer);
         });

@@ -115,6 +115,7 @@ input[type="text"].focus {
 	color: aliceblue;
 	font-weight: 500;
 	font-size: 1.3em;
+	min-width: 200px;
 	text-align: center;
 	border-radius: 75px;
 	background-color: rgba(0,0,0,0.70);
@@ -191,6 +192,7 @@ imageAnimation {  0% {
     right: 0px;
     margin-bottom: 0px;
 	overflow: hidden;
+	padding: 10px;
 }
 
 .footer a {
@@ -206,12 +208,28 @@ imageAnimation {  0% {
 
 #ip2018 {
 	width: 49%;
+	float: left;
+/*
 	display: inline-flex;
     justify-content: flex-start;
+*/
 }
 
 #authors {
 	width: 49%;
+	float: left;
+	text-align: right;
+	position: right;
+/*
 	display: inline-flex;
 	justify-content: flex-end;
+*/
+}
+
+@media screen and (max-width:728px) {
+  #ip2018, #authors {
+	  width:100%; /* The width is 100%, when the viewport is 600px or smaller */
+	  text-align: center;
+	  line-height: 40px;
+  }
 }

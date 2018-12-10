@@ -1,7 +1,5 @@
 package searchengine;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 abstract public class InvertedIndex implements Index {
 
@@ -53,6 +51,10 @@ abstract public class InvertedIndex implements Index {
         }
     }
 
+    /**
+     * Overrides the InvertedIndex to String method, so it becomes something that can be compared.
+     * @return String of the given InvertedIndex.
+     */
     @Override
     public String toString() {
         String returnString = "";
@@ -65,8 +67,24 @@ abstract public class InvertedIndex implements Index {
         return returnString;
     }
 
-    public Map<String, List<Website>> getIndexMap() {
-        return map;
+    /**
+     * Provides all websites in a given InvertedIndex as a set, with no duplicates.
+     * @return a set of all websites contained by the index.
+     */
+    public Set<Website> provideIndex() {
+        // store the websites in
+        Set<Website> siteCollection = new HashSet<>();
+        // the hashset to remove duplicates
+        for(String word : this.map.keySet()) {
+            // Looping through the words to get the mapped list of websites and add it to the hashset of websites
+            List<Website> sites = this.map.get(word);
+            siteCollection.addAll(sites);
+        }
+        return siteCollection;
     }
 
+    @Override
+    public void clear() {
+        map.clear();
+    }
 }

@@ -87,8 +87,9 @@ class IndexTest {
     // checks whether the index has all websites given by fileHelper.
     @Test
     void checkingSimpleIndex() {
-        this.simpleIndex.build(this.sites);
-        assertIterableEquals(sites, this.simpleIndex.getIndex());
+        checkIndex(this.simpleIndex);
+        this.simpleIndex.build(sites);
+        assertIterableEquals(sites, this.simpleIndex.provideIndex());
     }
 
     // checks whether the index has all websites given by fileHelper.
@@ -103,25 +104,27 @@ class IndexTest {
         checkIndex(this.treeIndex);
     }
 
-    private void checkIndex(InvertedIndex index) {
+    private void checkIndex(Index index) {
         String tinyFile = "data/enwiki-tiny.txt", smallFile = "data/enwiki-small.txt",
         mediumFile = "data/enwiki-medium.txt";
 
         index.build(readFile(tinyFile));
-        assertEquals(readFile(tinyFile).size(), mapToList(index).size());
+        assertEquals(readFile(tinyFile).size(), index.provideIndex().size());
+        index.clear();
         index.build(readFile(smallFile));
-        assertEquals(readFile(smallFile).size(), mapToList(index).size());
+        assertEquals(readFile(smallFile).size(), index.provideIndex().size());
+        index.clear();
         index.build(readFile(mediumFile));
-        assertEquals(readFile(mediumFile).size(), mapToList(index).size());
+        assertEquals(readFile(mediumFile).size(), index.provideIndex().size());
     }
 
 // Takes all the websites read and adds them to a list, the hash set deletes duplicates.
-    private List<Website> mapToList(InvertedIndex index) {
-        List<Website> indexSites = index.getIndexMap().values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        return new ArrayList<>(new HashSet<>(indexSites));
-    }
+//    private List<Website> mapToList(InvertedIndex index) {
+//        List<Website> indexSites = index.getIndexMap().values().stream()
+//                .flatMap(Collection::stream)
+//                .collect(Collectors.toList());
+//        return new ArrayList<>(new HashSet<>(indexSites));
+//    }
 
     // takes the file and makes it into a list, only made for readability.
     private List<Website> readFile(String file) {

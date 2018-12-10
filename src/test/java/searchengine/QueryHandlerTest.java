@@ -63,9 +63,4 @@ class QueryHandlerTest {
         assertEquals(0, qh.getMatchingWebsites("OR").size());
         assertEquals(1, qh.getMatchingWebsites("       OR word1 OR something funky OR").size());
     }
-
-    @Test
-    void testSth() {
-
-    }
 }

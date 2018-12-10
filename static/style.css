@@ -1,7 +1,5 @@
 /* CSS Document */
 
-/* background stuff */
-
 * {
 	font-family: "Kodchasan", sans-serif;
 }
@@ -22,76 +20,66 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-	font-weight: 1000;
+	font-weight: 900;
 	text-decoration: underline;
 }
 
 /* selected link */
 a:active {
-	color: blue;
+	color: tomato;
 }
 
 
 body {
 	color: white;
-    margin-bottom: 10%;
+	margin-bottom: 10%;
 	background-color: black;
 }
 
 input[type="text"] {
-    padding: 10px;
+	background-image: url('img/stars.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 10px;
+	padding: 10px;
     margin: 10px;
-/*    border: solid 1px #dcdcdc;*/
     border-radius: 4px;
-    min-width: 200px;
-    transition: box-shadow 0.3s, border 0.3s;
+    width: 20%;
+	-webkit-transition: box-shadow 0.4s, border 0.4s, width 0.4s ease-in-out;
+    transition: box-shadow 0.4s, border 0.4s,  width 0.4s ease-in-out;
 }
 
 input[type="text"]:focus,
 input[type="text"].focus {
-/*    border: solid 1px #707070;*/
+    border: solid 1px #707070;
     box-shadow: 0 0 5px 1px #969696;
+	width: 60%;
 }
 
 #content {
-	min-width: 75%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto; /** these three lines align the content of this div horizontally **/
+	max-width: 75%;
 	margin-top: 10%;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	text-align: center;
 }
 
-#responsesize { /* informative message about the search */
+#responseSize { /* informative message about the search */
 	text-align: center;
-	
 }
-
-#urllist { /* the results */
-	border-radius: 75px;
-	align-content: center;
-	margin: auto;
-/*	min-width: 75%;*/
-/*	padding: 20px;*/
-/*    background-color: rgba(0,0,0,0.70);*/
-	max-width: 600px;
-	text-align: center;
-/*    border: 1px solid #dcdcdc;*/
-}
-
-#urllist:link {
-	
-}
-
 
 /* styling the search button */
 #searchbutton {
 	font-size: 1.2em;
 	font-weight: 500;
 	color: aliceblue;
-    background-color: rgba(0,0,0,0.70);
-    border-radius: 45px;
-    min-width: 90px;
-    min-height: 90px;
+	background-color: rgba(0,0,0,0.70);
+	border-radius: 45px;
+	min-width: 90px;
+	min-height: 90px;
 
 }
 
@@ -100,12 +88,55 @@ input[type="text"].focus {
 	color: aliceblue;
 	font-weight: 500;
 	font-size: 1.3em;
+	min-width: 200px;
 	text-align: center;
 	border-radius: 75px;
-	width: 40%;
 	background-color: rgba(0,0,0,0.70);
 	min-height: 75px;
 }
+
+#resultWrapper {
+	width: 728px;
+	margin: auto;
+}
+
+.result { /* the results */
+	line-height: 1em;
+/*	color: aliceblue;*/
+	background-color: rgba(0,0,0,0.70);
+	border-radius: 10px;
+/*	align-content: center;*/
+	margin: auto; /* centers the div */
+/*	min-width: 75%;*/
+	padding: 10px;
+	max-width: 600px;
+	text-align: center;
+	margin-bottom: 10px;
+/*	border: 1px solid #dcdcdc;*/
+}
+
+.result:hover {
+	background-color: rgba(255,255,255,0.70);
+}
+
+.result:hover a {
+	color: black;
+	text-decoration: none;
+}
+
+.result h1 {
+	font-size: 1.2em;
+}
+
+.result h2 {
+	font-size: 0.7em;
+}
+
+.result h3 {
+	text-align: left;
+	font-size: 1.0em;
+}
+
 
 .background > figure {
 	animation: imageAnimation 50s linear infinite 0s;
@@ -169,7 +200,6 @@ imageAnimation {  0% {
 	color: aliceblue;
 	font-size: 1.2em;
 	font-variant: small-caps;
-	padding: 1%;
 	background-color: rgba(0,0,0,0.70);
     width: 100%;
 	position: fixed;
@@ -177,20 +207,45 @@ imageAnimation {  0% {
     left: 0px;
     right: 0px;
     margin-bottom: 0px;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.footer a {
+	color: aliceblue;
+	padding: 10px;
+	text-decoration: none;
+}
+
+.footer a:hover {
+	background-color: aliceblue;
+	color: black;
 }
 
 #ip2018 {
 	width: 49%;
+	float: left;
+/*
 	display: inline-flex;
     justify-content: flex-start;
+*/
 }
 
 #authors {
 	width: 49%;
+	float: left;
+	text-align: right;
+	position: right;
+/*
 	display: inline-flex;
 	justify-content: flex-end;
+*/
 }
 
-.author {
-	padding-left: 2%;
+@media screen and (max-width:728px) {
+  #ip2018, #authors, #resultWrapper {
+	  width:100%; /* The width is 100%, when the viewport is 600px or smaller */
+	  text-align: center;
+	  line-height: 40px;
+  }
 }

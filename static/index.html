@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+
 <html>
 <head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Busca Anything</title>
 	<link href="https://fonts.googleapis.com/css?family=Kodchasan" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script> <!-- start javascript -->
@@ -12,13 +15,19 @@
 <div id="front">
 	<div id="content">
 		<input id="searchbox" type="text" placeholder="Busca anything..."/><button id="searchbutton">Busca</button>
+		<!--enable enter as a search trigger-->
+		<script>document.getElementById("searchbox").addEventListener("change", myFunction);
+		function myFunction() {
+			document.getElementById("searchbutton").click();
+		}</script>
 	</div>
 
-	<div id="responsesize">
+	<div id="responseSize">
 	</div>
 
-	<div id="urllist">
+	<div id="resultWrapper">
 	</div>
+	
 </div>
 
 <div class="background">
@@ -30,12 +39,8 @@
 </div>
 	
 <footer class="footer">
-	<div id="ip2018">Introductory Programming 2018</div>
-	<div id="authors">Authors:
-		<div class="author"><a href="https://www.linkedin.com/in/ashley-parsons-trew-b172746b/">Ashley</a></div>
-		<div class="author"><a href="https://www.linkedin.com/in/hugo-brito/">Hugo</a></div>
-		<div class="author"><a href="https://www.linkedin.com/in/ieva-kangsepa/">Ieva</a></div>
-		<div class="author"><a href="https://www.linkedin.com/in/jonas-hartmann-andersen/">Jonas</a></div>
+	<div id="ip2018"><a href="https://en.itu.dk/">ITU</a><a href="https://mit.itu.dk/ucs/cb_www/course.sml?course_id=2013742&mode=search&lang=en&print_friendly_p=t&goto=1544434992.000">Introductory Programming</a></div>
+	<div id="authors">Authors: <a href="https://www.linkedin.com/in/ashley-parsons-trew-b172746b/">Ashley</a><a href="https://www.linkedin.com/in/hugo-brito/">Hugo</a><a href="https://www.linkedin.com/in/ieva-kangsepa/">Ieva</a><a href="https://www.linkedin.com/in/jonas-hartmann-andersen/">Jonas</a>
 	</div>
 </footer>
 

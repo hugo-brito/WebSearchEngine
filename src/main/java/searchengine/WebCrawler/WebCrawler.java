@@ -13,11 +13,11 @@ import java.util.List;
  */
 public class WebCrawler {
 
-    WebScraper scaper;
-    List<String> urlsToLookAt;
+    private WebScraper scraper;
+    private List<String> urlsToLookAt;
 
     public WebCrawler() {
-        scaper = new WebScraper();
+        scraper = new WebScraper();
         urlsToLookAt = this.getUrlsToLookAt();
     }
 
@@ -41,10 +41,14 @@ public class WebCrawler {
         HashSet<String> visitedSites =  new HashSet<>();
         for (String url:urlsToLookAt) {
                 try {
+                    //URL is form Java library, it "understands" how urls are composed and can
+                    //fetch you things you want form it.
                 URL linkUrl = new URL(url);
+                //We get both host and path, to compare theese values with new sites later on, to know,
+                    //if we already seen this case. To avoid http and https lookups.
                 String urlValue = linkUrl.getHost() + linkUrl.getPath();
                 visitedSites.add(urlValue);
-                scaper.fetchWebsiteRecursive(url,visitedSites);
+                scraper.fetchWebsiteRecursive(url,visitedSites);
             }
             catch (MalformedURLException e)
             {
@@ -60,6 +64,8 @@ public class WebCrawler {
      */
     private List<String> getUrlsToLookAt(){
         List<String> defaultUrls = new ArrayList<> ();
+        //Urls should not end with "/", because the rest of the logic will remove the "/" if the url ends with it
+        // before putting it into visitedSites.
         defaultUrls.add("https://tv2.dk");
         defaultUrls.add("https://www.dr.dk");
         return defaultUrls;

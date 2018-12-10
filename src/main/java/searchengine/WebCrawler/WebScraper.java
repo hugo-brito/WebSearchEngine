@@ -22,6 +22,8 @@ public class WebScraper {
      * @param url String value of the url address that should be visited
      * @param visitedSites HashSet of already visited url addresses.
      */
+    //visited sites could be exchanged with database tha could be querried in real life, instead of this HashSet
+    //filling up memory.
     public void fetchWebsiteRecursive(String url, HashSet<String> visitedSites){
 
         //Using https://jsoup.org/download
@@ -43,27 +45,28 @@ public class WebScraper {
                /*forEach loop goes through all the elements and looks for the atribute of the href, which is the actual link*/
                for (Element link : links) {
                    /*https://jsoup.org/*/
+                   //now we select url link form links (<a> tag) and .absUrl gives full url.
+                   //this is necessary becaseu some websites writes the whole link in href, some only the path.
                    String linkHref = link.absUrl("href");
 
                    /*We first look for links that contains http*/
-                   String newLink = null;
                    if (linkHref.contains("http")) {
-                       newLink = linkHref;
-                   }
-                   try {
-                       URL linkUrl = new URL(newLink);
-                       String urlValue = linkUrl.getHost();
-                       if (!linkUrl.getPath().isEmpty() && !linkUrl.getPath().equals(("/")))
-                           urlValue += linkUrl.getPath();
+                       try {
+                           URL linkUrl = new URL(linkHref);
+                           String urlValue = linkUrl.getHost();
+                           //We only want to add path to the urlValue if the path is not empty and not equal to "/"
+                           if (!linkUrl.getPath().isEmpty() && !linkUrl.getPath().equals(("/")))
+                               urlValue += linkUrl.getPath();
 
-                       if (urlValue != null && visitedSites.contains(urlValue) == false ) {
-                           Thread.sleep(30000);
-                           visitedSites.add(urlValue);
-                           fetchWebsiteRecursive(newLink, visitedSites);
+                           if (urlValue != null && visitedSites.contains(urlValue) == false) {
+                               Thread.sleep(30000);
+                               visitedSites.add(urlValue);
+                               fetchWebsiteRecursive(linkHref, visitedSites);
+                           }
+
+                       } catch (Exception e) {
+                           return;
                        }
-
-                   } catch (Exception e) {
-                       return;
                    }
 
 
@@ -89,6 +92,7 @@ public class WebScraper {
 
 
         //https://stackoverflow.com/questions/1625234/how-to-append-text-to-an-existing-file-in-java
+        //"true" means that I am appending the file, not overwrite it.
         try(FileWriter fw = new FileWriter("data//real_data_file.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))

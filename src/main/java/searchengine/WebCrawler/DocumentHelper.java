@@ -22,7 +22,7 @@ public class DocumentHelper {
      * Website object will get this url.
      * @param doc A org.jsoup.nodes.Document object that has parsed in the DOCTYPE html file from the given URL
      * @param url URL of the site where the DOCTYPE html file was loaded from.
-     * @return A Website object that has the first title and words found in the DOCTYPE html file
+     * @return A Website object that has the title and words found in the DOCTYPE html file
      */
     public static Website extractWebsiteFromDoc(Document doc, String url){
         /*Retreived head tag element of the document, where the title should be contained. */
@@ -43,16 +43,22 @@ public class DocumentHelper {
             /*For each header split it's text into list of words, by splitting by space between them.*/
             List<String> words = new ArrayList<>();
             for (Element header : allHeaderElements) {
+                //We want childNodes, becasue we found out that childNodes are the ones we are interested in.
+                //If it is only .hasText, than text that belongs to the <a> tag (html link), also will be taken with.
+                // <a> tag text normally would contain information abut the webpage the link is leading to,
+                // and not the webpage we are currenlty looking at. We are going to use a tag later on, when we move
+                //to the next link on the web site.
                 if(header.hasText() && header.childNodeSize() > 0){
                     for (Node child: header.childNodes()) {
                         //there could be multiple nodes in a header,
                         // but we only want the words from the TextNode child.
                         // Should only be one direct child which is a TextNode
+
+                        // TextNode is the plain text in the <h?> tag. <a> tag or anything else, would be something else
                         if(child.getClass() == TextNode.class){
                             String headerText = child.toString();
                             String[] wordsInHeader = headerText.split(" ");
                             for (String word : wordsInHeader){
-
                                 words.add(cleanWord(word));
                             }
                         }
@@ -61,7 +67,8 @@ public class DocumentHelper {
                 }
 
             }
-            /*Used url title and list of words to create the Website object*/
+            //Ashley's code is already checking if websites have any words. We want to save website,
+            //becasue it could contain url we want to check later.
             Website site = new Website(url, title, words);
             return site;
         }
@@ -80,7 +87,6 @@ public class DocumentHelper {
         Elements links = bodyElement.getElementsByTag("a");
         return links;
     }
-    //TODO reqex or string operations on the word to filter out symbols
     private static String cleanWord(String input){
         input = input.replaceAll("\\p{Punct}", "");
         // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character

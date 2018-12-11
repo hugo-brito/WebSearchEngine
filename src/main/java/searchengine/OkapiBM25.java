@@ -1,5 +1,6 @@
 package searchengine;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class OkapiBM25 implements Score {
     private static double K_1 = 1.2;
     private static double B = 0.75;
 
-    public OkapiBM25(InvertedIndex index) {
+    public OkapiBM25(Index index) {
         setAverageDocLength(index);
         this.tfidfScore = new TFIDFScore(index);
         this.tfScore = new TFScore();
@@ -40,7 +41,7 @@ public class OkapiBM25 implements Score {
      * @return The relevance score for the query string one a specified website.
      */
     @Override
-    public double getScore(String query, Website site, InvertedIndex index) {
+    public double getScore(String query, Website site, Index index) {
         // since this algorithm works for one or more words in the search string, need to split the string first to get
         // the individual words
         String[] words = query.split(" ");
@@ -56,14 +57,9 @@ public class OkapiBM25 implements Score {
      * per website to assign it to the static variable AVERAGE_DOC_LENGTH.
      * @param index the database of websites
      */
-    private void setAverageDocLength(InvertedIndex index) {
-        Set<Website> siteCollection = new HashSet<>();
-        for(String word : index.getIndexMap().keySet()) {
-            // add all websites mapped to the word key to a list and then add that list to
-            // the hashset to remove duplicates
-            List<Website> sites = index.getIndexMap().get(word);
-            siteCollection.addAll(sites);
-        }
+    private void setAverageDocLength(Index index) {
+        // returns all the websites of a given index.
+        Collection<Website> siteCollection = index.provideIndex();
         double totalWords = 0;
         for(Website site : siteCollection) {
             totalWords+= site.getWords().size();
@@ -81,7 +77,7 @@ public class OkapiBM25 implements Score {
      * @param index the database of websites
      * @return the website score based on the Okapi BM 25 calculation
      */
-    private double okapiScore(int count, String[] words, Website site, InvertedIndex index) {
+    private double okapiScore(int count, String[] words, Website site, Index index) {
         // the numbers of words on the website
         int docLength = site.getWords().size();
         // the recursive part of the method. if the count is 1 then just calculate the score for the one word making up

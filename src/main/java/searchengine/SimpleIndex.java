@@ -42,4 +42,13 @@ public class SimpleIndex implements Index {
                 "sites=" + sites +
                 '}';
     }
+
+    /**
+     * Provides all websites in a the SimpleIndex as a list.
+     * @return a list of all websites contained by the index.
+     */
+    @Override
+    public List<Website> provideIndex() {
+        return this.sites;
+    }
 }

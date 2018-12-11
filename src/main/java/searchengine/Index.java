@@ -1,4 +1,5 @@
 package searchengine;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -20,6 +21,11 @@ public interface Index {
      * @param query The query
      * @return the list of websites that contains the query word.
      */
-
     List<Website> lookup(String query);
+
+    /**
+     * Provides all websites in a given Index as a collection.
+     * @return a collection of all websites contained by the index.
+     */
+    Collection<Website> provideIndex();
 }

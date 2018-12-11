@@ -39,7 +39,5 @@
 \contentsline {section}{\numberline {4.1}Section 5.1}{27}{section.4.1}
 \contentsline {section}{\numberline {4.2}Section 5.2}{27}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Subsection 5.2.1}{27}{subsection.4.2.1}
-\contentsline {chapter}{\numberline {5}Chapter 6 Conclusion}{29}{chapter.5}
-\contentsline {section}{\numberline {5.1}Section 6}{29}{section.5.1}
-\contentsline {chapter}{\numberline {A}Test Figure reference}{31}{appendix.A}
-\contentsline {chapter}{\numberline {B}Tables}{33}{appendix.B}
+\contentsline {chapter}{\numberline {A}Test Figure reference}{29}{appendix.A}
+\contentsline {chapter}{\numberline {B}Tables}{31}{appendix.B}

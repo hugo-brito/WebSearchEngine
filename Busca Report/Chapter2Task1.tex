@@ -23,7 +23,18 @@ The {\tt Index} was generalized into an interface as to make it easy to test the
 
 The {\tt InvertedIndices} were then implemented using inheritance, since both the {\tt InvertedIndexHashMap} and {\tt InvertedIndexTreeMap} can be given exactly the same methods with the only things that differ are the data structure.
 
+\newpage
+
 \section{Technical Description}
+In accordance with the task description, a generalised {\tt Index} interface was created. Each of the classes below implements this interface, visualized in \ref{fig:Index:uml}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Diagram_InvertedIndices}
+    \caption{UML Diagram for the Software Architecture of Index data structures.}
+    \label{fig:Index:uml}
+\end{figure}
+
 \subsection{FileHelper}
 As part of the set up of this task, the {\tt FileHelper} class - specifically the \\ {\tt parseFile(String filename)} method – was updated such that from the database file, only websites that have a url, title, and at least one word of webpage content are read-in and stored in the server.
 This was accomplished by an {\tt if} statements to check the assignments of the url and title fields prior to adding a {\tt new Website} object to the {\tt ArrayList<Website>}. However, the meat of the changes made to this method were to how the method recognised the content of each line scanned in in order to know how to treat it.

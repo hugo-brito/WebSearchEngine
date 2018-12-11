@@ -195,11 +195,19 @@ where data/test-file1.txt is an empty file, and the rest contained the following
 As you can see from the Actual Output column of \ref{FH:result}, the updated code failed test B3, highlighting a weakness in the code, and subsequently had to be debugged. Including another IF statement after the while loop resolved the issue, and following that all tests were passed.
 
 \subsubsection{Index tests}
+The correctness of the {\tt build} and {\tt lookUp} method were verified using unit tests (JUnit 5), which can be found in the {\tt IndexTest} file.
+When setting up the test, a small {\tt List<Website>} was created which made it easier to predict the expected results of the methods. Each test
+checks all of the indices using the white-box coverage considerations. The {\tt SimpleIndex} were more used as a reference to the others, and the
+tests as it should be able to pass all test, due its simple nature.
 
+The {\tt build} method was verified by creating a {\tt String} of what was expected the index should contain and then calling the {\tt toString} on
+the index.
 
+The {\tt lookUp} method was tested by providing it with words and then checking the size of the list returned against the expected size of that list.
 
-
-
+Lastly, a test of checking whether the websites contained in the Index is the same as the websites read by the {\tt FileHelper} class was done.
+This was performed on the tiny, small and medium files and was meant to see whether the behaviour of the index would stay the same when the
+database size changed.
 
 %How to reference surce\footnotemark. 
 %\footnotetext{Oracle \url{https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html}} 

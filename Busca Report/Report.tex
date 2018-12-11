@@ -53,12 +53,14 @@ captionpos=b
 %input{PhDMacros}                                   %Thesis specific macros
 %
 \usepackage{float}
+\usepackage{rotating}
+\usepackage{natbib}
 %==================================================================================================
 % THESIS PROPERTIES (Modifiy these fields with your details)
 %==================================================================================================
 \def\thesisauthor{Group: ip18groupR}         %Author
 \def\thesistitle{Project: Search Engine}               %Title
-\def\thesishandin{December 14, 2018}                       %Submission date (Day-Month}ng 
+\def\thesishandin{December 14, 2018}                       %Submission date (Day-Month}ng
 \def\thesisdegree{Master of Science in Software Development}                              %Degree ('B.Eng', 'B.Sc.', 'M.Sc.' or 'PhD')
 \def\thesisyear{2018}                               %Submission year
 \def\thesisnumber{}                             %Serial number (do not include year)
@@ -76,57 +78,57 @@ captionpos=b
 % THESIS STRUCTURE  (Modifiy to include more chapters etc)
 %==================================================================================================
 \begin{document}
-%------------------------
-%Pre-frontmatter material
-%------------------------
-\prefrontmatter
-%--------------------
-%Frontmatter material
-%--------------------
-%\frontmatter
-%\pagenumbering{roman}                               %Set frontmatter numbering style
-%\input{SummaryUK}                                   %English summary of Thesis
-%\markboth{}{}                                       %Set headings (left)(right)
-%\input{SummaryDK}                                   %Danish summary of Thesis
-%\markboth{}{}                                       %Set headings (left)(right)
-%\input{Preface}                                     %Preface
-%\markboth{}{}                                       %Set headings (left)(right)
-%\input{Acknowledgements}                            %Acknowledgements
-%\markboth{}{}                                       %Set headings (left)(right)
-%------------------
-% Table of contents
-%------------------
-\newpage\mbox{}\newpage
-\chaptermark{Contents}
-\pdfbookmark{\contentsname}{toc}
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\sectionmark{Contents}
-\addtolength{\parskip}{-\baselineskip}
-\tableofcontents
-\addtolength{\parskip}{\baselineskip}
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
-%-------------
-% Main content
-%-------------
-\mainmatter
-\include{Introduction}
-\include{Task1}
-\include{Task2}
-\include{Task3}
-\include{Extensions}
-\include{Conclusion}
-\appendix                             
-\include{AppendixFiguretest}
-\include{AppendixTable}
-%-----------
-% Backmatter used for Bibliography
-%-----------
-\backmatter
-\chaptermark{Bibliography}
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\sectionmark{Bibliography}
-\addcontentsline{toc}{chapter}{Bibliography}        %Force addition of Bibliography to TOC
-\bibliographystyle{alpha}                           %Use alpha codes for references
-\bibliography{reference}                           %Bibliography file called
+    %------------------------
+    %Pre-frontmatter material
+    %------------------------
+    \prefrontmatter
+    %--------------------
+    %Frontmatter material
+    %--------------------
+    %\frontmatter
+    %\pagenumbering{roman}                               %Set frontmatter numbering style
+    %\input{SummaryUK}                                   %English summary of Thesis
+    %\markboth{}{}                                       %Set headings (left)(right)
+    %\input{SummaryDK}                                   %Danish summary of Thesis
+    %\markboth{}{}                                       %Set headings (left)(right)
+    %\input{Preface}                                     %Preface
+    %\markboth{}{}                                       %Set headings (left)(right)
+    %\input{Acknowledgements}                            %Acknowledgements
+    %\markboth{}{}                                       %Set headings (left)(right)
+    %------------------
+    % Table of contents
+    %------------------
+    \newpage\mbox{}\newpage
+    \chaptermark{Contents}
+    \pdfbookmark{\contentsname}{toc}
+    \renewcommand{\sectionmark}[1]{\markright{#1}}
+    \sectionmark{Contents}
+    \addtolength{\parskip}{-\baselineskip}
+    \tableofcontents
+    \addtolength{\parskip}{\baselineskip}
+    \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+    %-------------
+    % Main content
+    %-------------
+    \mainmatter
+    \include{Introduction}
+    \include{Task1}
+    \include{Task2}
+    \include{Task3}
+    \include{Extensions}
+    \include{Conclusion}
+    \appendix
+    \include{AppendixFiguretest}
+    \include{AppendixTable}
+    %-----------
+    % Backmatter used for Bibliography
+    %-----------
+    \backmatter
+    \chaptermark{Bibliography}
+    \renewcommand{\sectionmark}[1]{\markright{#1}}
+    \sectionmark{Bibliography}
+    \addcontentsline{toc}{chapter}{Bibliography}        %Force addition of Bibliography to TOC
+    \bibliographystyle{apalike}                           %Use alpha codes for references
+    \bibliography{reference}                           %Bibliography file called
 \end{document}
 % % % EOF % % %

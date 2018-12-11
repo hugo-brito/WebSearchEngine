@@ -14,8 +14,8 @@ $(document).ready(function() {
 
             if ($("#searchbox").val() === "") { // empty query
                 $("#responseSize").html("<h4>Please type something to busca for.</h4>");
+                
             } else {
-
                 if (data.length === 0) {
                     $("#responseSize").html("<h4>Your busca for <strong>" + $('#searchbox').val() + "</strong> did not retrieve any results.</h4>"); // no results
                 } else {

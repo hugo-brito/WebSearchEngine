@@ -12,7 +12,7 @@ public class QueryHandler {
      * The index and score the QueryHandler uses for answering queries.
      */
 
-    private InvertedIndex idx;
+    private Index idx;
     private Score score;
 
     /**
@@ -21,7 +21,7 @@ public class QueryHandler {
      * @param score The ranking algorithm used for scoring.
      */
 
-    public QueryHandler(InvertedIndex idx, Score score) {
+    public QueryHandler(Index idx, Score score) {
         this.idx = idx;
         this.score = score;
     }
@@ -74,7 +74,7 @@ public class QueryHandler {
         // put the highest score first (descending order)
         //!!!!!!!!!!!!Hash map is faster than treeMap, and therefore there is no good reason to use treeMap,
         // !!!!if it does not put sites in order. Swithced the key and value around, becasue Website objects are unique
-        // !!!!!!!!and Doubæe objects are not. That is also how it was arranged in Willards code.
+        // !!!!!!!!and Doubæe objects are not. That is also how it was arranged in Willard's code.
         //!!!!!!! We put Wllards code, when it is time to return sorted scores.
         Map<Website, Double> scoredWebsites = new HashMap<>();
         // there's a problem here with this Map -- what if 2 websites have the same score (key), treeMap keeps unique keys

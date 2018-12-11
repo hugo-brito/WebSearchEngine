@@ -21,7 +21,7 @@ public class SearchEngine {
      * @param sites the list of websites
      */
     public SearchEngine(List<Website> sites) {
-        InvertedIndex idx = new InvertedIndexHashMap();//Change to InvertedHashMap or TreeMap
+        Index idx = new InvertedIndexHashMap();//Change to preferred Index
         idx.build(sites);
         Score score= new TFScore();//Change to the score you want to use
         queryHandler = new QueryHandler(idx,score);

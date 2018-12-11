@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 //			if data.length>10
                 $.each(data, function (index, value) {
-                    buffer += "<div class='result'><a href=\'" + value.url + "'><h1>" + value.title + "</h1><h2>" + value.url + "</h2><h3>";
+                    buffer += "<div class='result'><a href=\'" + value.url + "' target=\"_blank\"><h1>" + value.title + "</h1><h2>" + value.url + "</h2><h3>";
                     var element = 0;
                     var limit = 15;
                     $.each(value.words, function (index, val) {

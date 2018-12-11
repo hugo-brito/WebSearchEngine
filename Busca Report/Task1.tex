@@ -93,106 +93,15 @@ HashMap seams to be better fit than a TreeMap for Search Engine solution, becaus
 After the above changes were implemented, development tests were written in order determine the viability of the code and whether the changes satisfied the requirements of the task. To that end, JUnit tests were devised for each class that was updated.
 
 \subsubsection{FileHelper tests}
+White-box tests were developed around the branching statements in the updated method, and a coverage table was produced,
+please refer to Appendix \ref{tab:Coverage}. From this coverage table the  \ref{tab:Expectancy} was produced. The data
+set data/test-file1.txt is an empty file, and the rest contained the data shown in \ref{tab:DataFiles}. This proccess
+using the Coverage and Expectancy table shown in Appendix \ref{app:table}, is an example of how we construct our tests.
 
-White-box tests were developed around the branching statements in the updated method, and a coverage table was produced.
-
-\begin{table}[!h]
-    \caption{Coverage table of the parseFile(String filename) method}
-    \begin{tabular}{|l|p{100pt}|l|}
-        \hline
-        \textbf{Choice} & \textbf{Input property} & \textbf{Input data set} \\ \hline
-        1 catch & incorrect file name & A \\ \hline
-        1 try & file name & B \\ \hline
-        2 while: zero times & empty file & B1 \\ \hline
-        2 while: once & file has one line & B2 \\ \hline
-        2 while: more than once & file has two lines & B3 \\ \hline
-        2 while: more than once & file has at least three lines & B4 \\ \hline
-        3 true & the line contains a web url & B3, B4 \\ \hline
-        3 false & the line does not contain a web url & B1, B2 \\ \hline
-        4 true & either the listOfWords field or the title field is null & B3, B4 \\ \hline
-        4 false & both the listOfWords and the title fields are not null & B4 \\ \hline
-        5 true & the url field is not null & B4 \\ \hline
-        5 false & the url field is null & B3, B4 \\ \hline
-        6 true & the line contains a website title & B3, B4 \\ \hline
-        6 false & the line doesn't contain a website title & B2 \\ \hline
-        7 true & listOfWords is null & B2, B4 \\ \hline
-        7 false & listOfWords is not null & B4 \\ \hline
-    \end{tabular}
-\end{table}
-
-From the coverage table an expectancy table was produced.
-
-\begin{table}[!h]
-    \caption{Expectancy table of the JUnit tests}
-    \begin{tabular}{|l|p{85pt}|p{100pt}|p{100pt}|}
-        \hline
-        \textbf{Input data set} & \textbf{Input data} & \textbf{Expected output} & \textbf{Actual output} \\ \hline
-        A & "wrongfilename.txt" & Exception & FileNotFoundException \\ \hline
-        B1 & "data/test-file1.txt" & returns an ArrayList<website>, size() == 0 & returns an ArrayList<website>, size() == 0 \\ \hline
-        B2 & "data/test-file2.txt" & returns an ArrayList<website>, size() == 0 & returns an ArrayList<website>, size() == 0 \\ \hline
-        B3 & "data/test-file3.txt" & returns an ArrayList<website>, size() == 0 & returns an ArrayList<website>, size() == 1 \\ \hline
-        B4 & "data/test-file-errors.txt" & returns an ArrayList<website>, size() == 2 & returns an ArrayList<website>, size() == 2 \\ \hline
-        B4 & "data/test-file4.txt" & returns an ArrayList<website>, size() == 2 & returns an ArrayList<website>, size() == 2 \\ \hline
-    \end{tabular}
-    \label{FH:resuts}
-\end{table}
-
-where data/test-file1.txt is an empty file, and the rest contained the following data:
-
-\begin{table}[!h]
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-        \begin{minipage}[c]{0.12\columnwidth}
-            \textbf{data/test\\-file2.txt} \\
-        \end{minipage} &
-        \begin{minipage}[c]{0.24\columnwidth}
-            \textbf{data/test-file3.txt} \\
-        \end{minipage} &
-        \begin{minipage}[c]{0.32\columnwidth}
-            \textbf{data/test-file4.txt} \\
-        \end{minipage} &
-        \begin{minipage}[c]{0.35\columnwidth}
-            \textbf{data/test-file-errors.txt} \\
-        \end{minipage} \tabularnewline \hline
-
-        \begin{minipage}[t]{0.12\columnwidth}%
-            word3 %
-        \end{minipage} &
-        \begin{minipage}[t]{0.24\columnwidth}%
-            http://example.com \\
-            Title1%
-        \end{minipage} &
-        \begin{minipage}[t]{0.32\columnwidth}%
-            *PAGE:http://page1.com \\
-            Title1 \\
-            word1 \\
-            word2 \\
-            *PAGE:http://page2.com \\
-            Title2 \\
-            word1 \\
-            word3 %
-        \end{minipage} &
-        \begin{minipage}[t]{0.35\columnwidth}%
-            word1 \\
-            word2 \\
-            *PAGE:http://page1.com \\
-            Title1 \\
-            word1 \\
-            word2 \\
-            *PAGE:http://wrong1.com \\
-            Title1 \\
-            *PAGE:http://wrong2.com \\
-            *PAGE:http://wrong3.com \\
-            Titleword1 Titleword2 \\
-            *PAGE:http://page2.com \\
-            Title2 \\
-            word1 \\
-            word3 \\%
-        \end{minipage} \tabularnewline \hline
-    \end{tabular}
-\end{table}
-
-JUnit tests were then produced from table \ref{FH:result}, as found in FileHelperTest.java. Correctness was verfied along two axes: the size of the {\tt List<Website>} returned, and the specific contents of the {\tt List}. As you can see from the Actual Output column of \ref{FH:result}, the updated code failed test B3, highlighting a weakness in the code, and subsequently had to be debugged. Including another IF statement after the while loop resolved the issue, and following that all tests were passed.
+JUnit tests were then produced from table \ref{tab:Expectancy}, as found in FileHelperTest.java. Correctness was verfied along two axes: the size of
+the {\tt List<Website>} returned, and the specific contents of the {\tt List}. As you can see from the Actual Output column of \ref{tab:Expectancy},
+the updated code failed test B3, highlighting a weakness in the code, and subsequently had to be debugged. Including another IF statement after
+the while loop resolved the issue, and following that all tests were passed.
 
 \subsubsection{Index tests}
 The correctness of the {\tt build} and {\tt lookUp} method were verified using unit tests (JUnit 5), which can be found in the {\tt IndexTest} file.

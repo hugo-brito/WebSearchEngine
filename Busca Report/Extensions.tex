@@ -41,10 +41,44 @@ Text \\
 
 
 
-\section{Section 5.2}
-Text\\
+\section{Improve the Client GUI} % Change the client code such that the result of searches are displayed in a nicer way.
 
+We were given the possibility to improve the front-end of the search challenge as an added task. The client side of our product consists of a set of files that dictate, among other things, the aspect of the page, implements the pieces and bits of code that will ultimately allows the user communicate with the server and perform the searches; and arranges the results of the queries in a more user-friendly fashion.\newline
+The files containing the code that concerns the front-end of the search engine can be found in the folder static. Here follows each of the files' description:
+\begin{itemize}
+    \item index.html — This is the first file the browser reads upon accessing the root of a website hosted in any given domain. Hence it holds what other files to read also (such as the styling sheet), provides written unformatted text which will be displayed on the browser, which may also includes links to other webpages.
+    \item style.css — It is possible to style a given webpage from a given html file, but it is best practice to do in on a separate file (such as the present one). Should one build a website with several pages (which for each a separate html file is necessary), styling can become cumbersome and even result in styling inconsistencies. So this file provides a styling guide that can be used for several different pages providing consistency among all of them, and for this is only necessary to add the line of code that points to such file in the html.
+    \item code.js — It holds the javascript code that allows for changes in the html (or even style), which will result in changes on what the user sees. Our javascript code was responsible for receiving the search term(s), sending them to the server, receiving the results of the given search, and translating them into html.
+    \item Image files in static/img/ — Some images needed to provide the website with the desired aspect.
+\end{itemize}
+The basic implementation of the client GUI allowed the very basic functionality of performing a search. So the accomplished tasks in this regard will be described in the following subsections.
 
+\subsection{Adding content to be displayed by the html}
+A wireframe of a preliminary graphic design of the website can be found in the appendix. Several aspects of the GUI were changed to improve the user's experience. We included a footer with links to ITU's website, the course page, as well as our LinkedIn profiles. Overall names of the classes and id's to be used in the styling sheet were also changed to achieve the intended design. Code was also added to include background images.
+Additionally, it seemed intuitive to allow the enter key to trigger a search, so such feature was implemented by including a small script in the html file.
+
+\subsection{Styling}
+All the aspect of the website was described in the style.css file. In here, virtually everything was changed, namely:
+\begin{itemize}
+    \item Centering the content of the webpace;
+    \item The aspect of every given class, id, link, as well as behaviour of certain elements when, for example, the user hovers the mouse over that specific element;
+    \item Providing responsiveness no the website (adjusting the aspect of the content depending on the size of the viewport;
+    \item Behaviour of the background images, where they would display as crossfaded slide show;
+    \item Behaviour of the searchbar, where it would change its size by clicking on it.
+\end{itemize}
+
+\subsection{Adding functionality through javascript}
+Changes in the javascript code, which can be found in the static/code.js, where made in order to allow for:
+\begin{itemize}
+    \item Provide a different answer depending on the given different queries. The cases we accounted for were the following:
+    \begin{itemize}
+        \item No query was provided;
+        \item The query did not provide any result;
+        \item The query provided a certain number of results;
+    \end{itemize}
+    \item Besides the title and the URL, the results are also accompanied by a certain number word from the given website.
+    \item Clicking on a result will open it on a new tab (instead of the current tab).
+\end{itemize}
 
 
 \subsection{Subsection 5.2.1}

@@ -65,8 +65,8 @@ As the description in the Basic Approach states, this method uses two auxiliary 
 This method enforces consistency in the input to be later on used to search for results.
 The first steps of the process consist of:
 \begin{itemize}
-\item Replacing all the punctuation characters by spaces
-\item Replacing every one or more space characters by a single space character
+    \item Replacing all the punctuation characters by spaces
+    \item Replacing every one or more space characters by a single space character
 \end{itemize}
 The above mentioned steps are achieved by making use of the {\tt String} method {\tt replaceAll}.
 %\begin{lstlisting}[language=Java]
@@ -91,6 +91,35 @@ To this end, the {\tt Set} method {\tt retainAll} was utilised.
 All the results from each of the different intersected searches performed by the {\tt getMatchingWebsites} method are added to a {\tt HashSet<Website>} (again, to avoid any duplication of websites), which is then passed to the {\tt rankWebsites} method and returned as a {\tt List<Website>}. The details of the {\tt rankWebsites} method will be discussed in more depth in the next chapter.
 
 \section{Testing considerations} % Description of considerations for testing the correctness of our solution.
+Upon testing for correctness, we split the test cases in two main groups: one that tests basic functionality, and a second one that tests for bad user behaviour.
+\begin{itemize}
+    \item Testing for the basic functionality:
+        \begin{itemize}
+            \item One word
+            \item One or more words separated by spaces;
+            \item Two words with the ``{\tt OR}'' keyword in between;
+            \item Groups of words separated by the ``{\tt OR}'' and by spaces;
+        \end{itemize}
+    \item Testing for bad user behaviour, where the query:
+    \begin{itemize}
+        \item Is empty;
+        \item Starts with white space followed by the ``{\tt OR}'' keyword;
+        \item Repeats the words separated by the ``{\tt OR}'' keyword;
+        \item Consists of solely the ``{\tt OR}'' keyword;
+        \item Starts with the ``{\tt OR}'' keyword followed groups of words separated by spaces;
+        \item Starts with white space followed by the ``{\tt OR}'' keyword followed groups of words separated by the ``{\tt OR}'' and by spaces and ends with ``{\tt OR}'' ;
+        \item Consists of only white space;
+        \item Starts with punctuation and white space and is followed by a group of words separated by spaces;
+        \item Consists of several ``{\tt OR}'' keywords separated by spaces, followed by a group of words separated by spaces and ends with several ``{\tt OR}'' keywords separated by spaces;
+        \item Consists of several words separated by the ``{\tt OR}'' keyword where there is more that one ``{\tt OR}'' occurrence between words;
+        \item Contains only upper case characters;
+        \item Contains no spaces but a word surrounded by several ``{\tt OR}'' keywords;
+        \item Contains an upper case word next to an ``{\tt OR}'' keyword with no spaces in between, followed by another ``{\tt OR}'' keyword and a word.
+        \item Lastly, we considered the worst case scenario where a query contained many of the above-mentioned cases and also for when there was punctuation between words.
+    \end{itemize}
+\end{itemize}
 
 \section{Reflection} % Benchmarking results for experiments that allowed us choose the best data structure for the search engine.
 Sets used to avoid duplication of results, regexs used to parse the input string quickly, arraylists over arrays for flexibility,
+
+

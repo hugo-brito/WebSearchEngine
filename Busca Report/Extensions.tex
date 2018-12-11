@@ -1,7 +1,41 @@
-\chapter{Chapter 5 Extensions}
+\chapter{Extensions}
 
 
-\section{Section 5.1}
+\section{Okapi BM25}
+
+\subsection{Okapi BM25} (Basic Approach)
+The Okapi BM25 algorithm is a more sophisticated type of TFIDF ranking algorithm.
+It's a summation over all words that make up the search term, making use of the TF calculation as well as the IDF calculation, with optimisation variables too.
+The version of the formula used in this project is:
+
+\begin{align*}
+    okapi BM 25 score = \sum_{i=1}^n IDF(w_i) \cdot \frac{TF(w_i)\cdot (k_1 + 1)}{TF(w_i) + k_1\cdot(1 - b + b\cdot \frac{number of words on the website}{average number of words on a webpage})}
+\end{align*}
+
+with the optimisation variables set as $k_1 = 1.2$ and $b = 0.75$ since no advanced optimisation was considered.
+
+-------
+
+\subsection{OkapiBM25 class} (Technical Description)
+Again, as the Okapi BM25 algorithm makes use of both the TF calculation and the TFIDF calculation, these objects were stored as fields in the {\tt OkapiBM25Score} class as before.
+The optimisation constants and the average document length set as static fields.
+Two helper methods were added: {\tt setAverageDocLength} and {\tt okapiScore}. {\tt setAverageDocLength} calculates the mean number of words per website based on the websites in the index, and {\tt okapiScore} is a recursive method to perform the summation of all the individual scores of all the words in the search query to return to the {\tt getScore} method.
+
+\begin{lstlisting}[language=Java]
+    private double okapiScore(int count, String[] words, Website site, InvertedIndex index) {
+    int docLength = site.getWords().size();
+    if(count != 0) {
+    double IDF = this.tfidfScore.IDF(words[count], index);
+    double termFrequency = this.tfScore.getScore(words[count], site, index);
+    double score = IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
+    return score + okapiScore(count-1, words, site, index);
+    } else {
+    double IDF = this.tfidfScore.IDF(words[0], index);
+    double termFrequency = this.tfScore.getScore(words[0], site, index);
+    return IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
+    }
+    }
+\end{lstlisting}
 Text \\
 
 

@@ -69,11 +69,12 @@ class QueryHandlerTest {
     @Test
     void testCornerCases() {
         assertEquals(0, qh.getMatchingWebsites("").size());
-        assertEquals(1, qh.getMatchingWebsites("   OR word1 OR word1").size());
+        assertEquals(1, qh.getMatchingWebsites("   OR word1").size());
+        assertEquals(1, qh.getMatchingWebsites("word1 OR word1").size());
         assertEquals(0, qh.getMatchingWebsites("OR").size());
+        assertEquals(1, qh.getMatchingWebsites("OR smallest countries").size());
         assertEquals(1, qh.getMatchingWebsites("       OR word1 OR something funky OR").size());
         assertEquals(0, qh.getMatchingWebsites("   ").size());
-        assertEquals(1, qh.getMatchingWebsites("OR smallest countries").size());
         assertEquals(1, qh.getMatchingWebsites(".. country japan island").size());
         assertEquals(3, qh.getMatchingWebsites("OR OR OR OR OR OR OR about of as OR OR OR").size());
         assertEquals(6, qh.getMatchingWebsites("OR OR about OR OR OR OR as OR OR OR orc OR asdasd OR of OR OR as OR OR about").size());

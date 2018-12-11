@@ -14,7 +14,7 @@ Based on the task the {\tt parseFile(String fileName)} method has to be able to 
 
 In order for the website to be given to the index, the website must have a title and the amount of words has to be more than 0 for it to be considered.
 
-The {\tt Index} was generalized into an interface as to make it easy to test the various indices and switch between them. The following methods define the {\tt Index}:
+The {\tt Index} was generalized into an interface to make it easy to test the various indices and switch between them. The following methods define the {\tt Index}:
 \begin{itemize}
     \item {\tt build} The build method processes a list of websites into the index data structure.
     \item {\tt lookup} Given a query string, returns a list of all websites that contain the query.
@@ -192,7 +192,7 @@ where data/test-file1.txt is an empty file, and the rest contained the following
     \end{tabular}
 \end{table}
 
-As you can see from the Actual Output column of \ref{FH:result}, the updated code failed test B3, highlighting a weakness in the code, and subsequently had to be debugged. Including another IF statement after the while loop resolved the issue, and following that all tests were passed.
+JUnit tests were then produced from table \ref{FH:result}, as found in FileHelperTest.java. Correctness was verfied along two axes: the size of the {\tt List<Website>} returned, and the specific contents of the {\tt List}. As you can see from the Actual Output column of \ref{FH:result}, the updated code failed test B3, highlighting a weakness in the code, and subsequently had to be debugged. Including another IF statement after the while loop resolved the issue, and following that all tests were passed.
 
 \subsubsection{Index tests}
 

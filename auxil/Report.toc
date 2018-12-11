@@ -26,18 +26,24 @@
 \contentsline {subsection}{\numberline {2.3.6}Final steps in the {\tt getMatchingWebsites} method}{16}{subsection.2.3.6}
 \contentsline {section}{\numberline {2.4}Testing considerations}{16}{section.2.4}
 \contentsline {section}{\numberline {2.5}Reflection}{17}{section.2.5}
-\contentsline {chapter}{\numberline {3}Chapter 4: Ranking Algorithms}{19}{chapter.3}
+\contentsline {chapter}{\numberline {3}Ranking Algorithms}{19}{chapter.3}
 \contentsline {section}{\numberline {3.1}Task}{19}{section.3.1}
 \contentsline {section}{\numberline {3.2}Basic Approach}{20}{section.3.2}
-\contentsline {section}{\numberline {3.3}Technical Description}{21}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}IFScore class}{22}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}TFIDFScore class}{22}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}OkapiBM25 class}{23}{subsection.3.3.3}
-\contentsline {section}{\numberline {3.4}Testing considerations}{24}{section.3.4}
-\contentsline {section}{\numberline {3.5}Reflection}{24}{section.3.5}
+\contentsline {subsection}{\numberline {3.2.1}Term Frequency}{20}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Term Frequency \IeC {\textemdash } Inverse Document Frequency}{21}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Technical Description}{22}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}{\tt TFScore} class}{22}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}{\tt TFIDFScore} class}{23}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Testing considerations}{23}{section.3.4}
+\contentsline {section}{\numberline {3.5}Reflection}{23}{section.3.5}
+\contentsline {section}{\numberline {3.6}Testing considerations}{23}{section.3.6}
+\contentsline {section}{\numberline {3.7}Reflection}{24}{section.3.7}
 \contentsline {chapter}{\numberline {4}Chapter 5 Extensions}{27}{chapter.4}
 \contentsline {section}{\numberline {4.1}Section 5.1}{27}{section.4.1}
 \contentsline {section}{\numberline {4.2}Section 5.2}{27}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Subsection 5.2.1}{27}{subsection.4.2.1}
-\contentsline {chapter}{\numberline {A}Test Figure reference}{29}{appendix.A}
-\contentsline {chapter}{\numberline {B}Tables}{31}{appendix.B}
+\contentsline {chapter}{\numberline {5}Chapter 6 Conclusion}{29}{chapter.5}
+\contentsline {section}{\numberline {5.1}Section 6}{29}{section.5.1}
+\contentsline {chapter}{\numberline {A}Test Figure reference}{31}{appendix.A}
+\contentsline {chapter}{\numberline {B}Tables}{33}{appendix.B}
+\contentsline {chapter}{Bibliography}{37}{table.caption.8}

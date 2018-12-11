@@ -19,14 +19,14 @@
 %exposed by the class (no tests need to be provided for main and “getter” methods)
 
 \section{Task} % A short review on the task that we had to solve.
-This task enables complex query handling. This is a basic feature that is expected from a search engine: to be able to understand queries that consist of more than just one word (intersected search). Additionally, the task required the search engine to be able to handle aggregated results from different (possibly) multi-word queries when the {\tt OR} keyword is present (unioned search).
+This task enables complex query handling. This is a basic feature that is expected from a search engine: to be able to understand queries that consist of more than just one word (intersected search: all words m). Additionally, the task required the search engine to be able to handle aggregated results from different (possibly) multi-word queries when the '{\tt OR}' keyword is present (unioned search).
 
 \section{Basic Approach} % A basic description on how we solved the task.
 All the logic necessary to handle the queries was implemented in the class {\tt QueryHandler}.
 When considering what needs to be accomplished as well as what the user can input in the search field, the present task is accomplished by following these steps:
 \begin{enumerate}
     \item Sanitise the query: this comprises of checking if the query is meaningful and fulfils basic criteria in morphological terms, and to enforce it in the cases it does not.
-    \item Separate the query into sub-queries whenever the {\tt OR} keyword is present.
+    \item Separate the query into sub-queries whenever the '{\tt OR}' keyword is present.
     \item For each of the sub-queries, find websites that contain all the words in that sub-query.
     \item Aggregate all the results of the multiple sub-queries on a list.
 \end{enumerate}
@@ -45,22 +45,9 @@ In order to achieve encapsulation and responsibility-driven design, the followin
 \section{Technical description} % Description of software architecture used in the solution.
 \subsection{Field}
 The {\tt QueryHandler} class takes an {\tt Index} object and a {\tt Score} object as the initialising parameters and assigns them to private fields. The {\tt Index} can be any of the indices described in the previous chapter as all extend the same {\tt Interface}. The same can be said for the {\tt Score} interface, and the details of this can be found in the next chapter. %This was achieved with the following piece of code:
-%\begin{lstlisting}[language=Java]
-%public class QueryHandler {
-%private Index idx = null;
-%public QueryHandler(Index idx) {
-%this.idx = idx;
-%}
-%\end{lstlisting}
 \subsection{{\tt getMatchingWebsites} core method}
 As soon as this class is instantiated, its intended use expects the {\tt getMatchingWebsites} method to be called. This method takes in a {\tt String} as parameter, which consists of the search terms and returns a {\tt List<Website>}, which consists of the matching results. %The signature is as follows:
-%\begin{lstlisting}[language=Java]
-%public List<Website> getMatchingWebsites(String line) {
-%\end{lstlisting}
 As the description in the Basic Approach states, this method uses two auxiliary methods to process the data as necessary. The first data processing happens when the parameter is passed to {\tt cleanQuery} method, which then returns a list of Strings that can be used to proceed with the search. %The code used to achieve this is the following:
-%\begin{lstlisting}[language=Java]
-%List<String> query = cleanQuery(line);
-%\end{lstlisting}
 \subsection{{\tt cleanQuery} auxiliary method}
 This method enforces consistency in the input to be later on used to search for results.
 The first steps of the process consist of:
@@ -69,11 +56,7 @@ The first steps of the process consist of:
     \item Replacing every one or more space characters by a single space character
 \end{itemize}
 The above mentioned steps are achieved by making use of the {\tt String} method {\tt replaceAll}.
-%\begin{lstlisting}[language=Java]
-%private List<String> cleanQuery (String input) {
-%input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
-%\end{lstlisting}
-After this, the {\tt OR} keyword is used as criteria for splitting the input {\tt String} using the {\tt split} method, which is then used to create a {\tt List<String> searches}. The idea is that every element of the list will consist of an intersected search, and the search results of each element will then be aggregated to achieve the final result.
+After this, the '{\tt OR}' keyword is used as criteria for splitting the input {\tt String} using the {\tt split} method, which is then used to create a {\tt List<String> searches}. The idea is that every element of the list will consist of an intersected search, and the search results of each element will then be aggregated to achieve the final result.
 The {\tt split} method gives {\tt String []} as a result, but is then parsed as an {\tt ArrayList<String>} as this is more maleable, and through the {\tt java.util} methods allows for the consistency in the {\tt List<String> searches} to be enforced (such as trimming all the searches in case they start or end with empty spaces, deleting all empty entries in the {\tt List<String>}, and making everything lower case due to the way the website content is stored in the index). This was elegantly achieved by using lambdas.
 \subsection{Intermediate steps in the {\tt getMatchingWebsites} method}
 The refined search query, now stored in a {\tt List<String>}, is iterated through and each element passed as a parameter to the auxiliary method {\tt intersectedSearch}, the results of which are stored in a {\tt Set<Website> results}. The root of the reason for the choice of such data structure is the fact that it does not allow duplicates (as opposed to a {\tt List}, which expedites the process. Since we intend to iterate through a set of data, it seemed appropriate to implement a {\tt for} loop.
@@ -97,29 +80,31 @@ Upon testing for correctness, we split the test cases in two main groups: one th
         \begin{itemize}
             \item One word
             \item One or more words separated by spaces;
-            \item Two words with the ``{\tt OR}'' keyword in between;
-            \item Groups of words separated by the ``{\tt OR}'' and by spaces;
+            \item Two words with the '{\tt OR}' keyword in between;
+            \item Groups of words separated by the '{\tt OR}' and by spaces;
         \end{itemize}
     \item Testing for bad user behaviour, where the query:
     \begin{itemize}
         \item Is empty;
-        \item Starts with white space followed by the ``{\tt OR}'' keyword;
-        \item Repeats the words separated by the ``{\tt OR}'' keyword;
-        \item Consists of solely the ``{\tt OR}'' keyword;
-        \item Starts with the ``{\tt OR}'' keyword followed groups of words separated by spaces;
-        \item Starts with white space followed by the ``{\tt OR}'' keyword followed groups of words separated by the ``{\tt OR}'' and by spaces and ends with ``{\tt OR}'' ;
+        \item Starts with white space followed by the '{\tt OR}' keyword;
+        \item Repeats the words separated by the '{\tt OR}' keyword;
+        \item Consists of solely the '{\tt OR}' keyword;
+        \item Starts with the '{\tt OR}' keyword followed groups of words separated by spaces;
+        \item Starts with white space followed by the '{\tt OR}' keyword followed groups of words separated by the '{\tt OR}' and by spaces and ends with '{\tt OR}' ;
         \item Consists of only white space;
         \item Starts with punctuation and white space and is followed by a group of words separated by spaces;
-        \item Consists of several ``{\tt OR}'' keywords separated by spaces, followed by a group of words separated by spaces and ends with several ``{\tt OR}'' keywords separated by spaces;
-        \item Consists of several words separated by the ``{\tt OR}'' keyword where there is more that one ``{\tt OR}'' occurrence between words;
+        \item Consists of several '{\tt OR}' keywords separated by spaces, followed by a group of words separated by spaces and ends with several '{\tt OR}' keywords separated by spaces;
+        \item Consists of several words separated by the '{\tt OR}' keyword where there is more that one '{\tt OR}' occurrence between words;
         \item Contains only upper case characters;
-        \item Contains no spaces but a word surrounded by several ``{\tt OR}'' keywords;
-        \item Contains an upper case word next to an ``{\tt OR}'' keyword with no spaces in between, followed by another ``{\tt OR}'' keyword and a word.
+        \item Contains no spaces but a word surrounded by several '{\tt OR}' keywords;
+        \item Contains an upper case word next to an '{\tt OR}' keyword with no spaces in between, followed by another '{\tt OR}' keyword and a word.
         \item Lastly, we considered the worst case scenario where a query contained many of the above-mentioned cases and also for when there was punctuation between words.
     \end{itemize}
 \end{itemize}
 
 \section{Reflection} % Benchmarking results for experiments that allowed us choose the best data structure for the search engine.
-Sets used to avoid duplication of results, regexs used to parse the input string quickly, arraylists over arrays for flexibility,
+This task set out to enable the {\tt QueryHandler} class to handle more complex queries (i.e. multi-word queries referred to as intersected queries, and queries making use of the '{\tt OR}' keyword which are referred to as unioned searches).
+Due to the fact that this update involved merging the results of individual searches on single words to return an amalgamated {\tt List<Website>}, {\tt Set} was used liberally to avoid duplication of {\tt Website} results.
+Regexes were used to parse the search query quickly in the {\tt cleanQuery} method, and the {\tt String []} were converted to {\tt ArrayList<String>} for flexibility as {\tt ArrayList} offers methods that were integral in sanitising the original search query.
 
 

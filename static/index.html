@@ -1,20 +1,48 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>Programming Workshop Search Engine</title>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="code.js"></script>
-    <link rel="stylesheet" href="style.css" />
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Busca Anything</title>
+	<link href="https://fonts.googleapis.com/css?family=Kodchasan" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script> <!-- start javascript -->
+	<script src="code.js"></script>
+	<link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="content">
-        <h1>My Search Engine</h1>
-        <input id="searchbox" type="text" placeholder="Search here..." />
-        <button id="searchbutton">Search</button>
-    </div>
-    <div id="responsesize">
-    </div>
-    <div id="urllist">
-    </div>
+
+<div id="front">
+	<div id="content">
+		<input id="searchbox" type="text" placeholder="Busca anything..."/><button id="searchbutton">Busca</button>
+		<!--enable enter as a search trigger-->
+		<script>document.getElementById("searchbox").addEventListener("change", myFunction);
+		function myFunction() {
+			document.getElementById("searchbutton").click();
+		}</script>
+	</div>
+
+	<div id="responseSize">
+	</div>
+
+	<div id="resultWrapper">
+	</div>
+	
+</div>
+
+<div class="background">
+  <figure></figure>
+  <figure></figure>
+  <figure></figure>
+  <figure></figure>
+  <figure></figure>
+</div>
+	
+<footer class="footer">
+	<div id="ip2018"><a href="https://en.itu.dk/" target="_blank">ITU</a><a href="https://mit.itu.dk/ucs/cb_www/course.sml?course_id=2013742&mode=search&lang=en&print_friendly_p=t&goto=1544434992.000" target="_blank">Introductory Programming</a></div>
+	<div id="authors">Authors: <a href="https://www.linkedin.com/in/ashley-parsons-trew-b172746b/" target="_blank">Ashley</a><a href="https://www.linkedin.com/in/hugo-brito/" target="_blank">Hugo</a><a href="https://www.linkedin.com/in/ieva-kangsepa/" target="_blank">Ieva</a><a href="https://www.linkedin.com/in/jonas-hartmann-andersen/" target="_blank">Jonas</a>
+	</div>
+</footer>
+
 </body>
 </html>

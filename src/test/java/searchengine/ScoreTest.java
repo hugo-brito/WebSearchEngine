@@ -15,9 +15,9 @@ public class ScoreTest {
     @BeforeEach
     void setUp() {
         this.sites = new ArrayList<>();
-        sites.add(new Website("1.com","example1", Arrays.asList("word1", "word2")));
-        sites.add(new Website("2.com","example2", Arrays.asList("word2", "word3")));
-        sites.add(new Website("3.com","example3", Arrays.asList("word3", "word4", "word5")));
+        sites.add(new Website("1.com", "example1", Arrays.asList("word1", "word2")));
+        sites.add(new Website("2.com", "example2", Arrays.asList("word2", "word3")));
+        sites.add(new Website("3.com", "example3", Arrays.asList("word3", "word4", "word5")));
         sites.add(new Website("4.com", "example4", Arrays.asList("word5", "word5", "word6", "word2", "word7")));
         this.index = new InvertedIndexHashMap();
         this.index.build(sites);
@@ -69,4 +69,8 @@ public class ScoreTest {
 
         // multi-word query, occurs partially on site and partially on other sites
     }
+
+
+
+
 }

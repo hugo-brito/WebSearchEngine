@@ -1,8 +1,6 @@
 package searchengine;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The TFIDF (term frequency - inverse document frequency) ranking algorithm calculates a score for how relevant a word
@@ -12,10 +10,11 @@ import java.util.Set;
  */
 public class TFIDFScore implements Score{
 
+    // should this be made static? Since it is the same regardless of how many object of TFIDFScore is created.
     private double websiteCollectionSize;
     private TFScore tfScore;
 
-    public TFIDFScore(InvertedIndex index) {
+    public TFIDFScore(Index index) {
         setWebsiteCollectionSize(index);
         this.tfScore = new TFScore();
     }
@@ -28,11 +27,11 @@ public class TFIDFScore implements Score{
      * @return The TFIDF score for the word on the given website
      */
     @Override
-    public double getScore(String word, Website site, InvertedIndex index) {
+    public double getScore(String word, Website site, Index index) {
         // calculating the IDF
         double IDF = IDF(word, index);
         // calculating the TF using the TFScore class
-        double TF = tfScore.getScore(word, site, index);
+        double TF = this.tfScore.getScore(word, site, index);
         //calculating the TFIDF score
         return IDF*TF;
     }
@@ -44,7 +43,7 @@ public class TFIDFScore implements Score{
      * @param index the index of websites
      * @return the IDF value for that word over the website collection
      */
-    public double IDF(String word, InvertedIndex index) {
+    public double IDF(String word, Index index) {
         // creating a list of websites in which the search term is present
         List<Website> resultsContainingWord = index.lookup(word);
         // getting the size of this list
@@ -63,17 +62,8 @@ public class TFIDFScore implements Score{
      * there are in the collection
      * @param index the index of websites
      */
-    private void setWebsiteCollectionSize(InvertedIndex index) {
-        // a new hashset to store the websites in
-        Set<Website> siteCollection = new HashSet<>();
-        // getting the keys (words) from the index map
-        Set<String> words = index.getIndexMap().keySet();
-        // Looping through the words to get the mapped list of websites and add it to the hashset of websites
-        // hashset removes all duplicates
-        for(String word : words) {
-            List<Website> sites = index.getIndexMap().get(word);
-            siteCollection.addAll(sites);
-        }
-        this.websiteCollectionSize = siteCollection.size();
+    private void setWebsiteCollectionSize(Index index) {
+        // gives the setWebsiteCollectionSize the size of a given index, with no duplicates.
+        this.websiteCollectionSize = index.provideIndex().size();
     }
 }

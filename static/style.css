@@ -1,20 +1,255 @@
-#urllist {
-    color: #969696;
-    border: 1px solid #dcdcdc;
-    border-radius: 3px;
+/* CSS Document */
+
+* {
+	font-family: "Kodchasan", sans-serif;
+}
+
+a { /* the aspect of links */
+	text-decoration: none;
+}
+
+/* unvisited link */
+a:link {
+	color: aliceblue;
+}
+
+/* visited link */
+a:visited {
+	color: grey;
+}
+
+/* mouse over link */
+a:hover {
+	font-weight: 900;
+	text-decoration: underline;
+}
+
+/* selected link */
+a:active {
+	color: tomato;
+}
+
+
+body {
+	color: white;
+	margin-bottom: 10%;
+	background-color: black;
 }
 
 input[type="text"] {
-    padding: 10px;
-    margin: 10px;
-    border: solid 1px #dcdcdc;
-    border-radius: 4px;
-    min-width: 200px;
-    transition: box-shadow 0.3s, border 0.3s;
+	background-image: url('img/stars.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 10px;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 4px;
+	width: 20%;
+	-webkit-transition: box-shadow 0.4s, border 0.4s, width 0.4s ease-in-out;
+	transition: box-shadow 0.4s, border 0.4s,  width 0.4s ease-in-out;
 }
 
 input[type="text"]:focus,
 input[type="text"].focus {
-    border: solid 1px #707070;
-    box-shadow: 0 0 5px 1px #969696;
+	border: solid 1px #707070;
+	box-shadow: 0 0 5px 1px #969696;
+	width: 60%;
+}
+
+#content {
+	display: block;
+	margin-left: auto;
+	margin-right: auto; /** these three lines align the content of this div horizontally **/
+	max-width: 75%;
+	margin-top: 10%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+#responseSize { /* informative message about the search */
+	text-align: center;
+}
+
+/* styling the search button */
+#searchbutton {
+	font-size: 1.2em;
+	font-weight: 500;
+	color: aliceblue;
+	background-color: rgba(0,0,0,0.70);
+	border-radius: 45px;
+	min-width: 90px;
+	min-height: 90px;
+
+}
+
+/* styling the search box */
+#searchbox {
+	color: aliceblue;
+	font-weight: 500;
+	font-size: 1.3em;
+	min-width: 200px;
+	text-align: center;
+	border-radius: 75px;
+	background-color: rgba(0,0,0,0.70);
+	min-height: 75px;
+}
+
+#resultWrapper {
+	width: 728px;
+	margin: auto;
+}
+
+.result { /* the results */
+	line-height: 1em;
+	/*	color: aliceblue;*/
+	background-color: rgba(0,0,0,0.70);
+	border-radius: 10px;
+	/*	align-content: center;*/
+	margin: auto; /* centers the div */
+	/*	min-width: 75%;*/
+	padding: 10px;
+	max-width: 600px;
+	text-align: center;
+	margin-bottom: 10px;
+	/*	border: 1px solid #dcdcdc;*/
+}
+
+.result:hover {
+	background-color: rgba(255,255,255,0.70);
+}
+
+.result:hover a {
+	color: black;
+	text-decoration: none;
+}
+
+.result h1 {
+	font-size: 1.2em;
+}
+
+.result h2 {
+	font-size: 0.7em;
+}
+
+.result h3 {
+	text-align: left;
+	font-size: 1.0em;
+}
+
+
+.background > figure {
+	animation: imageAnimation 50s linear infinite 0s;
+	backface-visibility: hidden;
+	background-size: cover; /* Resize the background image to cover the entire container */
+	background-position: center center; /* Center the image vertically and horizontally*/
+	color: transparent; /* this color refers to the text color */
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	left: 0px;
+	position: fixed; /* makes the background fixed when scrolling */
+	top: 0px;
+	width: 100%;
+	z-index: -100; /* go in the back */
+}
+
+.background > figure:nth-child(1) { background-image: url('img/001.jpg'); }
+
+.background > figure:nth-child(2) {
+	animation-delay: 10s;
+	background-image: url('img/002.jpg');
+}
+
+.background > figure:nth-child(3) {
+	animation-delay: 20s;
+	background-image: url('img/003.jpg');
+}
+
+.background > figure:nth-child(4) {
+	animation-delay: 30s;
+	background-image: url('img/004.jpg');
+}
+
+.background > figure:nth-child(5) {
+	animation-delay: 40s;
+	background-image: url('img/005.jpg');
+}
+
+@keyframes
+imageAnimation {  0% {
+	animation-timing-function: ease-in;
+	opacity: 0;
+}
+	8% {
+		animation-timing-function: ease-out;
+		opacity: 1;
+	}
+	17% {
+		opacity: 1
+	}
+	25% {
+		opacity: 0
+	}
+	100% {
+		opacity: 0
+	}
+}
+
+.footer {
+	color: aliceblue;
+	font-size: 1.2em;
+	font-variant: small-caps;
+	background-color: rgba(0,0,0,0.70);
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-bottom: 0px;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.footer a {
+	color: aliceblue;
+	padding: 10px;
+	text-decoration: none;
+}
+
+.footer a:hover {
+	background-color: aliceblue;
+	color: black;
+}
+
+#ip2018 {
+	width: 49%;
+	float: left;
+	/*
+        display: inline-flex;
+        justify-content: flex-start;
+    */
+}
+
+#authors {
+	width: 49%;
+	float: left;
+	text-align: right;
+	position: right;
+	/*
+        display: inline-flex;
+        justify-content: flex-end;
+    */
+}
+
+@media screen and (max-width:728px) {
+	.footer {
+		background-color: black;
+	}
+
+	#ip2018, #authors, #resultWrapper {
+		width:100%; /* The width is 100%, when the viewport is 600px or smaller */
+		text-align: center;
+		line-height: 40px;
+	}
 }

@@ -59,6 +59,21 @@ a lock on a file. Kill all Gradle processes:
 
   gradlew --stop
 
+�@hubr did you try putting in the absolute (full) path to the database
+file after the `database=` in `config.properties`? Alternatively, this
+could be because the benchmark file has the path to a database file
+hard-coded (sorry about that). To see if this is the case, you can try
+replacing the `FileHelper.parseFile("data/enwiki-medium.txt");` part of
+`IndexBenchmark.java`, with `FileHelper.parseFile(new String[0]);`
+(that only works if you have a working `config.properties`).�
+
+�1) make changes in source code,
+2) `gradlew cleanup`
+3) `gradlew --stop`
+4) `gradlew jmh`�
+
+
+
 
 IntelliJ Integration
 ----------------------------------------------------------------------

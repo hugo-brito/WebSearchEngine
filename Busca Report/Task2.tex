@@ -95,31 +95,29 @@ Upon testing for correctness, we split the test cases in two main groups: one th
         \begin{itemize}
             \item One word
             \item One or more words separated by spaces;
-            \item Two words with the '{\tt OR}' keyword in between;
-            \item Groups of words separated by the '{\tt OR}' and by spaces;
+            \item Two words with the "{\tt OR}" keyword in between;
+            \item Groups of words separated by the "{\tt OR}" and by spaces;
         \end{itemize}
     \item Testing for bad user behaviour, where the query:
     \begin{itemize}
         \item Is empty;
-        \item Starts with white space followed by the '{\tt OR}' keyword;
-        \item Repeats the words separated by the '{\tt OR}' keyword;
-        \item Consists of solely the '{\tt OR}' keyword;
-        \item Starts with the '{\tt OR}' keyword followed groups of words separated by spaces;
-        \item Starts with white space followed by the '{\tt OR}' keyword followed groups of words separated by the '{\tt OR}' and by spaces and ends with '{\tt OR}' ;
+        \item Starts with white space followed by the "{\tt OR}" keyword;
+        \item Repeats the words separated by the "{\tt OR}" keyword;
+        \item Consists of solely the "{\tt OR}" keyword;
+        \item Starts with the "{\tt OR}" keyword followed groups of words separated by spaces;
+        \item Starts with white space followed by the "{\tt OR}" keyword followed groups of words separated by the "{\tt OR}" and by spaces and ends with "{\tt OR}" ;
         \item Consists of only white space;
         \item Starts with punctuation and white space and is followed by a group of words separated by spaces;
-        \item Consists of several '{\tt OR}' keywords separated by spaces, followed by a group of words separated by spaces and ends with several '{\tt OR}' keywords separated by spaces;
-        \item Consists of several words separated by the '{\tt OR}' keyword where there is more that one '{\tt OR}' occurrence between words;
+        \item Consists of several "{\tt OR}" keywords separated by spaces, followed by a group of words separated by spaces and ends with several "{\tt OR}" keywords separated by spaces;
+        \item Consists of several words separated by the "{\tt OR}" keyword where there is more that one "{\tt OR}" occurrence between words;
         \item Contains only upper case characters;
-        \item Contains no spaces but a word surrounded by several '{\tt OR}' keywords;
-        \item Contains an upper case word next to an '{\tt OR}' keyword with no spaces in between, followed by another '{\tt OR}' keyword and a word.
+        \item Contains no spaces but a word surrounded by several "{\tt OR}" keywords;
+        \item Contains an upper case word next to an "{\tt OR}" keyword with no spaces in between, followed by another "{\tt OR}" keyword and a word.
         \item Lastly, we considered the worst case scenario where a query contained many of the above-mentioned cases and also for when there was punctuation between words.
     \end{itemize}
 \end{itemize}
 
 \section{Reflection} % Benchmarking results for experiments that allowed us choose the best data structure for the search engine.
-This task set out to enable the {\tt QueryHandler} class to handle more complex queries (i.e. multi-word queries referred to as intersected queries, and queries making use of the '{\tt OR}' keyword which are referred to as unioned searches).
+This task set out to enable the {\tt QueryHandler} class to handle more complex queries (i.e. multi-word queries referred to as intersected queries, and queries making use of the "{\tt OR}" keyword which are referred to as unioned searches).
 Due to the fact that this update involved merging the results of individual searches on single words to return an amalgamated {\tt List<Website>}, {\tt Set} was used liberally to avoid duplication of {\tt Website} results.
-Regexes were used to parse the search query quickly in the {\tt cleanQuery} method, and the {\tt String []} were converted to {\tt ArrayList<String>} for flexibility as {\tt ArrayList} offers methods that were integral in sanitising the original search query.
-
-
+Regular expressions were used to parse the search query quickly in the {\tt cleanQuery} method, and the {\tt String []} were converted to {\tt ArrayList<String>} for flexibility as {\tt ArrayList} offers methods that were integral in sanitising the original search query.

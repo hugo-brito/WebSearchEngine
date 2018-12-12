@@ -23,7 +23,6 @@ Each file lists a number of websites including their URL, their title, and the w
 {\tt word n}\\
 This meant that, for a website to be passed on to the index, it must have a title, an URL, and the amount of words has to be more than zero.
 
-
 \section{Technical Description}
 As part of the set up of this task, the {\tt FileHelper} class — specifically the {\tt parseFile(String filename)} method — was updated such that from the database file, only websites that have a url, title, and at least one word of webpage content are read-in and stored in the server.\\
 This was accomplished by an {\tt if} statements to check the assignments of the URL and title fields prior to adding a {\tt new Website} object to the {\tt ArrayList<Website>}. However, the major of the changes made to this method were to how the method recognised the content of each line scanned in in order to know how to treat it.\\

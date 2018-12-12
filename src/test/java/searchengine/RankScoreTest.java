@@ -15,24 +15,24 @@ public class RankScoreTest {
     @BeforeEach
     void setUp() {
         this.sites = new ArrayList<>();
-        // 1.com mentions 12 words: Queen= 4; Denmark= 4; of= 4; otherword= 2
-        String[] words1 = ("Queen of Denmark Queen of Denmark Queen of Denmark otherword otherword").toLowerCase().split(" ");
+        // 1.com mentions 12 words: Queen= 4; Denmark= 4; of= 4; randomword = 2
+        String[] words1 = ("Queen of Denmark Queen of Denmark Queen of Denmark randomword randomword ").toLowerCase().split(" ");
         sites.add(new Website("1.com", "example1", Arrays.asList(words1)));
 
-        // 2.com mentions 13 words: Queen= 2; Denmark= 2; of= 6; otherword= 2
-        String[] words2 = ("Queen of Denmark Queen of Denmark of of of of otherword otherword").toLowerCase().split(" ");
+        // 2.com mentions 13 words: Queen= 2; Denmark= 2; of= 6; randomword = 2
+        String[] words2 = ("Queen of Denmark Queen of Denmark of of of of randomword  randomword ").toLowerCase().split(" ");
         sites.add(new Website("2.com", "example2", Arrays.asList(words2)));
 
-        //3.com mentions 14 words: Queen= 1; Denmark= 1; of= 10; otherword= 2
-        String[] words3 = ("Queen of Denmark of of of of of of of of of otherword otherword").toLowerCase().split(" ");
+        //3.com mentions 14 words: Queen= 1; Denmark= 1; of= 10; randomword = 2
+        String[] words3 = ("Queen of Denmark of of of of of of of of of randomword  randomword ").toLowerCase().split(" ");
         sites.add(new Website("3.com", "example3", Arrays.asList(words3)));
 
-        //4.com mentions 9 words: of= 7; otherword= 2 (Website adds noise for word "of")
-        String[] words4 = ("of of of of of of of otherword otherword").toLowerCase().split(" ");
+        //4.com mentions 9 words: of= 7; randomword = 2 (Website adds noise for word "of")
+        String[] words4 = ("of of of of of of of randomword  randomword ").toLowerCase().split(" ");
         sites.add(new Website("4.com", "example4", Arrays.asList(words4)));
 
-        //5.com mentions 9 words: of= 7; otherword= 2 (Website adds noise for word "of")
-        String[] words5 = ("of of of of of of of otherword otherword").toLowerCase().split(" ");
+        //5.com mentions 9 words: of= 7; randomword = 2 (Website adds noise for word "of")
+        String[] words5 = ("of of of of of of of randomword  randomword ").toLowerCase().split(" ");
         sites.add(new Website("5.com", "example5", Arrays.asList(words5)));
 
 

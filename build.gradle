@@ -72,6 +72,13 @@ task runWeb(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     main = "searchengine.WebApplication"
 }
+task startWebCrawler(type: JavaExec) {
+    group 'All You Need'
+    description 'Start a web crawler to create new index file at data//real_data_file.txt.'
+    standardInput = System.in
+    classpath sourceSets.main.runtimeClasspath
+    main = "searchengine.WebCrawler.WebCrawler"
+}
 
 jmh {
     group 'All You Need'

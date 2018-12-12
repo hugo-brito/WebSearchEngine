@@ -59,7 +59,9 @@ public class DocumentHelper {
                             String headerText = child.toString();
                             String[] wordsInHeader = headerText.split(" ");
                             for (String word : wordsInHeader){
-                                words.add(cleanWord(word));
+                                String cleanWord = cleanWord(word);
+                                if(cleanWord != null)
+                                     words.add(cleanWord);
                             }
                         }
                     }
@@ -88,7 +90,9 @@ public class DocumentHelper {
         return links;
     }
     private static String cleanWord(String input){
-        input = input.replaceAll("\\p{Punct}", "");
+        input = input.replaceAll("\\p{Punct}", "").replace("?","");
+        if(input.equals(""))
+            return null;
         // replace all the punctuation by spaces and then replace 1 or more space characters by a single space character
 
         return input;

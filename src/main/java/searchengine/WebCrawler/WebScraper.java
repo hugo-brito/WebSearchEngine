@@ -6,6 +6,7 @@ import org.jsoup.select.Elements;
 import searchengine.Website;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -84,30 +85,62 @@ public class WebScraper {
      * Appending the values of a Website object to the file real_data_file.txt in the data folder
      * @param site Object of type Website that should be added to the file.
      */
-    public void AppendSiteToFile(Website site){
+    public void AppendSiteToFile(Website site) {
 
       /*  *PAGE:https://en.wikipedia.org/wiki/United_States   *PAGE:url
         United States                                          title
-        the                                                  a new line for each word   */
+        the
+                                                           a new line for each word   */
+     try{
+        BufferedWriter out = new BufferedWriter(
+                new OutputStreamWriter(
+                        new FileOutputStream("data//real_data_file.txt", true), // true to append
+                        StandardCharsets.UTF_8                  // Set encoding
+                )
+
+        );
+        out.write("*PAGE:"+ site.getUrl().trim());
+        out.newLine();
+        String title = site.getTitle().trim();
+
+        if(title.length()> 1)
+          title = title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase();
+        else
+            title = title.toUpperCase();
+        out.write(title);
+        out.newLine();
+        List<String> words = site.getWords();
+        for (String word: words)
+        {
+            out.write(word.trim().toLowerCase());
+            out.newLine();
+        }
+        out.flush();
+        out.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 
 
-        //https://stackoverflow.com/questions/1625234/how-to-append-text-to-an-existing-file-in-java
+       /* //https://stackoverflow.com/questions/1625234/how-to-append-text-to-an-existing-file-in-java
         //"true" means that I am appending the file, not overwrite it.
         try(FileWriter fw = new FileWriter("data//real_data_file.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {
 
-            out.println("*PAGE:"+ site.getUrl());
-            out.println(site.getTitle());
+            out.println("*PAGE:"+ site.getUrl().trim());
+            out.println(site.getTitle().trim());
             List<String> words = site.getWords();
             for (String word: words)
             {
-                out.println(word);
+                out.println(word.trim());
             }
 
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
-        }
+        }*/
     }
 }

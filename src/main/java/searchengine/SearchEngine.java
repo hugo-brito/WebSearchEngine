@@ -21,7 +21,7 @@ public class SearchEngine {
      * @param sites the list of websites
      */
     public SearchEngine(List<Website> sites) {
-        Index idx = new SimpleIndex();//Change to InvertedHashMap or TreeMap
+        Index idx = new InvertedIndexTreeMap();//Change to InvertedHashMap or TreeMap
         idx.build(sites);
         queryHandler = new QueryHandler(idx);
     }

@@ -1,5 +1,6 @@
 package searchengine.WebCrawler;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,8 +28,11 @@ public class WebCrawler {
      */
     public static void main(String[] args){
         WebCrawler crawler = new WebCrawler();
+
         crawler.crawl();
+
     }
+
 
     /**
      * It start "crawling" by taking urls form the urlsToLookAt field, on at the time.
@@ -38,6 +42,11 @@ public class WebCrawler {
      * in the webScraper class.
      */
     public void crawl()  {
+        //Clean up
+        File f = new File("data/real_data_file.txt");
+        if(f.exists())
+            f.delete();
+
         HashSet<String> visitedSites =  new HashSet<>();
         for (String url:urlsToLookAt) {
                 try {

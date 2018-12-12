@@ -63,14 +63,13 @@ In order to choose one of the implementations, namely ArrayList, TreeMap or Hash
 During the benchmark it was assured that the test environment is as similar as possible among the different trials, meaning that all tests were performed on the same machine and no other applications running on the background.
 
 \begin{table}[!htbp]
-    \caption{\textbf{Benchmark Score in ns/op average for all indices}}
-    \begin{tabular}{|c|c|c|c|}
+    \caption{\textbf{Benchmark Scores. Each score is an average in ns/op}}
+    \begin{tabular}{|p{75pt}|p{75pt}|p{75pt}|p{75pt}|}
         \hline
-        \textbf{Data sets} & \textbf{SimpleIndext} & \textbf{Inv.IndexHashMap} & \textbf{Inv.IndexTreemap} \\ \hline
-        \textbf{} & \textbf{avgt Score ns/op} & \textbf{avgt Score ns/op} & \textbf{avgt Score ns/op} \\ \hline
-        enwiki-tiny &18944.884&1052.067&1591.311 \\ \hline
-        enwiki-small &8819338.592&1883.776&3622.582\\ \hline
-        enwiki-medium &233498546.571&27451.020&30176.993 \\ \hline
+        \textbf{Data sets} & \textbf{Simple} & \textbf{HashMap} & \textbf{Treemap} \\ \hline
+        enwiki-tiny & 18944.884 & 1052.067 & 1591.311 \\ \hline
+        enwiki-small & 8819338.592 & 1883.776 & 3622.582 \\ \hline
+        enwiki-medium & 233498546.571 & 27451.020 & 30176.993 \\ \hline
     \end{tabular}
     \label{table:result}
 \end{table}

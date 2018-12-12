@@ -75,7 +75,6 @@ public class WebCrawler {
         List<String> defaultUrls = new ArrayList<> ();
         //Urls should not end with "/", because the rest of the logic will remove the "/" if the url ends with it
         // before putting it into visitedSites.
-        defaultUrls.add("https://edition.cnn.com");
         defaultUrls.add("https://www.nytimes.com");
         defaultUrls.add("https://tv2.dk");
         defaultUrls.add("https://www.dr.dk");

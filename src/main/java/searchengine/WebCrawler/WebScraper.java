@@ -26,7 +26,11 @@ public class WebScraper {
     //visited sites could be exchanged with database tha could be querried in real life, instead of this HashSet
     //filling up memory.
     public void fetchWebsiteRecursive(String url, HashSet<String> visitedSites){
-
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //Using https://jsoup.org/download
         // Runned into difficulties using reg-ex, found for other solution
         // Jsoup is better solution than reg-ex to read html, because Jsoup is a parser made for HTML.
@@ -60,11 +64,10 @@ public class WebScraper {
                                 urlValue += linkUrl.getPath();
 
                             if (urlValue != null && visitedSites.contains(urlValue) == false) {
-                                Thread.sleep(30000);
                                 visitedSites.add(urlValue);
                                 fetchWebsiteRecursive(linkHref, visitedSites);
                             }
-
+//If we are not able to locate the host or url, we do not want to continue the recursive call, we stop here and go to the previous
                         } catch (Exception e) {
                             return;
                         }

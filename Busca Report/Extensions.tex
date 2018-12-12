@@ -5,41 +5,67 @@
 
 \subsection{Okapi BM25} (Basic Approach)
 The Okapi BM25 algorithm is a more sophisticated type of TFIDF ranking algorithm.
-It's a summation over all words that make up the search term, making use of the TF calculation as well as the IDF calculation, with optimisation variables too.
+It's a summation over all words that make up the search term, making use of the TF calculation as well as the IDF calculation along with variables that can be used for optimisation.
 The version of the formula used in this project is:
 
-\begin{align*}
-    okapi BM 25 score = \sum_{i=1}^n IDF(w_i) \cdot \frac{TF(w_i)\cdot (k_1 + 1)}{TF(w_i) + k_1\cdot(1 - b + b\cdot \frac{number of words on the website}{average number of words on a webpage})}
-\end{align*}
+\begin{align}
+    OBM25 = \sum_{i=1}^n IDF(w_i) \cdot \frac{TF(w_i)\cdot (k_1 + 1)}{TF(w_i) + k_1\cdot(1 - b + b\cdot \frac{W}{\bar{W}})}
+\label{eq:OBM25}
+\end{align}
 
-with the optimisation variables set as $k_1 = 1.2$ and $b = 0.75$ since no advanced optimisation was considered.
+with the optimisation variables set as $k_1 = 1.2$ and $b = 0.75$ since no advanced optimisation was considered and
 
--------
+\begin{itemize}
+    \item $OMB25$ is the Okapi BM 25 score
+    \item A search term $w$ consists of individual words $w_1, w_2, ..., w_n$
+    \item $IDF(w_i)$ is the inverse document frequency score applied to the word $w_i$
+    \item $TF(w_i)$ is the term frequency score applied to the word $w_i$
+    \item $W$ is the number of words on the webpage
+    \item $\bar{W}$ is the average number of words on a webpage
+\end{itemize}
 
-\subsection{OkapiBM25 class} (Technical Description)
-Again, as the Okapi BM25 algorithm makes use of both the TF calculation and the TFIDF calculation, these objects were stored as fields in the {\tt OkapiBM25Score} class as before.
-The optimisation constants and the average document length set as static fields.
+\subsection{OkapiBM25Score class} (Technical Description)
+As the Okapi BM25 algorithm makes use of both the TF calculation and the TFIDF calculation, these objects were stored as fields in the {\tt OkapiBM25Score} class in a similar manner to what was done for the {\tt TFIDFScore} class.
+The optimisation constants and the average document length were set as static fields.
 Two helper methods were added: {\tt setAverageDocLength} and {\tt okapiScore}. {\tt setAverageDocLength} calculates the mean number of words per website based on the websites in the index, and {\tt okapiScore} is a recursive method to perform the summation of all the individual scores of all the words in the search query to return to the {\tt getScore} method.
 
 \begin{lstlisting}[language=Java]
     private double okapiScore(int count, String[] words, Website site, InvertedIndex index) {
     int docLength = site.getWords().size();
     if(count != 0) {
-    double IDF = this.tfidfScore.IDF(words[count], index);
-    double termFrequency = this.tfScore.getScore(words[count], site, index);
-    double score = IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
-    return score + okapiScore(count-1, words, site, index);
+        double IDF = this.tfidfScore.IDF(words[count], index);
+        double termFrequency = this.tfScore.getScore(words[count], site, index);
+        double score = IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
+        return score + okapiScore(count-1, words, site, index);
     } else {
-    double IDF = this.tfidfScore.IDF(words[0], index);
-    double termFrequency = this.tfScore.getScore(words[0], site, index);
-    return IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
-    }
+        double IDF = this.tfidfScore.IDF(words[0], index);
+        double termFrequency = this.tfScore.getScore(words[0], site, index);
+        return IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
+        }
     }
 \end{lstlisting}
-Text \\
 
+\subsection{OkapiBM25Score class} (Testing Considerations)
+The mathematical correctness of the OBM25 score calculations were verified using unit tests, which can be found in the ScoreTest.java file alongside the unit tests for the other {\tt Score} classes.
+The set up was the same as previously mentioned in the Ranking Algorithm's chapter.
+Positive tests for single word and multi word query tests were constructed in the following manner:
 
+\begin{itemize}
+    \item the word doesn't occur on the specified website
+    \item the word doesn't occur in the website index at all
+    \item the word occurs once on the specified website
+    \item the word occurs once on the specified website and at least one other website
+    \item the word occurs more than once on the specified website
+    \item multi-word query: words don't occur on the specified website
+    \item multi-word query: words occur once on the specified website
+    \item multi-word query: words occur more than once on the specified website
+    \item multi-word query: words occur once on the specified website and at least one other website
+    \item comparison of the above score values
+\end{itemize}
 
+Negative testing consideration were harder to formulate.
+The most obvious to test would be dividing by 0, however as seen in equation \ref{eq:OBM25}, it's not actually possible for the denominator to be 0 due to the optimisation variables: either $TF(w_i)$ or $\frac{W}{\bar{W}}$ has to be negative, which is not possible.
+To that end, no negative tests were considered for the {\tt OkapiBM25} class.
 
 \section{Improve the Client GUI} % Change the client code such that the result of searches are displayed in a nicer way.
 

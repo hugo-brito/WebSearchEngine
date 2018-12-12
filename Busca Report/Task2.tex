@@ -35,7 +35,7 @@ In order to achieve encapsulation and responsibility-driven design, the followin
     \item {\tt getMatchingWebsites}: Core method of the class. It is responsible for:
     \begin{itemize}
         \item Receiving the input and passing it to the {\tt cleanQuery} helper method.
-        \item Receiving the input from the {\tt cleanQuery} method in a meaningful and orderly fashion, passing it then, element by element, to the {\tt intersectedSearch} method.
+        \item Receiving the return {\tt List<String>} from the {\tt cleanQuery} method and passing it, element by element, as a parameter to the {\tt intersectedSearch} method.
         \item Receiving every result of the {\tt intersectedSearch} method and store it, so that when every element of the list is processed, it returns the matching websites.
     \end{itemize}
     \item {\tt cleanQuery}: Auxiliary private method to make sure that the input is free from unaccounted or irrelevant input.
@@ -56,8 +56,23 @@ The first steps of the process consist of:
     \item Replacing every one or more space characters by a single space character
 \end{itemize}
 The above mentioned steps are achieved by making use of the {\tt String} method {\tt replaceAll}.
+
+\begin{lstlisting}[language=Java]
+private List<String> cleanQuery (String input){
+    input = input.replaceAll("\\p{Punct}", " ").replaceAll("\\s+", " ");
+\end{lstlisting}
+
 After this, the '{\tt OR}' keyword is used as criteria for splitting the input {\tt String} using the {\tt split} method, which is then used to create a {\tt List<String> searches}. The idea is that every element of the list will consist of an intersected search, and the search results of each element will then be aggregated to achieve the final result.
 The {\tt split} method gives {\tt String []} as a result, but is then parsed as an {\tt ArrayList<String>} as this is more maleable, and through the {\tt java.util} methods allows for the consistency in the {\tt List<String> searches} to be enforced (such as trimming all the searches in case they start or end with empty spaces, deleting all empty entries in the {\tt List<String>}, and making everything lower case due to the way the website content is stored in the index). This was elegantly achieved by using lambdas.
+
+\begin{lstlisting}[language=Java]
+searches.replaceAll(String::trim);
+
+searches.removeAll(Arrays.asList(""));
+
+searches.replaceAll(String::toLowerCase);
+\end{lstlisting}
+
 \subsection{Intermediate steps in the {\tt getMatchingWebsites} method}
 The refined search query, now stored in a {\tt List<String>}, is iterated through and each element passed as a parameter to the auxiliary method {\tt intersectedSearch}, the results of which are stored in a {\tt Set<Website> results}. The root of the reason for the choice of such data structure is the fact that it does not allow duplicates (as opposed to a {\tt List}, which expedites the process. Since we intend to iterate through a set of data, it seemed appropriate to implement a {\tt for} loop.
 \subsection{{\tt intersectedSearch} auxiliary method}
@@ -74,7 +89,7 @@ To this end, the {\tt Set} method {\tt retainAll} was utilised.
 All the results from each of the different intersected searches performed by the {\tt getMatchingWebsites} method are added to a {\tt HashSet<Website>} (again, to avoid any duplication of websites), which is then passed to the {\tt rankWebsites} method and returned as a {\tt List<Website>}. The details of the {\tt rankWebsites} method will be discussed in more depth in the next chapter.
 
 \section{Testing considerations} % Description of considerations for testing the correctness of our solution.
-Upon testing for correctness, we split the test cases in two main groups: one that tests basic functionality, and a second one that tests for bad user behaviour.
+Upon testing for correctness, we split the test cases in two main groups: one that tests basic functionality using valid data (positive testing), and a second one that tests functionality with bad user behaviour (negative testing).
 \begin{itemize}
     \item Testing for the basic functionality:
         \begin{itemize}

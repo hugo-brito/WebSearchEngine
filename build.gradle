@@ -71,6 +71,7 @@ task runWeb(type: JavaExec) {
 jmh {
     group 'All You Need'
     description 'Runs the JMH benchmark.'
+    jvmArgs = ['-Djmh.separateClasspathJAR=true']
 }
 
 task runTest(dependsOn: test) {

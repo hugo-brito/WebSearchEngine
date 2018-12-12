@@ -13,7 +13,7 @@ public class InvertedIndexHashMap extends InvertedIndex {
      *
      * @param sites The list of websites that should be indexed
      */
-    @Override
+   /* @Override
     public void build(List<Website> sites) {
         Set<String> words = new HashSet<>();
 
@@ -35,5 +35,5 @@ public class InvertedIndexHashMap extends InvertedIndex {
             }
             map.put(word, websites);
         }
-    }
+    }*/
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class SearchEngine {
     private QueryHandler queryHandler;
+    private AutoComplete autoComplete;
 
     /**
      * Creates a {@code SearchEngine} object from a list of websites.
@@ -25,6 +26,7 @@ public class SearchEngine {
         idx.build(sites);
         Score score= new TFScore();//Change to the score you want to use
         queryHandler = new QueryHandler(idx,score);
+        autoComplete = new AutoComplete(idx);
     }
 
     /**
@@ -39,5 +41,10 @@ public class SearchEngine {
         }
         List<Website> resultList = queryHandler.getMatchingWebsites(query);
         return resultList;
+    }
+
+    public List<String> matchingWords(String query) {
+        List<String> matches = autoComplete.findMatches(query);
+        return matches;
     }
 }

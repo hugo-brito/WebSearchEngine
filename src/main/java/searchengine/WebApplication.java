@@ -3,10 +3,7 @@ package searchengine;
 // Spring Imports (first Application, then Controller)
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 
 // Other Imports
 import java.util.List;
@@ -69,5 +66,12 @@ public class WebApplication {
         System.out.println("Found " + resultList.size() + " websites.");
         
         return resultList;
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/words", method = RequestMethod.GET)
+    public List<String> autoComplete(@RequestParam(value = "q", defaultValue = "") String query) {
+        List<String> matchingWords = searchengine.matchingWords(query);
+        return matchingWords;
     }
 }

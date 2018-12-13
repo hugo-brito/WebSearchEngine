@@ -253,3 +253,50 @@ imageAnimation {  0% {
 		line-height: 40px;
 	}
 }
+
+/*.ui.autocomplete {*/
+	/*color: aliceblue;*/
+	/*font-weight: 500;*/
+	/*font-size: 1.3em;*/
+	/*min-width: 200px;*/
+	/*text-align: center;*/
+	/*border-radius: 75px;*/
+	/*background-color: rgba(0,0,0,0.70);*/
+	/*min-height: 75px;*/
+	/*position: absolute;*/
+	/*top: 100%;*/
+	/*left: 0;*/
+	/*z-index: 1000;*/
+	/*float: left;*/
+	/*margin: auto;*/
+/*}*/
+
+.ui-menu-item {
+	display: table;
+	text-align: center;
+	padding: 3px 15px;
+	/*clear: both;*/
+	font-weight: normal;
+	line-height: 18px;
+	color: aliceblue;
+	background-color: rgba(0,0,0,0.70);
+	/*white-space: nowrap;*/
+	/*text-decoration: none;*/
+	min-width: 600px;
+	min-height: 25px;
+}
+
+.ui-state-hover, .ui-state-active {
+	color: black;
+	text-decoration: none;
+	background-color: rgba(255,255,255,0.70);
+	border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+}
+
+.ui-helper-hidden-accessible { display:none; }
+
+.ui-autocomplete {
+	list-style: none;
+}

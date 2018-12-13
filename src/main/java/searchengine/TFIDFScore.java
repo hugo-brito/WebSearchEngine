@@ -54,7 +54,8 @@ public class TFIDFScore implements Score{
             return 0;
         }
         // calculates the score. should be in the range of zero upwards
-        return Math.log10(this.websiteCollectionSize/numberOfResults);
+        return Math.log(this.websiteCollectionSize/numberOfResults)/Math.log(2);
+                //Math.log10(this.websiteCollectionSize/numberOfResults);
     }
 
     /**

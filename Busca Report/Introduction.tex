@@ -2,19 +2,19 @@
 \label{sec:Introduction}
 The goal of this project is to develop search engine as part of the Introductory Programming course at the IT University of Copenhagen. Sections 2- 4 are reporting the solutions on the mandatory tasks posted in the project description, namely Faster Queries using an Inverted Index, Refined Queries and Ranking Algorithms. Each of the mandatory tasks contain description of the\\ 
 
-\begin{enumerate}
+\begin{itemize}
 \item Taks, which is introduction of the task that have to be solved in the given section;
 \item Basic Approach, which describes the solution;
 \item Technical description, explaining the software architecture used in the solution;
 \item Testing considerations, considering the corresctness of the solution;
 \item  Benchmark/ Reflection, includes benchmarking results or other conclusions based on the observations or theoretical considerations;
-\end{enumerate}
+\end{itemize}
 
 Besides the mandatory tasks, the challenge of the implementating OkapiBM25 algorithm for the task Ranking Algorithms have been solved as well. Some extensions also have been implemented, namely:
-\begin{enumerate}
+\begin{itemize}
     \item Changes to the client GUI
     \item Implementation of the WebCrawler
-\end{enumerate}
+\end{itemize}
 
 \section{GitHub}
 \label{sec:GitHub}
@@ -26,29 +26,32 @@ The project documentation have been submitted via learnit.dk and the source code
 The code is also available on ITU's GitHub: https://github.itu.dk/wilr/ip18groupR\\
 To start the program one should:
 \begin{enumerate}
-    \item  Download the zip file;
-    \item  Select directory for saving the file;
-    \item  Open the Command Promt;
-    \item  Find the directory, where programm files have been saved;
-    \item  Build the Gradlew by calling "./gradlew" for Linux users (L) or "gradlew" for MAc and Windows users (MW);
-    \item  To start the server as a  Spring boot application use the command "gradlew runWeb"
-    \item After the server is started, open a browser and type in \textit{http://localhost:8080/}
-    \item Start searching by typing in search queries in the search textbox shown on the HTML page
-    \item To have an overlook on other tasks performed by gradlew, call "./gradlew tasks" (L) or" gradlew tasks" (MW);
+    \item Download the zip file;
+    \item Select directory for saving the file;
+    \item Open the Command Promt;
+    \item Find the directory, where programm files have been saved;
+    \item Build the Gradlew by calling  \textit{./gradlew} for Linux users (L) or \textit{gradlew} for Mac and Windows users;
+    \item To start the server as a  Spring boot application use the command \textit{gradlew runWeb};
+    \item After the server is started, open a browser and type in \textit{http://localhost:8080/};
+    \item Start searching by typing in search queries in the search textbox shown on the HTML page and press Enter on the keyboard or \textit{Busca} button;
+    \item To have an overlook on other tasks performed by gradlew, call \textit{gradlew tasks};
 \end{enumerate}
 
 To change the index file:
-\begin{enumerate}
-    \item Easiest way to change the index file is to open the configuration.properties file and change the database property to a different file;
-    \item Other way to change the index file is to give the file path as arguments (args w/ --args) when calling the gradle task \textit{runWeb}
-\end{enumerate}
+\begin{itemize}
+    \item Easiest way to change the index file is to open the \textit{configuration.properties} file and change the database property to a different file;
+    \item Other way to change the index file is to give the file path as arguments \textit{(args w/ --args)} when calling the gradle task \textit{runWeb}
+\end{itemize}
 
 To start the extension WebCrawler one should:
-\begin{enumerate}
-    \item Call the gradlew task by writing the command  \textit{gradlew startWebCrawler}
-    \item Every time the WebCrawler have visited a web page it will append it to the \textit{real\_data\_file.txt in the data}
-    \item The \textit{real\_data\_file.txt in the data} can then be used as index file for the search engine
-\end{enumerate}
+\begin{itemize}
+
+    \item Call the gradlew task by writing the command  \textit{gradlew startWebCrawler};
+    \item Every time the WebCrawler have visited a web page it will append it to the \textit{real\_data\_file.txt in the data};
+\item One has to make sure there are no previous WebCrawler running into the background, as it will continue to add results to the \textit{real\_data\_file.txt in the data};
+\item In order to search throught the WebCralwer results, the \textit{real\_data\_file.txt in the data} have to be used as index file for the search engine;
+
+\end{itemize}
 
 \section{Statement of Contribution}
 \label{sec:Statement of Contribution}

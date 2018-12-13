@@ -9,20 +9,6 @@ import static org.junit.Assert.assertFalse;
 
 class FileHelperTest {
 
-    @Test
-    void parseNoFile() {
-        assertTrue(FileHelper.parseFile("wrongfilename.txt").isEmpty());
-        // Can make it read what the thingy says.
-//        Throwable throwable;
-//        throwable = assertThrows(IOException.class, () ->
-//            FileHelper.parseFile("wrongfilename.txt"));
-//
-//        assertAll(
-//                () -> assertEquals("wrongfilename.txt (The system cannot find the file specified)" ,throwable.getMessage()),
-//                () -> assertNull(throwable.getCause())
-//        );
-    }
-
     // file is empty
     @Test
     void parseEmptyFile() {
@@ -44,8 +30,10 @@ class FileHelperTest {
         assertEquals(0, sites.size());
     }
 
-    // file has at least three lines but contents is not in the expected format of
-    // urls, title, word(s)
+    /*
+    file has at least three lines but contents is not in the expected format of
+    urls, title, word(s)
+     */
     @Test
     void parseBadFile3() {
         List<Website> sites = FileHelper.parseFile("data/test-file-errors.txt");
@@ -56,8 +44,10 @@ class FileHelperTest {
         assertFalse(sites.get(0).containsWord("word3"));
     }
 
-    // file has at least three lines and contents is in expected format of
-    // urls, title, word(s)
+    /*
+    file has at least three lines and contents is in expected format of
+    urls, title, word(s)
+     */
     @Test
     void parseGoodFile() {
         List<Website> sites = FileHelper.parseFile("data/test-file4.txt");

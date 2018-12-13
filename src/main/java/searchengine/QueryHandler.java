@@ -60,7 +60,7 @@ class QueryHandler {
         Map<Website, Double> scoredWebsites = new HashMap<>();
 
         for (Website site : sites) {
-            double siteScore = 0;
+            double siteScore = 0.0;
             for(String intersectedSearch : query) {
                 String[] words = intersectedSearch.split(" ");
                 double termScore = 0.0;

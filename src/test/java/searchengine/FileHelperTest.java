@@ -1,8 +1,6 @@
 package searchengine;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -13,9 +11,16 @@ class FileHelperTest {
 
     @Test
     void parseNoFile() {
-        Assertions.assertThrows(FileNotFoundException.class, () -> {
-            FileHelper.parseFile("wrongfilename.txt");
-        });
+        assertTrue(FileHelper.parseFile("wrongfilename.txt").isEmpty());
+        // Can make it read what the thingy says.
+//        Throwable throwable;
+//        throwable = assertThrows(IOException.class, () ->
+//            FileHelper.parseFile("wrongfilename.txt"));
+//
+//        assertAll(
+//                () -> assertEquals("wrongfilename.txt (The system cannot find the file specified)" ,throwable.getMessage()),
+//                () -> assertNull(throwable.getCause())
+//        );
     }
 
     // file is empty

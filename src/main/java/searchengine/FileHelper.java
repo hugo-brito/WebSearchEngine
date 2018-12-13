@@ -1,6 +1,7 @@
 package searchengine;
 
 // For reading database file
+import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.Properties;
  * websites from a file.
  */
 public class FileHelper {
+
     /**
      * Parses a file and extracts all the websites that are contained
      * in the file.
@@ -110,10 +112,9 @@ public class FileHelper {
             if (url != null) {
                 sites.add(new Website(url, title, listOfWords));
             }
-        } catch (FileNotFoundException e) {
-           e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
         return sites;
     }
 
@@ -141,6 +142,7 @@ public class FileHelper {
     public static List<Website> parseFile(String[] args) {
         String database;
         if (args.length < 1) {
+            System.out.println("NO PROGRAM ARGUMENTS; READING CONFIG...");
             database = FileHelper.readConfig();
             if (database == null || database.isEmpty() ) {
                 System.out.println("Error: Filename is missing");

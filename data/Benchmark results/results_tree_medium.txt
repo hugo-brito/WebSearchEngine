@@ -1,0 +1,2 @@
+﻿Benchmark                      Mode  Cnt      Score     Error  Units
+IndexBenchmark.measureAvgTime  avgt   25  30176.993 ± 415.305  ns/op

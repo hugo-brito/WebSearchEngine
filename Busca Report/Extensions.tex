@@ -108,4 +108,28 @@ Changes in the javascript code, which can be found in the static/code.js, where 
     \end{itemize}
     \item Besides the title and the URL, the results are also accompanied by a certain number word from the given website.
     \item Clicking on a result will open it on a new tab (instead of the current tab).
-\end{itemize}
+\end{itemize
+
+\section{Autocomplete}
+\subsection{Task}
+Autocomplete is a feature that suggests possible input based on the current input in the input field in a dropdown list. One of the extensions was implementing this feature.
+
+\subsection{Basic Approach}
+The javascript sits on the client side of the search engine in the static folder in a file named {\tt code.js}. It is responsible for the behaviour of the webpage and is one of 3 files that inform how the webpage looks and acts (the other two being {\tt index.html} and {\tt style.css}).
+As such, it is also responsible for communicating with the server to send and retrieve data. The javascript communicates with the sever using JSON. The server then parses the JSON request and sends a response back to client for it to then handle.
+\\
+The JQuery UI offers an autocomplete plugin so little javascript is required to implement the feature. All that is required is to link the plugin to the input field in your HTML and then define a data source for your autocomplete feature to draw its suggestions from.
+The simplest way to accomplish that is to define a local array of words in your Javascript file, but this method only works for small data sizes and therefore is not suitable for implementation in a search engine.
+Which means that the alternative is to retrieve data from the server and use that as the source for the plugin.
+
+\subsection{Technical Description}
+Firstly, the JQuery UI plugin was implemented in the {\tt code.js} file and linked to the input field {\tt searchbox}.
+Rather than sourcing a local array, a {\tt function(request, response)} was created as the source which makes a call to the server for data and performs some action on the response.
+Originally, the idea was that each character typed in the input field would trigger a call to server and a method in the {\tt WebApplication} class which would check a list of words (built from the Index) to see whether any words contained the request term and build a list of the matches to return to the client.
+However, this idea would result on many calls being made to the server, which would slow down the operation of the search engine substantially. This was then revised to make a call to the server once and store the response locally as the autocomplete plugin source, and the method to return the data was revised in turn.
+\\
+Next, the number of results was trimmed so that the dropdown list of suggestions didn't stretch the entire length of the page (as users should not be required to scrolled through results), and adjusted the plugin options so that results are only returned after at least 3 characters are in the input field.
+\\
+Finally, the results returned matching the request term were ordered so that results beginning with the request term appeared at the top of the dropdown list of suggestions.
+\\
+The styling for the plugin had to be added so as to match the styling of the rest of the webpage (colour, background etc), as well responsiveness to page resizing

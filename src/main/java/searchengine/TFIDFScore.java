@@ -9,7 +9,6 @@ import java.util.List;
  */
 public class TFIDFScore implements Score{
 
-    // should this be made static? Since it is the same regardless of how many object of TFIDFScore is created.
     private static double WEB_COLLECTION_SIZE;
     private TFScore tfScore;
 

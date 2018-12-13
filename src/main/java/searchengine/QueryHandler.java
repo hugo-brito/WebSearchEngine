@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Responsible for answering queries to our search engine.
+ * Responsible for answering queries from the search engine.
  *
  * @author Ashley Rose Parsons-Trew
  * @author Hugo Delgado de Brito

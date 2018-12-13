@@ -1,9 +1,6 @@
 package searchengine;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Ranking algorithm that calculates a cumulative score for the relevance of a search string in
@@ -16,7 +13,7 @@ public class OkapiBM25 implements Score {
     private static double AVERAGE_DOC_LENGTH;
 
     /*
-     * Free parameters used in the Okapi BM25 score calculation for optimisation.
+     Free parameters used in the Okapi BM25 score calculation for optimisation.
      */
     private static double K_1 = 1.2;
     private static double B = 0.75;

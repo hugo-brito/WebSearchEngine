@@ -25,9 +25,9 @@ public class SearchEngine {
      * @param sites the list of websites
      */
     public SearchEngine(List<Website> sites) {
-        Index idx = new InvertedIndexHashMap();//Change to preferred Index
+        Index idx = new InvertedIndexHashMap(); //Change to preferred Index
         idx.build(sites);
-        Score score= new TFScore();//Change to the score you want to use
+        Score score = new OkapiBM25(idx); //Change to the score you want to use
         queryHandler = new QueryHandler(idx,score);
     }
 
@@ -39,7 +39,7 @@ public class SearchEngine {
      */
     public List<Website> search(String query) {
         if (query == null || query.isEmpty() ) {
-            return new ArrayList<Website>();
+            return new ArrayList<>();
         }
         List<Website> resultList = queryHandler.getMatchingWebsites(query);
         return resultList;

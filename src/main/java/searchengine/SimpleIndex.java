@@ -2,11 +2,11 @@ package searchengine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An index comprised of a list of websites.
+ */
 public class SimpleIndex implements Index {
 
-    /**
-     * The list of websites stored in the index.
-     */
     private List<Website> sites = null;
 
     /**
@@ -36,6 +36,10 @@ public class SimpleIndex implements Index {
         return result;
     }
 
+    /**
+     * Overrides the inherited toString method so it becomes something that can be compared.
+     * @return String representation of the given SimpleIndex
+     */
     @Override
     public String toString() {
         return "SimpleIndex{" +

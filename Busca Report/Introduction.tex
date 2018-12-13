@@ -19,8 +19,36 @@ Besides the mandatory tasks, the challenge of the implementating OkapiBM25 algor
 \section{GitHub}
 \label{sec:GitHub}
 
-The source code that accompanties this report as a singel zip dile called ip18groupR.zip has been handed alongside with this report. 
-The code is also available on ITU's GitHub: https://github.itu.dk/wilr/ip18groupR
+\section{Project Delivery}
+\label{sec:Project Delivery}
+
+The project documentation have been submitted via learnit.dk and the source code that accompanties this report as a singel zip dile called ip18groupR.zip has been handed alongside with this report.
+The code is also available on ITU's GitHub: https://github.itu.dk/wilr/ip18groupR\\
+To start the program one should:
+\begin{enumerate}
+    \item  Download the zip file;
+    \item  Select directory for saving the file;
+    \item  Open the Command Promt;
+    \item  Find the directory, where programm files have been saved;
+    \item  Build the Gradlew by calling "./gradlew" for Linux users (L) or "gradlew" for MAc and Windows users (MW);
+    \item  To start the server as a  Spring boot application use the command "gradlew runWeb"
+    \item After the server is started, open a browser and type in \textit{http://localhost:8080/}
+    \item Start searching by typing in search queries in the search textbox shown on the HTML page
+    \item To have an overlook on other tasks performed by gradlew, call "./gradlew tasks" (L) or" gradlew tasks" (MW);
+\end{enumerate}
+
+To change the index file:
+\begin{enumerate}
+    \item Easiest way to change the index file is to open the configuration.properties file and change the database property to a different file;
+    \item Other way to change the index file is to give the file path as arguments (args w/ --args) when calling the gradle task \textit{runWeb}
+\end{enumerate}
+
+To start the extension WebCrawler one should:
+\begin{enumerate}
+    \item Call the gradlew task by writing the command  \textit{gradlew startWebCrawler}
+    \item Every time the WebCrawler have visited a web page it will append it to the \textit{real\_data\_file.txt in the data}
+    \item The \textit{real\_data\_file.txt in the data} can then be used as index file for the search engine
+\end{enumerate}
 
 \section{Statement of Contribution}
 \label{sec:Statement of Contribution}

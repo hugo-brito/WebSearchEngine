@@ -30,7 +30,7 @@ This was followed by methods of the {\tt Matcher} class.\\
 Even though it does not look to be that big of a change, doing so means that the two field variables are no longer needed, hence less has to be juggled when reading and making further changes to the code.
 
 \section{Testing}
-White-box tests were developed around the branching statements in the updated method, and a coverage table was produced, please refer to Appendix \ref{tab:Coverage}. From this coverage table the \ref{tab:Expectancy} was produced. The data set data/test-file1.txt is an empty file, and the rest contained the data shown in \ref{tab:DataFiles}. This process using the Coverage and Expectancy table shown in Appendix \ref{app:table}, is an example of how we construct our tests.
+White-box tests were developed around the branching statements in the updated method, and a coverage table was produced, please refer to Appendix \ref{tab:Coverage}. From this coverage table the \ref{tab:Expectancy} was produced. Please note that while {\tt try} and {\tt catch} cases were considered the catch call was disregarded as the exception was already being handled. The data set data/test-file1.txt is an empty file, and the rest contained the data shown in \ref{tab:DataFiles}. This process using the Coverage and Expectancy table shown in Appendix \ref{app:table}, is an example of how we construct our tests.
 JUnit tests were then produced from table \ref{tab:Expectancy}, as found in {\tt FileHelperTest.java}.\\ Correctness was verified along two axis:
 \begin{itemize}
     \item the size of the {\tt List<Website>} returned,

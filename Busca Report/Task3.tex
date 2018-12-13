@@ -86,9 +86,6 @@ Due to the changes made to the {\tt FileHelper} class — namely, that no websit
 As the $TFIDF$ makes use of the $TF$ calculation, the {\tt TFIDFScore} class was given a field of type {\tt TFScore} with which to call methods on as needed, rather than creating a new object each time it was required. Again, helper methods were added to deal with the different aspects of the calculation i.e. the $IDF$ and the number of websites in the search engine index. Also, in order to enable any index to work with this impementation, a helper method was added there, {\tt provideIndex()}, which returns a {\tt Collection<Website>}, much needed to compute this. The number of websites in the index was built from the index {\tt Map<String, Website>}. Such implementation makes use of the fact that a {\tt HashSet} allows no duplicates in order to calculate the number of distinct websites in the index.
 Again, the {\tt getScore} method only handles the multiplication.
 
-%this should be move to extension.
-For the tests on the {\tt OkapiBM25Score} class, single word and multi word query tests were constructed.
-
 \section{Testing considerations}
 The mathematical correctness of the score calculations were verified using unit tests, which can be found in the ScoreTest.java file. The positive testing approach were applied in this context.
 The set up comprised of building a small index of websites, which allowed for the score values of various words on various

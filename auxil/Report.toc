@@ -49,5 +49,5 @@
 \contentsline {subsection}{\numberline {5.2.1}Adding content to be displayed by the html}{30}{subsection.5.2.1}
 \contentsline {subsection}{\numberline {5.2.2}Styling}{31}{subsection.5.2.2}
 \contentsline {subsection}{\numberline {5.2.3}Adding functionality through javascript}{31}{subsection.5.2.3}
-\contentsline {chapter}{\numberline {A}Test Figure reference}{33}{appendix.A}
-\contentsline {chapter}{\numberline {B}Tables}{35}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{33}{appendix.A}
+\contentsline {chapter}{\numberline {B}Images}{37}{appendix.B}

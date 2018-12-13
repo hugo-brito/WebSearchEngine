@@ -2,6 +2,7 @@ package searchengine;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * The search engine. Upon receiving a list of websites, it performs
@@ -43,8 +44,11 @@ public class SearchEngine {
         return resultList;
     }
 
-    public List<String> matchingWords(String query) {
-        List<String> matches = autoComplete.findMatches(query);
-        return matches;
+    /**
+     * Returns a set of words
+     * @return a set containing all words from all websites
+     */
+    public Set<String> source() {
+        return autoComplete.getWordsList();
     }
 }

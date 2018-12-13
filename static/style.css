@@ -243,6 +243,10 @@ imageAnimation {  0% {
 }
 
 @media screen and (max-width:728px) {
+	.ui-menu-item, .ui-state-hover, .ui-state-active, ui-autocomplete, .ui-helper-hidden-accessible {
+		width: 90%;
+	}
+
 	.footer {
 		background-color: black;
 	}
@@ -277,12 +281,12 @@ imageAnimation {  0% {
 	padding: 3px 15px;
 	/*clear: both;*/
 	font-weight: normal;
-	line-height: 18px;
+	line-height: 1.5em;
 	color: aliceblue;
 	background-color: rgba(0,0,0,0.70);
 	/*white-space: nowrap;*/
 	/*text-decoration: none;*/
-	min-width: 600px;
+	width: 600px;
 	min-height: 25px;
 }
 

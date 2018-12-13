@@ -1,7 +1,9 @@
 // JavaScript Document
 
+var baseUrl = "http://localhost:8080";
+
 $(document).ready(function() {
-    var baseUrl = "http://localhost:8080";
+    // var baseUrl = "http://localhost:8080";
 
     $("#searchbutton").click(function () {
         console.log("Sending request to server.");
@@ -45,7 +47,7 @@ $(document).ready(function() {
 });
 
  $(function() {
-    var baseUrl = "http://localhost:8080";
+    // var baseUrl = "http://localhost:8080";
     var wordArray;
         $.ajax({
             method: "GET",
@@ -67,8 +69,10 @@ $(document).ready(function() {
                         });
                         response(startsWith.concat(contains).slice(0, 8));
                     },
-                    minLength: 3
+                    minLength: 3,
+                    width: 200
                 })
             }
         })
+     // $.ui.autocomplete.css('width', $('#searchbox').width());
  });

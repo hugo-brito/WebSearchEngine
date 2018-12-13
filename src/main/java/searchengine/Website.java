@@ -5,22 +5,15 @@ import java.util.List;
  * A website is the basic entity of the search engine. It has a url, a title, and a list of words.
  *
  * @author Martin Aumüller
+ * @author Ashley Rose Parsons-Trew
+ * @author Hugo Delgado de Brito
+ * @author Ieva Kangsepa
+ * @author Jonas Hartmann Andersen
  */
 public class Website implements Comparable<Website> {
 
-    /**
-     * the website's title
-     */
     private String title;
-
-    /**
-     * the website's url
-     */
     private String url;
-
-    /**
-     * a list of words storing the words on the website
-     */
     private List<String> words;
 
     /**
@@ -69,10 +62,14 @@ public class Website implements Comparable<Website> {
      * @param word the query word
      * @return True, if the word is present on the website
      */
-    public Boolean containsWord(String word) {
+    Boolean containsWord(String word) {
         return words.contains(word);
     }
 
+    /**
+     * Overrides the inherited toString method so it can print the website in a meaningful way.
+     * @return String representation of the given Website.
+     */
     @Override
     public String toString() {
         return "Website{" +
@@ -83,12 +80,12 @@ public class Website implements Comparable<Website> {
     }
 
     /**
-     * Implemented this interface so the websites can be sorted in TreeMaps and TreeSets (they gain the ability to compare themselves
-     * @param w - a website to compare itself to
-     * @return
+     * Overrides the Comparable interface compareTo method, so that websites are able to be compared.
+     * @param site a given website that needs to be compared.
+     * @return 1, 0 or -1 based on natural order of the 2 titles being compared.
      */
     @Override
-    public int compareTo(Website w) {
-        return this.title.compareTo(w.getTitle());
+    public int compareTo(Website site) {
+        return this.title.compareTo(site.getTitle());
     }
 }

@@ -8,9 +8,13 @@ import java.util.ArrayList;
  * the necessary configuration (i.e. building an index and a query
  * handler) to then be ready to receive search queries.
  *
- * @author Willard Rafnsson
- * @author Martin Aumüller
  * @author Leonid Rusnac
+ * @author Martin Aumüller
+ * @author Willard Rafnsson
+ * @author Ashley Rose Parsons-Trew
+ * @author Hugo Delgado de Brito
+ * @author Ieva Kangsepa
+ * @author Jonas Hartmann Andersen
  */
 public class SearchEngine {
     private QueryHandler queryHandler;
@@ -21,9 +25,9 @@ public class SearchEngine {
      * @param sites the list of websites
      */
     public SearchEngine(List<Website> sites) {
-        Index idx = new InvertedIndexHashMap();//Change to preferred Index
+        Index idx = new InvertedIndexHashMap(); //Change to preferred Index
         idx.build(sites);
-        Score score= new TFScore();//Change to the score you want to use
+        Score score = new OkapiBM25(idx); //Change to the score you want to use
         queryHandler = new QueryHandler(idx,score);
     }
 
@@ -35,7 +39,7 @@ public class SearchEngine {
      */
     public List<Website> search(String query) {
         if (query == null || query.isEmpty() ) {
-            return new ArrayList<Website>();
+            return new ArrayList<>();
         }
         List<Website> resultList = queryHandler.getMatchingWebsites(query);
         return resultList;

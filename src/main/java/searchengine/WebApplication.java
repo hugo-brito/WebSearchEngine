@@ -17,9 +17,13 @@ import java.util.List;
  * class, which Spring makes sure to construct (through an elaborate
  * component-scan).
  *
+ * @author Leonid Rusnac
  * @author Willard Rafnsson
  * @author Martin Aumüller
- * @author Leonid Rusnac
+ * @author Ashley Rose Parsons-Trew
+ * @author Hugo Delgado de Brito
+ * @author Ieva Kangsepa
+ * @author Jonas Hartmann Andersen
  */
 @RestController
 @SpringBootApplication

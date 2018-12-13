@@ -14,19 +14,15 @@ class IndexTest {
 
     @Rule
     private SimpleIndex simpleIndex = new SimpleIndex();
-    // adding testing units for the treemap index
 
     @Rule
     private InvertedIndex treeIndex = new InvertedIndexTreeMap();
-    // adding testing units for the hashmap index
 
     @Rule
     private InvertedIndex hashIndex = new InvertedIndexHashMap();
 
-    // Use the parseFile to create a method that reads in a lot of words, to test the index. Maybe add that to benchmark. To stresstest.
-
     @Rule
-    List<Website> sites = new ArrayList<Website>();
+    List<Website> sites = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -124,14 +120,6 @@ class IndexTest {
         index.build(readFile);
         assertEquals(readFile.size(), index.provideIndex().size());
     }
-
-// Takes all the websites read and adds them to a list, the hash set deletes duplicates.
-//    private List<Website> mapToList(InvertedIndex index) {
-//        List<Website> indexSites = index.getIndexMap().values().stream()
-//                .flatMap(Collection::stream)
-//                .collect(Collectors.toList());
-//        return new ArrayList<>(new HashSet<>(indexSites));
-//    }
 
     // takes the file and makes it into a list, only made for readability.
     private List<Website> readFile(String file) {

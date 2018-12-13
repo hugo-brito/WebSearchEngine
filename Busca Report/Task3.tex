@@ -20,8 +20,8 @@ Please note that these consist of different implementations of the same aforemen
 Research was conducted into the implementations of each of the ranking algorithms.
 
 \subsection{Term Frequency}
-The term frequency (TF) is simply this: given a word and a document (which in this case, is a webpage), how many times does a word appears on that document?\newline
-Even though there are various permutations on this basic formula, the TF formula settled on in the end was:\newline
+The TF is simply this: given a word and a document (which in this case, is a webpage), how many times does a word appears on that document? \citep{luhn1957statistical} \newline
+Even though there are various implementations on this basic formula, the TF formula settled on in the end was:\newline
 Let
 \begin{itemize}
     \item $TF$ be the term frequency
@@ -36,8 +36,8 @@ We have:
 Such formula enabled us to add a layer of normalisation on the score, as a word occurring 10 times on a 50-word-long website has a different significance to a word appearing 10 times on a 500-word-long website.
 
 \subsection{Term Frequency — Inverse Document Frequency}
-Before the ``Term Frequency — Inverse Document Frequency'' (TFIDF) algorithm can be discussed, the idea behind ``Inverse Document Frequency'' must be explained.\newline
-The idea behind the inverse document frequency is that, while the number of times a word appears on a webpage is a good indication of how important that word is to that webpage, there are many common words such as `the', `and', `this', etc., that will inevitably appear multiple times on a website and will therefore skew the score of any kind of score based on term frequency.
+Before the TFIDF algorithm can be discussed, the idea behind ``Inverse Document Frequency'' must be explained.\newline
+The idea behind the inverse document frequency is that, while the number of times a word appears on a webpage is a good indication of how important that word is to that webpage, there are many common words such as `the', `and', `this', etc., that will inevitably appear multiple times on a website and will therefore skew the score of any kind of score based on term frequency \citep{Jones72astatistical}.
 The inverse document frequency formula is designed to take this into account and is calculated as follows:\newline
 Let
 \begin{itemize}
@@ -47,7 +47,7 @@ Let
 \end{itemize}
 We have:
 \begin{align}
-    IDF &= log_{10}\bigg(\frac{s}{sw}\bigg)
+    IDF &= log_{2}\bigg(\frac{s}{sw}\bigg)
     \label{eq:IDF}
 \end{align}
 Taking the $log$ of this ratio means that, the more times a word appears on a website in the database, the closer the $IDF$ gets to $0$, and a word that appears on every website in the database is awarded an $IDF$ value of $0$.
@@ -59,7 +59,7 @@ By (\ref{eq:TF}) and (\ref{eq:IDF}), the $TFIDF$ score is calculated as follows:
     TFIDF = TF \times IDF
 \end{align*}
 The $TF$ score judges the relevance of the word to the website, and the $IDF$ is a weighting to adjust for common words. Very common words are awarded a $TFIDF$ score of 0 (or close to 0) and therefore give no impact in intersected searches.\newline
-It was also decided that the various permutations of {\tt Score} classes created would be solely responsible for the calculations. Any required logic was to be handled by the {\tt QueryHandler} class.
+It was also decided that the various implementations of {\tt Score} classes created would be solely responsible for the calculations.
 
 \section{Technical Description}
 As per the task description, a generalised {\tt Score} interface was created with only one method — {\tt getScore} — which performs the score calculation for the given word with the given website, taking the following parameters:
@@ -68,7 +68,7 @@ As per the task description, a generalised {\tt Score} interface was created wit
     \item {\tt @param site}: the website being scored against the search string
     \item {\tt @param index}: the index of websites
 \end{itemize}
-Each of the below classes implement this interface.
+Each of the below classes implement this interface. Besides this the {\tt rankWebsites} method was added to the {\tt QueryHandler}. That essentially takes one of the given ranking algorithms and scores the websites relevant to the query and then order them from highest-to-lowerst. This method will also be used by the OkapiBM25.
 
 \begin{figure}[t]
     \centering
@@ -86,28 +86,18 @@ Due to the changes made to the {\tt FileHelper} class — namely, that no websit
 As the $TFIDF$ makes use of the $TF$ calculation, the {\tt TFIDFScore} class was given a field of type {\tt TFScore} with which to call methods on as needed, rather than creating a new object each time it was required. Again, helper methods were added to deal with the different aspects of the calculation i.e. the $IDF$ and the number of websites in the search engine index. Also, in order to enable any index to work with this impementation, a helper method was added there, {\tt provideIndex()}, which returns a {\tt Collection<Website>}, much needed to compute this. The number of websites in the index was built from the index {\tt Map<String, Website>}. Such implementation makes use of the fact that a {\tt HashSet} allows no duplicates in order to calculate the number of distinct websites in the index.
 Again, the {\tt getScore} method only handles the multiplication.
 
-\section{Testing considerations}
-The correctness of the score calculations were verified using unit tests, which can be found in the ScoreTest.java file.
-The set up comprised of building a small index of websites, which allowed for the score values of various words on various
-websites to be calculated manually and compared to the results of the {\tt getScore} method.
-Each test covered one class, and the individual tests were determined using the standard white-box coverage considerations.
-For the tests on the {\tt TFIDFScore} class, a comparison was also included to confirm that a word occurring once on more than one site will have a lower score than a word occurring once on just one site.
+%this should be move to extension.
 For the tests on the {\tt OkapiBM25Score} class, single word and multi word query tests were constructed.
 
-\section{Reflection}
-
 \section{Testing considerations}
-The mathematical correctness of the score calculations were verified using unit tests, which can be found in the ScoreTest.java file.
+The mathematical correctness of the score calculations were verified using unit tests, which can be found in the ScoreTest.java file. The positive testing approach were applied in this context.
 The set up comprised of building a small index of websites, which allowed for the score values of various words on various
 websites to be calculated manually and compared to the results of the {\tt getScore} method.
-Each test covered one class, and the individual tests were determined using the standard white-box coverage considerations.
-The application of the algorithms were tested by RackScoreTest.java file. Test was used to see how do ranking algorithms Term frequency (TF) and Term frequency - inverse document frequency  behave on the set up, which tries to imitate real life case. The two ranking algorithms were testing websites which were set up in a fallowing manner: Website 1.com contains 12 words, it repeats "Queen of Denmark" three times and has two "randomwords". Website 3.com contains 14 words, also contain two "randomwords", "Queen of Denmark" is mentioned once and the rest of the words are "of". There are also two websites in the {\tt setUp} that contains only words "of". There role of these two websites is to create a background noise, as it would be expected that in the real websites would contain the filler words like "of" frequently. \\
-It was expected that when TF algorithm would rank higher the websites that have more words matching the search query "Queen of Denmark" compared to "randomwords", therefore Website 1.com, consisting of 12 words, where all words except two "randomwords" match the query ranks lower than the Website 3.com which consist of 14 words, where all words except two "randomwords" match the query. These tests passed.\\
-It was expected that testing TFIDF ranking, would rank Website 1.com higher than Website 3.com, because it considers not only if the words on the website match the search query, but also "jusge" the relevance of the words in the search query, and in the given test there are two websites that contains words "of" and not "Queen" or "Denmark". These tests also passed. 
+Each test covered one class, and the individual tests were determined using the standard white-box coverage considerations. For the tests on the {\tt TFIDFScore} class, a comparison was also included to confirm that a word occurring once on more than one site will have a lower score than a word occurring once on just one site.
+
+The application of the algorithms were tested in the RackScoreTest.java file. Black box & positive testing where used in these tests. The test checked whether ranking algorithm TF and TFIDF would rank the websites correctly. The two ranking algorithms were testing websites which were set up specifically for the tests to allow easier prediction of how the ranking should be. Two websites in the {\tt setUp} was made to create noise, to see how the algorithms would react to them.\\
 
 \section{Reflection}
-After learning about and implementing two different ranking algorithms and testing their implication it was possible to compare the different results they provided. 
-While the Term Frequency algorithm sums together the term frequency of each word in the search query (namely the number of times word appears on the website divided by the number of words on the website), the Term Frequency - Inverse Document Frequency algorithm also considers the relative frequency of each of the words in the search query appearing across the collection of websites on which the search is performed. This means that if search query would consist of "Queen of Denmark", the TFIDF ranking algorithm would provide more relevant results than TF ranking algorithm, because one could assume that the word "of" would appear significantly more often across different websites, than words "Queen" or "Denmark" and without using log function to lower the significance of the words that are less relevant to the search query, the search results would be less relevant. Therefore while the  unit tests were used to secure that the software functions as intended, test {\tt setUp} in RackScoreTest.java was also set to demonstrate potential relationship between the search query and the background of the rest of the websites in a abstract and simplified manner.\\
-Based on the theoretical assumptions on the relevance of the two algorithms, when applied to search tasks and the two algorithm behavior in the simplified RackScoreTest, where the website containing "Queen of Denmark" (Website 1.com) three times was ranked higher than the website containing "Queen of Denmark" once and word "of" ten times (Website 3.com) when ranked by TFIDF ranking algorithm, and vice versa when ranked by TF ranking algorithm,  it was concluded that between these two algorithms the TFIDF is the most relevant to this search engine project. 
-
-
+After implementing the two different ranking algorithms and testing their implication it was possible to compare the different results they provided.
+While the TF algorithm sums together the term frequency of each word in the search query, the TFIDF algorithm also considers the relative frequency of each of the words in the search query appearing across the collection of websites on which the search is performed. This means that if the search query would consist of "Queen of Denmark", the TFIDF ranking algorithm would provide more relevant results than the TF algorithm, because one could assume that the word "of" would appear significantly more often across different websites, than words "Queen" or "Denmark". Therefore while the  unit tests were used to secure that the software functions as intended, test {\tt setUp} in RackScoreTest.java was also set to demonstrate the potential relationship between the search query and the background of the rest of the websites in an abstract and simplified manner.\\
+Based on the theoretical assumptions on the relevance of the two algorithms, when applied to search tasks and their behavior in the RackScoreTest, it can be concluded that the TFIDF is the most relevant to as it provides a more appropriate result to the user's search query.

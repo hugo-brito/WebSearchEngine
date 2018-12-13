@@ -93,7 +93,7 @@ Upon testing for correctness, we split the test cases in two main groups: one th
 valid data (positive testing), and a second one that tests functionality with bad user behaviour (negative testing).
 To determine the expected results from the tests we copied each website from enwiki-tiny.txt into a separate regex101.com and used
 the following regex to help determine whether the words were on the website: \\
-Regex = (?:^|\\W)word(?:$|\\W) \\
+Regex $= (?:^|\\W)word(?:$|\\W) \\
 Where word is the given word wanted to find in the website.
 \begin{itemize}
     \item Testing for the basic functionality:

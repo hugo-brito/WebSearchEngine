@@ -79,7 +79,6 @@ Each of the below classes implement this interface. Besides this the {\tt rankWe
 
 \subsection{{\tt TFScore} class}
 The {\tt TFScore} class was the simplest of the three classes to implement, as shown in Figure \ref{fig:score:uml}.
-Due to the version of the term frequency formula used in this project, there is a helper method to supplement the required {\tt getScore} method, leaving the {\tt getScore} method to only handle the division.
 Due to the changes made to the {\tt FileHelper} class — namely, that no website that lacks a title or words can be created — it's not possible for there to be a divide by zero error, so no steps were made in this method to account for it.
 
 \subsection{{\tt TFIDFScore} class}

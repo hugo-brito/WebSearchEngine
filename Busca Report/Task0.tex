@@ -1,7 +1,7 @@
 \chapter{FileHelper}
 
 \section{Task}
-This chapter comprises the changes and improvements done on the {\tt FileHelper} class, which can be found in the folder src/main/java/searchengine. The intended functionality of such class is to parse a file containing data about websites, returning its result as a {\tt List<Website>} to be used later on for by other parts of the program.
+This chapter is comprised of the changes and improvements done on the {\tt FileHelper} class, which can be found in the folder src/main/java/searchengine. The intended functionality of such class is to parse a file containing data about websites, returning its result as a {\tt List<Website>} to be used later on for by other parts of the program.
 
 \section{Basic Description}
 The {\tt parseFile} method is designed to take in parse a file and extract all the websites that are contained in the file. It features the following:
@@ -20,21 +20,22 @@ This meant that, for a website to be passed on to the index, it must have a titl
 
 \section{Technical Description}
 As part of the set up of this task, the {\tt FileHelper} class — specifically the {\tt parseFile(String filename)} method — was updated such that from the database file, only websites that have a url, title, and at least one word of webpage content are read-in and stored in the server.\\
-This was accomplished by an {\tt if} statements to check the assignments of the URL and title fields prior to adding a {\tt new Website} object to the {\tt ArrayList<Website>}. However, the major of the changes made to this method were to how the method recognised the content of each line scanned in in order to know how to treat it.\\
+This was accomplished by an {\tt if} statement to check the assignments of the URL and title fields prior to adding a {\tt new Website} object to the {\tt ArrayList<Website>}. However, the major of the changes made to this method were to how the method recognised the content of each line scanned in in order to know how to treat it.\\
 Previously, this was accomplished by making use of the knowledge of the very specific file format, {\tt String} methods, and {\tt boolean} field variables. This was all replaced by two regular expressions:
 \begin{lstlisting}
     Pattern website = Pattern.compile("(https?:\\/\\/[A-Za-z0-9.\\/_]+)");
     Pattern webTitle = Pattern.compile("[A-Z][a-z]+[A-Za-z0-9\\s]+?");
 \end{lstlisting}
 This was followed by methods of the {\tt Matcher} class.\\
-Even though it does not look to be that big of a change, doing so means that the two field variables are no longer needed, hence less has to be juggled when reading and making further changes to the code.
+Even though it does not look to be that big of a change, doing so means that the two field variables are no longer needed. It also enforces correctness when parsing a file that might not be in the intended format.
 
 \section{Testing}
-White-box tests were developed around the branching statements in the updated method, and a coverage table was produced, please refer to Appendix \ref{tab:Coverage}. From this coverage table the \ref{tab:Expectancy} was produced. Please note that while {\tt try} and {\tt catch} cases were considered the catch call was disregarded as the exception was already being handled. The data set data/test-file1.txt is an empty file, and the rest contained the data shown in \ref{tab:DataFiles}. This process using the Coverage and Expectancy table shown in Appendix \ref{app:table}, is an example of how we construct our tests.
-JUnit tests were then produced from table \ref{tab:Expectancy}, as found in {\tt FileHelperTest.java}.\\ Correctness was verified along two axis:
+White-box tests were developed around the branching statements in the updated method, taking into account positive and negative testing. From these, a coverage table was produced (please refer to Appendix \ref{tab:Coverage}) and the expectancy table (Appendix \ref{tab:Expectancy}) followed. Please note that while {\tt try} and {\tt catch} cases were considered the {\tt catch} call was disregarded as the {\tt exception} was already being handled.\\
+The data set data/test-file1.txt is an empty file, and the rest contained the data shown in \ref{tab:DataFiles}. This process using the Coverage and Expectancy tables shown in Appendix \ref{app:table} is an example of how we construct our tests. JUnit tests were then produced from table \ref{tab:Expectancy}, as found in {\tt FileHelperTest.java}.\\
+Correctness was verified along two axes:
 \begin{itemize}
     \item the size of the {\tt List<Website>} returned,
     \item the specific contents of the {\tt List}.
 \end{itemize}
 As you can see from the Actual Output column of \ref{tab:Expectancy}, the updated code failed test B3, highlighting a weakness in the code, and subsequently had to be debugged. Including another {\tt if} statement after the {\tt while} loop resolved the issue, and following that all tests were passed.\\
-Lastly, a test to check if the websites contained in the {\tt Index} were the same as the websites read by the {\tt FileHelper} class was wrote and performed. This was performed on the tiny, small and medium files and was meant to see whether the behaviour of the index would stay the same when the database size changed.
+Lastly, a test to check if the websites contained in the {\tt Index} were the same as the websites read by the {\tt FileHelper} class was written and performed. This was performed on the tiny, small and medium files and was meant to see whether the behaviour of the {\tt index} would stay the same when the database size changed.

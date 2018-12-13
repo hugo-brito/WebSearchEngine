@@ -42,17 +42,17 @@ input[type="text"] {
 	background-size: contain;
 	background-position: 10px;
 	padding: 10px;
-    margin: 10px;
-    border-radius: 4px;
-    width: 20%;
+	margin: 10px;
+	border-radius: 4px;
+	width: 20%;
 	-webkit-transition: box-shadow 0.4s, border 0.4s, width 0.4s ease-in-out;
-    transition: box-shadow 0.4s, border 0.4s,  width 0.4s ease-in-out;
+	transition: box-shadow 0.4s, border 0.4s,  width 0.4s ease-in-out;
 }
 
 input[type="text"]:focus,
 input[type="text"].focus {
-    border: solid 1px #707070;
-    box-shadow: 0 0 5px 1px #969696;
+	border: solid 1px #707070;
+	box-shadow: 0 0 5px 1px #969696;
 	width: 60%;
 }
 
@@ -102,17 +102,17 @@ input[type="text"].focus {
 
 .result { /* the results */
 	line-height: 1em;
-/*	color: aliceblue;*/
+	/*	color: aliceblue;*/
 	background-color: rgba(0,0,0,0.70);
 	border-radius: 10px;
-/*	align-content: center;*/
+	/*	align-content: center;*/
 	margin: auto; /* centers the div */
-/*	min-width: 75%;*/
+	/*	min-width: 75%;*/
 	padding: 10px;
 	max-width: 600px;
 	text-align: center;
 	margin-bottom: 10px;
-/*	border: 1px solid #dcdcdc;*/
+	/*	border: 1px solid #dcdcdc;*/
 }
 
 .result:hover {
@@ -176,24 +176,24 @@ input[type="text"].focus {
 	background-image: url('img/005.jpg');
 }
 
-@keyframes 
+@keyframes
 imageAnimation {  0% {
 	animation-timing-function: ease-in;
 	opacity: 0;
 }
 	8% {
-	animation-timing-function: ease-out;
-	opacity: 1;
-}
+		animation-timing-function: ease-out;
+		opacity: 1;
+	}
 	17% {
-	opacity: 1
-}
+		opacity: 1
+	}
 	25% {
-	opacity: 0
-}
+		opacity: 0
+	}
 	100% {
-	opacity: 0
-}
+		opacity: 0
+	}
 }
 
 .footer {
@@ -201,12 +201,12 @@ imageAnimation {  0% {
 	font-size: 1.2em;
 	font-variant: small-caps;
 	background-color: rgba(0,0,0,0.70);
-    width: 100%;
+	width: 100%;
 	position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin-bottom: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-bottom: 0px;
 	overflow: hidden;
 	padding: 10px;
 }
@@ -225,10 +225,10 @@ imageAnimation {  0% {
 #ip2018 {
 	width: 49%;
 	float: left;
-/*
-	display: inline-flex;
-    justify-content: flex-start;
-*/
+	/*
+        display: inline-flex;
+        justify-content: flex-start;
+    */
 }
 
 #authors {
@@ -236,16 +236,20 @@ imageAnimation {  0% {
 	float: left;
 	text-align: right;
 	position: right;
-/*
-	display: inline-flex;
-	justify-content: flex-end;
-*/
+	/*
+        display: inline-flex;
+        justify-content: flex-end;
+    */
 }
 
 @media screen and (max-width:728px) {
-  #ip2018, #authors, #resultWrapper {
-	  width:100%; /* The width is 100%, when the viewport is 600px or smaller */
-	  text-align: center;
-	  line-height: 40px;
-  }
+	.footer {
+		background-color: black;
+	}
+
+	#ip2018, #authors, #resultWrapper {
+		width:100%; /* The width is 100%, when the viewport is 600px or smaller */
+		text-align: center;
+		line-height: 40px;
+	}
 }

@@ -71,6 +71,7 @@ abstract public class InvertedIndex implements Index {
      * Provides all websites in a given InvertedIndex as a set, with no duplicates.
      * @return a set of all websites contained by the index.
      */
+    @Override
     public Set<Website> provideIndex() {
         // store the websites in
         Set<Website> siteCollection = new HashSet<>();

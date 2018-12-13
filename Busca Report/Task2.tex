@@ -89,7 +89,12 @@ To this end, the {\tt Set} method {\tt retainAll} was utilised.
 All the results from each of the different intersected searches performed by the {\tt getMatchingWebsites} method are added to a {\tt HashSet<Website>} (again, to avoid any duplication of websites), which is then passed to the {\tt rankWebsites} method and returned as a {\tt List<Website>}. The details of the {\tt rankWebsites} method will be discussed in more depth in the next chapter.
 
 \section{Testing considerations} % Description of considerations for testing the correctness of our solution.
-Upon testing for correctness, we split the test cases in two main groups: one that tests basic functionality using valid data (positive testing), and a second one that tests functionality with bad user behaviour (negative testing).
+Upon testing for correctness, we split the test cases in two main groups: one that tests basic functionality using
+valid data (positive testing), and a second one that tests functionality with bad user behaviour (negative testing).
+To determine the expected results from the tests we copied each website from enwiki-tiny.txt into a separate regex101.com and used
+the following regex to help determine whether the words were on the website: \\
+Regex = (?:^|\\W)word(?:$|\\W) \\
+Where word is the given word wanted to find in the website.
 \begin{itemize}
     \item Testing for the basic functionality:
         \begin{itemize}

@@ -1,55 +1,38 @@
 \chapter{Extensions}
 
-
 \section{Okapi BM25}
 
-\subsection{Okapi BM25} (Basic Approach)
-The Okapi BM25 algorithm is a more sophisticated type of TFIDF ranking algorithm.
-It's a summation over all words that make up the search term, making use of the TF calculation as well as the IDF calculation along with variables that can be used for optimisation \citep{robertson2009probabilistic}.
+\subsection{Basic Approach}
+The Okapi BM25 algorithm is a more sophisticated type of $TFIDF$ ranking algorithm.
+It's a summation over all words that make up the search term, making use of the $TF$ calculation as well as the $IDF$ calculation along with variables that can be used for optimisation. \citep{robertson2009probabilistic}
 The version of the formula used in this project is:
-
 \begin{align}
-    OBM25 = \sum_{i=1}^n IDF(w_i) \cdot \frac{TF(w_i)\cdot (k_1 + 1)}{TF(w_i) + k_1\cdot(1 - b + b\cdot \frac{W}{\bar{W}})}
-\label{eq:OBM25}
+    OBM25 &= \sum_{i=1}^n IDF(w_i) \cdot \frac{TF(w_i)\cdot (k_1 + 1)}{TF(w_i) + k_1\cdot \big( 1 - b + b\cdot \frac{W}{W_a} \big)}
+    \label{eq:OBM25}
 \end{align}
 
-with the optimisation variables set as $k_1 = 1.2$ and $b = 0.75$ since no advanced optimisation was considered and
+with the optimisation variables set as $k_1 = 1,2$ and $b = 0,75$ since no advanced optimisation was considered and
 
 \begin{itemize}
     \item $OMB25$ is the Okapi BM 25 score
     \item A search term $w$ consists of individual words $w_1, w_2, ..., w_n$
     \item $IDF(w_i)$ is the inverse document frequency score applied to the word $w_i$
     \item $TF(w_i)$ is the term frequency score applied to the word $w_i$
-    \item $W$ is the number of words on the webpage
-    \item $\bar{W}$ is the average number of words on a webpage
+    \item $W$ is the number of words on the website
+    \item $W_a$ is the average number of words on a website
 \end{itemize}
 
-\subsection{OkapiBM25Score class} (Technical Description)
-As the Okapi BM25 algorithm makes use of both the TF calculation and the TFIDF calculation, these objects were stored as fields in the {\tt OkapiBM25Score} class in a similar manner to what was done for the {\tt TFIDFScore} class.
-The optimisation constants and the average document length were set as static fields.
-Two helper methods were added: {\tt setAverageDocLength} and {\tt okapiScore}. {\tt setAverageDocLength} calculates the mean number of words per website based on the websites in the index, and {\tt okapiScore} is a recursive method to perform the summation of all the individual scores of all the words in the search query to return to the {\tt getScore} method.
+\subsection{Technical Description}
+As the Okapi BM25 algorithm makes use of both the $TF$ and the $TFIDF$ calculations, these objects were stored as fields in the {\tt OkapiBM25Score} class in a similar manner to what was done for the {\tt TFIDFScore} class. The optimisation constants and the average document length were set as static fields. Two helper methods were added:
+\begin{itemize}
+    \item {\tt setAverageDocLength} calculates the mean number of words per website based on the websites in the index
+    \item {\tt okapiScore} is a recursive method to perform the summation of all the individual scores of all the words in the search query to return to the {\tt getScore} method
+\end{itemize}
 
-\begin{lstlisting}[language=Java]
-    private double okapiScore(int count, String[] words, Website site, InvertedIndex index) {
-    int docLength = site.getWords().size();
-    if(count != 0) {
-        double IDF = this.tfidfScore.IDF(words[count], index);
-        double termFrequency = this.tfScore.getScore(words[count], site, index);
-        double score = IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
-        return score + okapiScore(count-1, words, site, index);
-    } else {
-        double IDF = this.tfidfScore.IDF(words[0], index);
-        double termFrequency = this.tfScore.getScore(words[0], site, index);
-        return IDF*((termFrequency*(K_1 + 1))/(termFrequency + K_1*(1 - B + B*(docLength/AVERAGE_DOC_LENGTH))));
-        }
-    }
-\end{lstlisting}
-
-\subsection{OkapiBM25Score class} (Testing Considerations)
+\subsection{Testing Considerations}
 The mathematical correctness of the OBM25 score calculations were verified using unit tests, which can be found in the ScoreTest.java file alongside the unit tests for the other {\tt Score} classes.
 The set up was the same as previously mentioned in the Ranking Algorithm's chapter.
 Positive tests for single word and multi word query tests were constructed in the following manner:
-
 \begin{itemize}
     \item the word doesn't occur on the specified website
     \item the word doesn't occur in the website index at all
@@ -64,29 +47,50 @@ Positive tests for single word and multi word query tests were constructed in th
 \end{itemize}
 
 Negative testing consideration were harder to formulate.
-The most obvious to test would be dividing by 0, however as seen in equation \ref{eq:OBM25}, it's not actually possible for the denominator to be 0 due to the optimisation variables: either $TF(w_i)$ or $\frac{W}{\bar{W}}$ has to be negative, which is not possible.
+The most obvious to test would be dividing by 0, however as seen in equation \ref{eq:OBM25}, it's not actually possible for the denominator to be 0 due to the optimisation variables: either $TF(w_i)$ or $\frac{W}{W_a}$ has to be negative, which is not possible.
 To that end, no negative tests were considered for the {\tt OkapiBM25} class.
 
 \section{Improve the Client GUI} % Change the client code such that the result of searches are displayed in a nicer way.
 
-We were given the possibility to improve the front-end of the search challenge as an added task. The client side of our product consists of a set of files that dictate, among other things, the aspect of the page, implements the pieces and bits of code that will ultimately allows the user communicate with the server and perform the searches; and arranges the results of the queries in a more user-friendly fashion.\newline
+We were given the possibility to improve the front-end of the search engine as an added task. The client side of our product consists of a set of files that dictate, among other things, the aspect of the page, implements the pieces and bits of code that will ultimately allow the user to communicate with the server and perform the searches, and arranges the results of the queries in a more user-friendly fashion.\\
+Wireframes of graphical user interface designs can be found in the appendix. The guidelines defined by such wireframes took in consideration the "10 Timeless Commandments for Good Design", by the German industrial designer Dieter Rams. \citep{domingo:designprinciples}
+\begin{itemize}
+    \item The search bar was brought to the centre of user's vision and any other information that was not related to the basic functionality of searching of websites was made smaller and away from that area:
+    \begin{itemize}
+        \item "Good design makes a product useful. A product is bought to be used. It has to satisfy certain criteria, not only functional, but also psychological and aesthetic. Good design emphasises the usefulness of a product whilst disregarding anything that could possibly detract from it." \citep{domingo:designprinciples}
+        \item "Good design makes a product understandable. It clarifies the product’s structure. Better still, it can make the product talk. At best, it is self-explanatory." \citep{domingo:designprinciples}
+        \item "Good design is unobtrusive. Products fulfilling a purpose are like tools. They are neither decorative objects nor works of art. Their design should therefore be both neutral and restrained, to leave room for the user’s self-expression." \citep{domingo:designprinciples}
+        \item "Good design is honest. It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept." \citep{domingo:designprinciples}
+        \item "Good design is honest. It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept." \citep{domingo:designprinciples}
+        \item "Good design is as little design as possible. Less, but better – because it concentrates on the essential aspects, and the products are not burdened with non-essentials. Back to purity, back to simplicity." \citep{domingo:designprinciples}
+    \end{itemize}
+    \item The colour scheme as well as the background were carefully selected to pass the impression to the user that they are searching through a big number of possibilities. What is the entity that is big and contain all of the beautiful things? — the Universe, of course.
+    \begin{itemize}
+        \item "Good design is aesthetic. The aesthetic quality of a product is integral to its usefulness because products we use every day affect our person and our well-being. But only well-executed objects can be beautiful." \citep{domingo:designprinciples}
+    \end{itemize}
+    \item The aspect of the graphical user interface adjusts to the size of the viewport, making the website responsive:
+    \begin{itemize}
+        \item "Good design is thorough down to the last detail. Nothing must be arbitrary or left to chance. Care and accuracy in the design process show respect towards the user." \citep{domingo:designprinciples}
+    \end{itemize}
+\end{itemize}
+
 The files containing the code that concerns the front-end of the search engine can be found in the folder static. Here follows each of the files' description:
 \begin{itemize}
-    \item index.html — This is the first file the browser reads upon accessing the root of a website hosted in any given domain. Hence it holds what other files to read also (such as the styling sheet), provides written unformatted text which will be displayed on the browser, which may also includes links to other webpages.
-    \item style.css — It is possible to style a given webpage from a given html file, but it is best practice to do in on a separate file (such as the present one). Should one build a website with several pages (which for each a separate html file is necessary), styling can become cumbersome and even result in styling inconsistencies. So this file provides a styling guide that can be used for several different pages providing consistency among all of them, and for this is only necessary to add the line of code that points to such file in the html.
+    \item index.html — This is the first file the browser reads upon accessing the root of a website hosted in any given domain. Hence it refers to what other files to read as well (such as the styling sheet). It provides written unformatted text which will be displayed on the browser, and it can also include links to other webpages.
+    \item style.css — It is possible to style a given webpage from a given html file, but it is best practice to do in on a separate file (such as the present one). Should one build a website with several pages (which for each a separate html file is necessary), styling can become cumbersome and even result in styling inconsistencies. So this file provides a styling guide that can be used for several different pages providing consistency among all of them, and for this is only necessary to add the line of code that points to such file in the html. As it becomes obvious, in the long this practice also saves time as no more styling is required as the website grows.
     \item code.js — It holds the javascript code that allows for changes in the html (or even style), which will result in changes on what the user sees. Our javascript code was responsible for receiving the search term(s), sending them to the server, receiving the results of the given search, and translating them into html.
     \item Image files in static/img/ — Some images needed to provide the website with the desired aspect.
 \end{itemize}
 The basic implementation of the client GUI allowed the very basic functionality of performing a search. So the accomplished tasks in this regard will be described in the following subsections.
 
 \subsection{Adding content to be displayed by the html}
-A wireframe of a preliminary graphic design of the website can be found in the appendix. Several aspects of the GUI were changed to improve the user's experience. We included a footer with links to ITU's website, the course page, as well as our LinkedIn profiles. Overall names of the classes and id's to be used in the styling sheet were also changed to achieve the intended design. Code was also added to include background images.
+Several aspects of the GUI were changed to improve the user's experience. We included a footer with links to ITU's website, the course page, as well as our LinkedIn profiles. Overall names of the classes and id's to be used in the styling sheet were also changed to achieve the intended design. Code was also added to include background images.
 Additionally, it seemed intuitive to allow the enter key to trigger a search, so such feature was implemented by including a small script in the html file.
 
 \subsection{Styling}
 All the aspect of the website was described in the style.css file. In here, virtually everything was changed, namely:
 \begin{itemize}
-    \item Centering the content of the webpace;
+    \item Centering the content of the webpage;
     \item The aspect of every given class, id, link, as well as behaviour of certain elements when, for example, the user hovers the mouse over that specific element;
     \item Providing responsiveness no the website (adjusting the aspect of the content depending on the size of the viewport;
     \item Behaviour of the background images, where they would display as crossfaded slide show;
@@ -104,4 +108,28 @@ Changes in the javascript code, which can be found in the static/code.js, where 
     \end{itemize}
     \item Besides the title and the URL, the results are also accompanied by a certain number word from the given website.
     \item Clicking on a result will open it on a new tab (instead of the current tab).
-\end{itemize}
+\end{itemize
+
+\section{Autocomplete}
+\subsection{Task}
+Autocomplete is a feature that suggests possible input based on the current input in the input field in a dropdown list. One of the extensions was implementing this feature.
+
+\subsection{Basic Approach}
+The javascript sits on the client side of the search engine in the static folder in a file named {\tt code.js}. It is responsible for the behaviour of the webpage and is one of 3 files that inform how the webpage looks and acts (the other two being {\tt index.html} and {\tt style.css}).
+As such, it is also responsible for communicating with the server to send and retrieve data. The javascript communicates with the sever using JSON. The server then parses the JSON request and sends a response back to client for it to then handle.
+\\
+The JQuery UI offers an autocomplete plugin so little javascript is required to implement the feature. All that is required is to link the plugin to the input field in your HTML and then define a data source for your autocomplete feature to draw its suggestions from.
+The simplest way to accomplish that is to define a local array of words in your Javascript file, but this method only works for small data sizes and therefore is not suitable for implementation in a search engine.
+Which means that the alternative is to retrieve data from the server and use that as the source for the plugin.
+
+\subsection{Technical Description}
+Firstly, the JQuery UI plugin was implemented in the {\tt code.js} file and linked to the input field {\tt searchbox}.
+Rather than sourcing a local array, a {\tt function(request, response)} was created as the source which makes a call to the server for data and performs some action on the response.
+Originally, the idea was that each character typed in the input field would trigger a call to server and a method in the {\tt WebApplication} class which would check a list of words (built from the Index) to see whether any words contained the request term and build a list of the matches to return to the client.
+However, this idea would result on many calls being made to the server, which would slow down the operation of the search engine substantially. This was then revised to make a call to the server once and store the response locally as the autocomplete plugin source, and the method to return the data was revised in turn.
+\\
+Next, the number of results was trimmed so that the dropdown list of suggestions didn't stretch the entire length of the page (as users should not be required to scrolled through results), and adjusted the plugin options so that results are only returned after at least 3 characters are in the input field.
+\\
+Finally, the results returned matching the request term were ordered so that results beginning with the request term appeared at the top of the dropdown list of suggestions.
+\\
+The styling for the plugin had to be added so as to match the styling of the rest of the webpage (colour, background etc), as well responsiveness to page resizing

@@ -39,13 +39,16 @@ public class ScoreTest {
     void getTFIDFScore() {
         TFIDFScore tfidfScore = new TFIDFScore(index);
         // word occurs once on the site specified
-        assertEquals(0.5*Math.log10(4), tfidfScore.getScore("word1", sites.get(0), index));
+        assertEquals(0.5*log2(4), tfidfScore.getScore("word1", sites.get(0), index));
+        // prior 0.5*Math.log10(4)
         // word occurs more than once on the site specified, and on more than one website
-        assertEquals((2.0/5.0)*Math.log10(4.0/2.0), tfidfScore.getScore("word5", sites.get(3), index));
+        assertEquals((2.0/5.0)*log2(4.0/2.0), tfidfScore.getScore("word5", sites.get(3), index));
+        // (2.0/5.0)*Math.log10(4.0/2.0)
         // word doesn't occur on the specified website
         assertEquals(0, tfidfScore.getScore("word1", sites.get(2), index));
         // word occurs once on more than one website
-        assertEquals((1.0/3.0)*Math.log10(4.0/2.0), tfidfScore.getScore("word3", sites.get(2), index));
+        assertEquals((1.0/3.0)*log2(4.0/2.0), tfidfScore.getScore("word3", sites.get(2), index));
+        // (1.0/3.0)*Math.log10(4.0/2.0)
         // word that occurs on one site will have a a greater TFIDF score than one that occurs on more than one site
         assertTrue(tfidfScore.getScore("word1", sites.get(0), index) > tfidfScore.getScore("word3", sites.get(2), index));
     }
@@ -54,9 +57,11 @@ public class ScoreTest {
     void getOkapiBM25Score() {
         OkapiBM25 okapiBM25 = new OkapiBM25(index);
         // word occurs once on the site specified
-        assertEquals(Math.log10(4)*((0.5*(1.2 + 1))/(0.5 + 1.2*(1 - 0.75 + 0.75*(2.0/3.0)))), okapiBM25.getScore("word1", sites.get(0), index));
+        assertEquals(log2(4)*((0.5*(1.2 + 1))/(0.5 + 1.2*(1 - 0.75 + 0.75*(2.0/3.0)))), okapiBM25.getScore("word1", sites.get(0), index));
+        // Math.log10(4)*((0.5*(1.2 + 1))/(0.5 + 1.2*(1 - 0.75 + 0.75*(2.0/3.0))))
         // word occurs once on the specified website, and on at least one more website
-        assertEquals(Math.log10(4.0/2.0)*(((1.0/3.0)*(1.2 + 1))/((1.0/3.0) + 1.2*(1 - 0.75 + 0.75*(3.0/3.0)))), okapiBM25.getScore("word5", sites.get(2), index));
+        assertEquals(log2(4.0/2.0)*(((1.0/3.0)*(1.2 + 1))/((1.0/3.0) + 1.2*(1 - 0.75 + 0.75*(3.0/3.0)))), okapiBM25.getScore("word5", sites.get(2), index));
+        // Math.log10(4.0/2.0)*(((1.0/3.0)*(1.2 + 1))/((1.0/3.0) + 1.2*(1 - 0.75 + 0.75*(3.0/3.0))))
         // word doesn't occur on the specified website
         assertEquals(0, okapiBM25.getScore("word2", sites.get(2), index));
         // word doesn't occur on any website
@@ -70,7 +75,7 @@ public class ScoreTest {
         // multi-word query, occurs partially on site and partially on other sites
     }
 
-
-
-
+private double log2(double num) {
+        return Math.log(num)/Math.log(2);
+}
 }

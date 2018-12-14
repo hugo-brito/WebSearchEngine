@@ -1,5 +1,6 @@
 package searchengine;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,12 @@ public class ScoreTest {
         sites.add(new Website("4.com", "example4", Arrays.asList("word5", "word5", "word6", "word2", "word7")));
         this.index = new InvertedIndexHashMap();
         this.index.build(sites);
+    }
+
+    @AfterEach
+    void teardown() {
+        this.sites.clear();
+        this.index = null;
     }
 
     @Test
@@ -67,12 +74,18 @@ public class ScoreTest {
         // word doesn't occur on any website
         assertEquals(0, okapiBM25.getScore("wrong", sites.get(1), index));
         // multi-word query, occurs once on site specified 6,7
-
-        // multi-word query, occurs once on site specified partially on other sites 5,2
-
+        assertEquals(log2(4.0/1.0)*(((1.0/5.0)*(1.2 + 1))/((1.0/5.0) + 1.2*(1 - 0.75 + 0.75*(5.0/3.0)))) +
+                log2(4.0/1.0)*(((1.0/5.0)*(1.2 + 1))/((1.0/5.0) + 1.2*(1 - 0.75 + 0.75*(5.0/3.0)))),
+                okapiBM25.getScore("word6 word7", sites.get(3), index));
+        // multi-word query, occurs once on site specified partially on other sites 3,2
+        assertEquals(log2(4.0/2.0)*(((1.0/2.0)*(1.2 + 1.0))/((1.0/2.0) + 1.2*(1.0 - 0.75 + 0.75*(2.0/3.0)))) +
+                        log2(4.0/3.0)*(((1.0/2.0)*(1.2 + 1.0))/((1.0/2.0) + 1.2*(1.0 - 0.75 + 0.75*(2.0/3.0)))),
+                okapiBM25.getScore("word3 word2", sites.get(1),index));
         // multi-word query, doesn't occur on site specified
-
-        // multi-word query, occurs partially on site and partially on other sites
+        assertEquals(0, okapiBM25.getScore("word4 word5 word6 word7", sites.get(0),index));
+        //comparison of the multi-word and one score values
+        assertTrue(okapiBM25.getScore("word2 word5 word6 word7", sites.get(3), index)
+                < okapiBM25.getScore("word1", sites.get(0), index));
     }
 
 private double log2(double num) {

@@ -65,9 +65,7 @@ public class DocumentHelper {
                             }
                         }
                     }
-
                 }
-
             }
             //Ashley's code is already checking if websites have any words. We want to save website,
             //becasue it could contain url we want to check later.
@@ -77,7 +75,6 @@ public class DocumentHelper {
         else
             return null;
     }
-
     /**
      * Extracts links in the DOCTYPE html file represented by a org.jsoup.nodes.Document object.
      * @param doc A org.jsoup.nodes.Document object that has parsed in the DOCTYPE html file from a given url address.
@@ -89,6 +86,12 @@ public class DocumentHelper {
         Elements links = bodyElement.getElementsByTag("a");
         return links;
     }
+
+    /**
+     * Takes in a String input and removes punctuations from it.
+     * @param input The input which should get punctuations removed from it.
+     * @return The value of the input without punctuations or if nothing is left, it will return null.
+     */
     private static String cleanWord(String input){
         input = input.replaceAll("\\p{Punct}", "").replace("?","");
         if(input.equals(""))

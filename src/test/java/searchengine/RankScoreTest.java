@@ -67,5 +67,4 @@ class RankScoreTest {
         assertEquals(sites.get(1),rankedMatchedSites.get(1));
         assertEquals(sites.get(2),rankedMatchedSites.get(2));
     }
-
 }

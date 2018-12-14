@@ -3,13 +3,11 @@ package searchengine;
 // Spring Imports (first Application, then Controller)
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 
 // Other Imports
 import java.util.List;
+import java.util.Set;
 
 /**
  * Turns our search engine into a Web application, using Spring
@@ -73,5 +71,17 @@ public class WebApplication {
         System.out.println("Found " + resultList.size() + " websites.");
         
         return resultList;
+    }
+
+    /**
+     * Uses the search engine to build a set of words to be used as a source
+     * for the JQuery UI autocomplete plugin
+     * @return a set of all words from all websites in the index
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/words", method = RequestMethod.GET)
+    public Set<String> autoComplete() {
+        Set<String> matchingWords = searchengine.source();
+        return matchingWords;
     }
 }

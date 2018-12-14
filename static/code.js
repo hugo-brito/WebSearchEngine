@@ -1,7 +1,9 @@
 // JavaScript Document
 
+var baseUrl = "http://localhost:8080";
+
 $(document).ready(function() {
-    var baseUrl = "http://localhost:8080";
+    // var baseUrl = "http://localhost:8080";
 
     $("#searchbutton").click(function () {
         console.log("Sending request to server.");
@@ -43,3 +45,35 @@ $(document).ready(function() {
         });
     });
 });
+
+ $(function() {
+    // var baseUrl = "http://localhost:8080";
+    var wordArray;
+        $.ajax({
+            method: "GET",
+            url: baseUrl + "/words",
+            success: function (data) {
+                wordArray = data;
+                wordArray.sort();
+                $("#searchbox").autocomplete({
+                    source: function(request, response) {
+                        //var results = $.ui.autocomplete.filter(wordArray, request.term);
+                        var term = $.ui.autocomplete.escapeRegex(request.term)
+                            , startsWithMatcher = new RegExp("^" + term, "i")
+                            , startsWith = $.grep(wordArray, function(value) {
+                            return startsWithMatcher.test(value.label || value.value || value);
+                        })
+                            , containsMatcher = new RegExp(term, "i")
+                            , contains = $.grep(wordArray, function (value) {
+                            return $.inArray(value, startsWith) < 0 &&
+                                containsMatcher.test(value.label || value.value || value);
+                        });
+                        response(startsWith.concat(contains).slice(0, 8));
+                    },
+                    minLength: 3,
+                    width: 200
+                })
+            }
+        })
+     // $.ui.autocomplete.css('width', $('#searchbox').width());
+ });

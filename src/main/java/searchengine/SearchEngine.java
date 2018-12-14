@@ -2,6 +2,7 @@ package searchengine;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * The search engine. Upon receiving a list of websites, it performs
@@ -14,6 +15,7 @@ import java.util.ArrayList;
  */
 public class SearchEngine {
     private QueryHandler queryHandler;
+    private AutoComplete autoComplete;
 
     /**
      * Creates a {@code SearchEngine} object from a list of websites.
@@ -25,6 +27,7 @@ public class SearchEngine {
         idx.build(sites);
         Score score= new TFScore();//Change to the score you want to use
         queryHandler = new QueryHandler(idx,score);
+        autoComplete = new AutoComplete(idx);
     }
 
     /**
@@ -39,5 +42,13 @@ public class SearchEngine {
         }
         List<Website> resultList = queryHandler.getMatchingWebsites(query);
         return resultList;
+    }
+
+    /**
+     * Returns a set of words
+     * @return a set containing all words from all websites
+     */
+    public Set<String> source() {
+        return autoComplete.getWordsList();
     }
 }

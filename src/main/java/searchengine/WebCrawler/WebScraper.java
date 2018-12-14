@@ -15,7 +15,6 @@ import java.util.*;
  */
 public class WebScraper {
 
-
     /**
      * Recursive method for traversing a single web site and exploring it's links
      * It takes in url string to look at and a HahsSet of pages already visited.
@@ -94,15 +93,17 @@ public class WebScraper {
         United States                                          title
         the
                                                            a new line for each word   */
-        try{
-            BufferedWriter out = new BufferedWriter(
-                    new OutputStreamWriter(
-                            new FileOutputStream("data//real_data_file.txt", true), // true to append
-                            StandardCharsets.UTF_8                  // Set encoding
-                    )
 
-            );
-            out.write("*PAGE:"+ site.getUrl().trim());
+        FileOutputStream fo = null;
+        try {
+            fo = new FileOutputStream("data//real_data_file.txt", true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        OutputStreamWriter os = new OutputStreamWriter(fo, StandardCharsets.UTF_8 );
+        BufferedWriter out = new BufferedWriter(os);
+        try{
+            out.append("*PAGE:"+ site.getUrl().trim());
             out.newLine();
             String title = site.getTitle().trim();
 
@@ -110,16 +111,17 @@ public class WebScraper {
                 title = title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase();
             else
                 title = title.toUpperCase();
-            out.write(title);
+            out.append(title);
             out.newLine();
             List<String> words = site.getWords();
             for (String word: words)
             {
-                out.write(word.trim().toLowerCase());
+                out.append(word.trim().toLowerCase());
                 out.newLine();
             }
-            out.flush();
+
             out.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

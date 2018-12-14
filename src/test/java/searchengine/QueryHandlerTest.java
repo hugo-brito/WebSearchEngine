@@ -10,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QueryHandlerTest {
 
-    // used regex101.com and (?:^|\W)law(?:$|\W) to know what was expected.
-    // word\n(.*\n)*and
-
     @Rule
     private QueryHandler qh = null;
 
@@ -64,7 +61,6 @@ class QueryHandlerTest {
         assertEquals(2, qh.getMatchingWebsites("populous multicultural OR oriented officially").size());
      }
 
-    // Corner case: Does code remove duplicates?
     //     Test for problematic input
     @Test
     void testCornerCases() {

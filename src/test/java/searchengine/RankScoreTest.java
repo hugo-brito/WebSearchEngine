@@ -1,5 +1,6 @@
 package searchengine;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,17 +10,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RankScoreTest {
+class RankScoreTest {
     private InvertedIndex index = null;
     private List<Website> sites = null;
     @BeforeEach
     void setUp() {
         this.sites = new ArrayList<>();
-        // 1.com mentions 12 words: Queen= 4; Denmark= 4; of= 4; randomword = 2
+        // 1.com mentions 11 words: Queen= 3; Denmark= 3; of= 3; randomword = 2
         String[] words1 = ("Queen of Denmark Queen of Denmark Queen of Denmark randomword randomword ").toLowerCase().split(" ");
         sites.add(new Website("1.com", "example1", Arrays.asList(words1)));
 
-        // 2.com mentions 13 words: Queen= 2; Denmark= 2; of= 6; randomword = 2
+        // 2.com mentions 12 words: Queen= 2; Denmark= 2; of= 6; randomword = 2
         String[] words2 = ("Queen of Denmark Queen of Denmark of of of of randomword randomword ").toLowerCase().split(" ");
         sites.add(new Website("2.com", "example2", Arrays.asList(words2)));
 
@@ -40,7 +41,12 @@ public class RankScoreTest {
         this.index.build(sites);
     }
 
-    // Test if
+    @AfterEach
+    void teardown() {
+        sites.clear();
+        this.index = null;
+    }
+    // Testing if ranking correctly
     @Test
     void getRankTFScore(){
         TFScore tfScore = new TFScore();
@@ -51,7 +57,7 @@ public class RankScoreTest {
         assertEquals(sites.get(0),rankedMatchedSites.get(2));
     }
 
-    // Test if
+    // Testing if ranking correctly
     @Test
     void getRankTFIDFScore(){
         TFIDFScore tfidfScore = new TFIDFScore(this.index);

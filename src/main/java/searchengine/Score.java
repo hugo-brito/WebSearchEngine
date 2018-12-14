@@ -1,21 +1,22 @@
 package searchengine;
 
 /**
- * The score data structure provides a way of
- * ranking the relevance of a website to the query
- * word(s)
+ * The score provides a way of ranking the relevance of a website to the query
+ * word(s) by assigning a score value to a website
  *
- * @author Ashley Parsons-Trew
+ * @author Ashley Rose Parsons-Trew
+ * @author Hugo Delgado de Brito
+ * @author Ieva Kangsepa
+ * @author Jonas Hartmann Andersen
  */
 
 public interface Score {
 
     /**
-     * The getScore method calculates a score for a website based
-     * on the query word
-     * @param word
-     * @param site
-     * @param index
+     * Calculates a score for a website based on the query word
+     * @param word the query
+     * @param site the website being scored
+     * @param index the index containing the website
      * @return the relevance score of the website with respect
      * to the query word
      */

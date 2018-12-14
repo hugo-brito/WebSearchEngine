@@ -54,6 +54,7 @@ $(document).ready(function() {
             url: baseUrl + "/words",
             success: function (data) {
                 wordArray = data;
+                wordArray.sort();
                 $("#searchbox").autocomplete({
                     source: function(request, response) {
                         //var results = $.ui.autocomplete.filter(wordArray, request.term);

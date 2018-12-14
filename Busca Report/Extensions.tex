@@ -49,28 +49,17 @@ The most obvious to test would be dividing by 0, however as seen in equation \re
 To that end, no negative tests were considered for the {\tt OkapiBM25} class.
 
 \section{Improve the Client GUI} % Change the client code such that the result of searches are displayed in a nicer way.
-
-We were given the possibility to improve the front-end of the search engine as an added task. The client side of our product consists of a set of files that dictate, among other things, the aspect of the page, implements the pieces and bits of code that will ultimately allow the user to communicate with the server and perform the searches, and arranges the results of the queries in a more user-friendly fashion.\\
+One of the possible choices for the extension of the Search Engine was the improvement of it's front end. Among other things, the client side of the Search Engine contains a set of files dictating the aspect of the page by implementing the pieces and bits of code, that ultimately allow the user to communicate with the server and perform the searches, and arranges the results of the queries in a more user-friendly fashion.\\
 Wireframes of graphical user interface designs can be found in the appendix. The guidelines defined by such wireframes took in consideration the "10 Timeless Commandments for Good Design", by the German industrial designer Dieter Rams. \citep{domingo:designprinciples}
 \begin{itemize}
-    \item The search bar was brought to the centre of user's vision and any other information that was not related to the basic functionality of searching of websites was made smaller and away from that area. This results on improved comprehension and makes the interaction
-    \begin{itemize}
-        \item "Good design makes a product useful. A product is bought to be used. It has to satisfy certain criteria, not only functional, but also psychological and aesthetic. Good design emphasises the usefulness of a product whilst disregarding anything that could possibly detract from it." \citep{domingo:designprinciples}
-        \item "Good design makes a product understandable. It clarifies the product’s structure. Better still, it can make the product talk. At best, it is self-explanatory." \citep{domingo:designprinciples}
-        \item "Good design is unobtrusive. Products fulfilling a purpose are like tools. They are neither decorative objects nor works of art. Their design should therefore be both neutral and restrained, to leave room for the user’s self-expression." \citep{domingo:designprinciples}
-        \item "Good design is honest. It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept." \citep{domingo:designprinciples}
-        \item "Good design is as little design as possible. Less, but better – because it concentrates on the essential aspects, and the products are not burdened with non-essentials. Back to purity, back to simplicity." \citep{domingo:designprinciples}
-    \end{itemize}
-    \item The colour scheme as well as the background were carefully selected to pass the impression to the user that they are searching through a big number of possibilities. What is the entity that is big and contain all of the beautiful things? — the Universe, of course.
-    \begin{itemize}
-        \item "Good design is aesthetic. The aesthetic quality of a product is integral to its usefulness because products we use every day affect our person and our well-being. But only well-executed objects can be beautiful." \citep{domingo:designprinciples}
-    \end{itemize}
+    \item Dieter Rams commandments applied for the digital design by \citep{domingo:designprinciples} suggest to bring the search bar to the centre of user's vision and decentralise the elements not related to the main functionality, in order to improve the comprehension. It is also emphasised that the design should contribute making the product more useful, by satisfying not only functionality but also the aesthetics. Design of the product should also strive to make it more understandable, clarify the product’s structure, ideally self-explanatory and  "make the product talk". The principle of the unobtrusiveness is also important, as product, which in this case is Search Engine, is fulfilling the a propose as a tool, and not a work of art.
+    \item Design being "honest", means not manipulating the consumer with promises that cannot be kept. Good design is is pure and concentrates on the essential aspects and do not burden the product with non-essentials.\citep{domingo:designprinciples}
+    \item The colour scheme as well as the background were carefully selected to pass the impression to the user that they are searching through a big number of possibilities. What is the entity that is big and contain all of the beautiful things? — the Universe, of course. This choice was inspired by the \citep{domingo:designprinciples} interpretation of Dieter Rams design principle of aesthetics, where he links the aesthetic quality of a product to its usefulness because "products we use every day affect our person and our well-being. But only well-executed objects can be beautiful." \citep{domingo:designprinciples}
     \item The aspect of the graphical user interface adjusts to the size of the viewport, making the website responsive:
     \begin{itemize}
         \item "Good design is thorough down to the last detail. Nothing must be arbitrary or left to chance. Care and accuracy in the design process show respect towards the user." \citep{domingo:designprinciples}
     \end{itemize}
 \end{itemize}
-
 The files containing the code that concerns the front-end of the search engine can be found in the folder static. Here follows each of the files' description:
 \begin{itemize}
     \item index.html — This is the first file the browser reads upon accessing the root of a website hosted in any given domain. Hence it refers to what other files to read as well (such as the styling sheet). It provides written unformatted text which will be displayed on the browser, and it can also include links to other webpages.
@@ -79,11 +68,9 @@ The files containing the code that concerns the front-end of the search engine c
     \item Image files in static/img/ — Some images needed to provide the website with the desired aspect.
 \end{itemize}
 The basic implementation of the client GUI allowed the very basic functionality of performing a search. So the accomplished tasks in this regard will be described in the following subsections.
-
 \subsection{Adding content to be displayed by the html}
 Several aspects of the GUI were changed to improve the user's experience. We included a footer with links to ITU's website, the course page, as well as our LinkedIn profiles. Overall names of the classes and id's to be used in the styling sheet were also changed to achieve the intended design. Code was also added to include background images.
 Additionally, it seemed intuitive to allow the enter key to trigger a search, so such feature was implemented by including a small script in the html file.
-
 \subsection{Styling}
 All the aspect of the website was described in the style.css file. In here, virtually everything was changed, namely:
 \begin{itemize}
@@ -93,7 +80,6 @@ All the aspect of the website was described in the style.css file. In here, virt
     \item Behaviour of the background images, where they would display as crossfaded slide show;
     \item Behaviour of the searchbar, where it would change its size by clicking on it.
 \end{itemize}
-
 \subsection{Adding functionality through javascript}
 Changes in the javascript code, which can be found in the static/code.js, where made in order to allow for:
 \begin{itemize}

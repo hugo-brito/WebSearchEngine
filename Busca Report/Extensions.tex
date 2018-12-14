@@ -31,7 +31,7 @@ As the Okapi BM25 algorithm makes use of both the $TF$ and the $TFIDF$ calculati
 
 \subsection{Testing Considerations}
 The mathematical correctness of the OBM25 score calculations were verified using unit tests, which can be found in the ScoreTest.java file alongside the unit tests for the other {\tt Score} classes.
-The set up was the same as previously mentioned in the Ranking Algorithm's chapter.
+The set up was the same as previously mentioned in the Ranking Algorithm's chapter, and \ref{fig:calculations} details how Excel was used to perform the manual calculations for comparison.
 Positive tests for single word and multi word query tests were constructed in the following manner:
 \begin{itemize}
     \item the word doesn't occur on the specified website
@@ -41,8 +41,6 @@ Positive tests for single word and multi word query tests were constructed in th
     \item the word occurs more than once on the specified website
     \item multi-word query: words don't occur on the specified website
     \item multi-word query: words occur once on the specified website
-    \item multi-word query: words occur more than once on the specified website
-    \item multi-word query: words occur once on the specified website and at least one other website
     \item comparison of the above score values
 \end{itemize}
 
@@ -130,9 +128,29 @@ However, this idea would result on many calls being made to the server, which wo
 \\
 Next, the number of results was trimmed so that the dropdown list of suggestions didn't stretch the entire length of the page (as users should not be required to scrolled through results), and adjusted the plugin options so that results are only returned after at least 3 characters are in the input field.
 \\
-Finally, the results returned matching the request term were ordered so that results beginning with the request term appeared at the top of the dropdown list of suggestions.
+Finally, the results returned matching the request term were ordered so that results beginning with the request term appeared at the top of the dropdown list of suggestions and the suggestions appear in alphabetical order.
 \\
-The styling for the plugin had to be added so as to match the styling of the rest of the webpage (colour, background etc), as well responsiveness to page resizing
+The styling for the plugin had to be added so as to match the styling of the rest of the webpage (colour, background etc). Responsiveness (i.e. webpage resizing in response to browser window dimentsions) was also a feature that the rest of the webpage implemented, however there wasn't enough time to implement this for the autocomplete dropdown list.
+
+\subsection{Testing Considerations}
+Again, lack of time meant that unit tests could not be derived for the {\tt AutoComplete} class, nor the {\tt source} method in {\tt SearchEngine} class or the {\tt autocomplete} method in the {\tt WebApplication} class. However, black box tests were conducted to ensure that the following functionality was in place:
+
+\begin{itemize}
+    \item On typing three characters in the input field, a dropdown list of suggestions appears.
+    \item The font colour and background of the list of suggestions matches the styling of the input field.
+    \item The list of suggestions has been cropped to only show 8 matches at a time.
+    \item The list of suggestions has words that start with the request term at the top.
+    \item The list of suggestions has been alphabetised.
+\end{itemize}
+
+\subsection{Further Changes}
+Other features to implement as part of the autocomplete plugin:
+
+\begin{itemize}
+    \item Clicking on a suggestion immediately performs a search with that term. Currently, clicking on a suggestion updates the input the field with that suggestion instead.
+    \item As mentioned above, adding responsiveness to the autocomplete dropdown list
+    \item Rather than underlining the suggestion the mouse is hovering over, the block that the suggestion is in is highlighted instead.
+\end{itemize}
 
 \section{WebCrawler}
 \subsection{Basic Approach}

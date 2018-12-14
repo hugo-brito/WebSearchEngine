@@ -53,12 +53,11 @@ To that end, no negative tests were considered for the {\tt OkapiBM25} class.
 We were given the possibility to improve the front-end of the search engine as an added task. The client side of our product consists of a set of files that dictate, among other things, the aspect of the page, implements the pieces and bits of code that will ultimately allow the user to communicate with the server and perform the searches, and arranges the results of the queries in a more user-friendly fashion.\\
 Wireframes of graphical user interface designs can be found in the appendix. The guidelines defined by such wireframes took in consideration the "10 Timeless Commandments for Good Design", by the German industrial designer Dieter Rams. \citep{domingo:designprinciples}
 \begin{itemize}
-    \item The search bar was brought to the centre of user's vision and any other information that was not related to the basic functionality of searching of websites was made smaller and away from that area:
+    \item The search bar was brought to the centre of user's vision and any other information that was not related to the basic functionality of searching of websites was made smaller and away from that area. This results on improved comprehension and makes the interaction
     \begin{itemize}
         \item "Good design makes a product useful. A product is bought to be used. It has to satisfy certain criteria, not only functional, but also psychological and aesthetic. Good design emphasises the usefulness of a product whilst disregarding anything that could possibly detract from it." \citep{domingo:designprinciples}
         \item "Good design makes a product understandable. It clarifies the product’s structure. Better still, it can make the product talk. At best, it is self-explanatory." \citep{domingo:designprinciples}
         \item "Good design is unobtrusive. Products fulfilling a purpose are like tools. They are neither decorative objects nor works of art. Their design should therefore be both neutral and restrained, to leave room for the user’s self-expression." \citep{domingo:designprinciples}
-        \item "Good design is honest. It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept." \citep{domingo:designprinciples}
         \item "Good design is honest. It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept." \citep{domingo:designprinciples}
         \item "Good design is as little design as possible. Less, but better – because it concentrates on the essential aspects, and the products are not burdened with non-essentials. Back to purity, back to simplicity." \citep{domingo:designprinciples}
     \end{itemize}
@@ -108,17 +107,14 @@ Changes in the javascript code, which can be found in the static/code.js, where 
     \item Clicking on a result will open it on a new tab (instead of the current tab).
 \end{itemize}
 
-\section{Autocomplete}
+\section{Auto-complete}
 \subsection{Task}
-Autocomplete is a feature that suggests possible input based on the current input in the input field in a dropdown list. One of the extensions was implementing this feature.
+Auto-complete is a feature that suggests possible input based on the current input as one types on a drop-down list. One of the extensions was implementing this feature.
 
 \subsection{Basic Approach}
-The javascript sits on the client side of the search engine in the static folder in a file named {\tt code.js}. It is responsible for the behaviour of the webpage and is one of 3 files that inform how the webpage looks and acts (the other two being {\tt index.html} and {\tt style.css}).
-As such, it is also responsible for communicating with the server to send and retrieve data. The javascript communicates with the sever using JSON. The server then parses the JSON request and sends a response back to client for it to then handle.
-\\
-The JQuery UI offers an autocomplete plugin so little javascript is required to implement the feature. All that is required is to link the plugin to the input field in your HTML and then define a data source for your autocomplete feature to draw its suggestions from.
-The simplest way to accomplish that is to define a local array of words in your Javascript file, but this method only works for small data sizes and therefore is not suitable for implementation in a search engine.
-Which means that the alternative is to retrieve data from the server and use that as the source for the plugin.
+The JavaScript sits on the client side of the search engine in the static folder in a file named {\tt code.js}. It is responsible for the behaviour of the webpage and is one of 3 files that inform how the webpage looks and acts (the other two being {\tt index.html} and {\tt style.css}).
+As such, it is also responsible for communicating with the server to send and retrieve data. The JavaScript communicates with the sever using JSON. The server then parses the JSON request and sends a response back to client for it to then handle.\\
+The JQuery UI offers an auto-complete plugin so little JavaScript is required to implement the feature. All that is required is to link the plugin to the input field in your HTML and then define a data source for your auto-complete feature to draw its suggestions from. The simplest way to accomplish that is to define a local array of words in your JavaScript file, but this method only works for small data sizes and therefore is not suitable for implementation in a search engine. Which means that the alternative is to retrieve data from the server and use that as the source for the plugin.
 
 \subsection{Technical Description}
 Firstly, the JQuery UI plugin was implemented in the {\tt code.js} file and linked to the input field {\tt searchbox}.
@@ -155,54 +151,47 @@ Other features to implement as part of the autocomplete plugin:
 \section{WebCrawler}
 \subsection{Basic Approach}
 
-In this section the flow of the WebCrawler will be explained.  
+In this section the flow of the WebCrawler will be explained.
 WebCrawler solutions contains three classes {\tt WebCrawler}, {\tt WebScraper} and {\tt DocumentHelper}.
 
 \begin{itemize}
-\item The {\tt WebCrawler} class contains the {\tt main} method which will instantiate a {\tt WebCrawler} object and start the whole crawling process. It does so by having a list of default website urls which it will use as starting point for traversing the internet. For extracting information and crawling from website to website it uses the the recursive method {\tt fetchWebsiteRecursive} in the {\tt WebScraper} class.;
-\item For each call to the method {\tt fetchWebsiteRecursive} , the {\tt WebScraper} will download the html page and extract or scrape its information and store it in an index file.;
-\item From each website the {\tt WebScraper} will also extract all the links, and for all the links pointing to websites that it have not retrieved previously, it will recursively call the {\tt fetchWebsiteRecursive} method giving in these new link as input. For doing the actual extraction of  information, the {\tt WebScraper} make use of the helper class {\tt DocumentHelper} class;
-\item {\tt DocumentHelper} contains helper methods that can extract information from a given url address. It does so by utilizing a java library {\tt org.jsoup.Jsoup} LINK. The Jsoup library will download a html document and parse it into a data structure which can be queried for specific html tags. 
+    \item The {\tt WebCrawler} class contains the {\tt main} method which will instantiate a {\tt WebCrawler} object and start the whole crawling process. It does so by having a list of default website urls which it will use as starting point for traversing the internet. For extracting information and crawling from website to website it uses the the recursive method {\tt fetchWebsiteRecursive} in the {\tt WebScraper} class.;
+    \item For each call to the method {\tt fetchWebsiteRecursive} , the {\tt WebScraper} will download the html page and extract or scrape its information and store it in an index file.;
+    \item From each website the {\tt WebScraper} will also extract all the links, and for all the links pointing to websites that it have not retrieved previously, it will recursively call the {\tt fetchWebsiteRecursive} method giving in these new link as input. For doing the actual extraction of  information, the {\tt WebScraper} make use of the helper class {\tt DocumentHelper} class;
+    \item {\tt DocumentHelper} contains helper methods that can extract information from a given url address. It does so by utilizing a java library {\tt org.jsoup.Jsoup} LINK. The Jsoup library will download a html document and parse it into a data structure which can be queried for specific html tags.
 \end{itemize}
 
 \subsection{Technical description}
-This section takes a closer look at the technical solution of the Web Crawler and fallows the flow of the programm. 
-
+This section takes a closer look at the technical solution of the Web Crawler and fallows the flow of the programm.
 \begin{itemize}
-\item As mentioned the {\tt WebCrawler} class contains a {\tt main} method which instantiate an object of the {\tt WebCrawler} itself. In its constructer it gets the {\tt ArrayList<Sting>} of default urls to look at by calling the method {\tt getUrlsToLookAt()}. After the object has been created the main method calls the method {\tt crawl()}. 
-The {\tt crawl()} method first deletes previous Web Crawler results with  {\tt deleteFileIfExist()} method. Next it loops through the list of {\tt defaultUrls} and for each of them it will get the components of the url by creating a {\tt URL} object from it. From the components it will concatenate {\tt Host} and {\tt Path} into the {\tt String urlValue} and adds this value to the {\tt HashSet<String> visitedSites}. This HashSet is used for maintaining an overview of which websites have already been visited, thereby making sure the whole crawling process don’t end up in an infinite loop of calling the same websites repeatedly. The {\tt HashSet<String> visitedSites} and the {\tt String urlValue} is now passed to the {\tt fetchWebsiteRecursive} method in {\tt WebScraper} class which starts the recursive crawling of the internet. 
-\item {\tt fetchWebsiteRecursive} method in {\tt WebScraper} takes in the parameters {\tt String url} and a {\tt HashSet visitedSites}. In this method the {\tt org.jsoup.Jsoup} solution is used to  download the html document from the given urlValue and store it in a {\tt Document} object from the same library. This object is then parsed to the {\tt extractWebsiteFromDoc} method in the {\tt DocumentHelper} class.
-\\
-In here the method of {\tt Element.getElementsByTag(String tagName)} found in the {\tt org.jsoup.jsoup}\footnotemark library, is used to fetch the different html tags containing the values that is needed for the index file, such as the <title> and <h1-3> tags. For example for getting the title, one first get the Element object representing the <head> tag, and from that Element query for the Element representing the <title> tag. When it is obtained it is possible to get its text by calling the {\tt Element.text()}. 
-If the passed {\tt Document} has valid {\tt title}, the method will go on to extract the words the same way as the title. Here it is looking for all the <h1-3> tags.  
-Theese specific tags were chosen after briefly analyzing several webpages.It became apparent that content of the websites is stored in the headers of the html documents, and for this initial version of the Web Crawler it has been found sufficient to start by using only a few headers. These header objects are then stored in the {\tt ArrayList<Element> allHeaderElements}. 
-\\
-The method continues by selecting the words to store in the {\tt ArrayList<String> words} by looping through the {\tt ArrayList<Element> allHeaderElements}. If the {\tt header} tag contains text and has child nodes, then another {\tt forEach} loop is having a look at those {\tt childNodes} and take only those that are {\tt TextNode}s, leaving out links and deeper level elements.
-Each text in the header is then split by space in order to get the individual words. Each word is then added to the {\tt ArrayList<String> words} after it has been sent to {\tt cleanWord} method where punctuation are removed.  This process continues till all the headers have been checked and all the words added to the {\tt words collection}.  At the end it then uses the title and words collection to create a new object of type {\tt Website} which is returned back to the {\tt WebScraper}. 
-\footnotetext{jsoup \url{https://jsoup.org} jsoup is a Java library for working with real-world HTML. It provides a convenient API for extracting and manipulating data.}
-\item The {\tt Website} object created by the {\tt extractWebsiteFromDoc} method is passed over to the {\tt AppendSiteToFile} method in {\tt WebScraper} class. {\tt Website} is appended to the file {\tt data\_real\_data\_file.txt} in a format that integrates this data set to fit with the rest of the program.
-\item After the {\tt AppendSiteToFile} method has finished the {\tt WebScraper} class continue with extracting links from the current html document. It does so by again using a method in the {\tt DocumentHelper} class called {\tt extractLinksFromDoc}. This method returns an Elements collection which contains all the link Element objects. The {\tt WebScraper} then loops over these links, and if a link is valid and not already in the {\tt HashSet<String> visitedSites}, recursively parse it to the {\tt fetchWebsiteRecursive} method and also add it in the {\tt visitedSites}, thereby traversing to the next website and execute the whole process again. If the recursive call finish, it will go all the way back to the {\tt WebCrawler} class and fetch the next default url and recursively start from there.
+    \item As mentioned the {\tt WebCrawler} class contains a {\tt main} method which instantiate an object of the {\tt WebCrawler} itself. In its constructer it gets the {\tt ArrayList<Sting>} of default urls to look at by calling the method {\tt getUrlsToLookAt()}. After the object has been created the main method calls the method {\tt crawl()}.
+    The {\tt crawl()} method first deletes previous Web Crawler results with  {\tt deleteFileIfExist()} method. Next it loops through the list of {\tt defaultUrls} and for each of them it will get the components of the url by creating a {\tt URL} object from it. From the components it will concatenate {\tt Host} and {\tt Path} into the {\tt String urlValue} and adds this value to the {\tt HashSet<String> visitedSites}. This HashSet is used for maintaining an overview of which websites have already been visited, thereby making sure the whole crawling process don’t end up in an infinite loop of calling the same websites repeatedly. The {\tt HashSet<String> visitedSites} and the {\tt String urlValue} is now passed to the {\tt fetchWebsiteRecursive} method in {\tt WebScraper} class which starts the recursive crawling of the internet.
+    \item {\tt fetchWebsiteRecursive} method in {\tt WebScraper} takes in the parameters {\tt String url} and a {\tt HashSet visitedSites}. In this method the {\tt org.jsoup.Jsoup} solution is used to  download the html document from the given urlValue and store it in a {\tt Document} object from the same library. This object is then parsed to the {\tt extractWebsiteFromDoc} method in the {\tt DocumentHelper} class.\\
+    In here the method of {\tt Element.getElementsByTag(String tagName)} found in the {\tt org.jsoup.jsoup}\footnotemark library, is used to fetch the different html tags containing the values that is needed for the index file, such as the <title> and <h1-3> tags. For example for getting the title, one first get the Element object representing the <head> tag, and from that Element query for the Element representing the <title> tag. When it is obtained it is possible to get its text by calling the {\tt Element.text()}.
+    If the passed {\tt Document} has valid {\tt title}, the method will go on to extract the words the same way as the title. Here it is looking for all the <h1-3> tags.
+    Theese specific tags were chosen after briefly analyzing several webpages.It became apparent that content of the websites is stored in the headers of the html documents, and for this initial version of the Web Crawler it has been found sufficient to start by using only a few headers. These header objects are then stored in the {\tt ArrayList<Element> allHeaderElements}.\\
+    The method continues by selecting the words to store in the {\tt ArrayList<String> words} by looping through the {\tt ArrayList<Element> allHeaderElements}. If the {\tt header} tag contains text and has child nodes, then another {\tt forEach} loop is having a look at those {\tt childNodes} and take only those that are {\tt TextNode}s, leaving out links and deeper level elements.\\
+    Each text in the header is then split by space in order to get the individual words. Each word is then added to the {\tt ArrayList<String> words} after it has been sent to {\tt cleanWord} method where punctuation are removed.  This process continues till all the headers have been checked and all the words added to the {\tt words collection}.  At the end it then uses the title and words collection to create a new object of type {\tt Website} which is returned back to the {\tt WebScraper}.
+    \footnotetext{jsoup \url{https://jsoup.org} jsoup is a Java library for working with real-world HTML. It provides a convenient API for extracting and manipulating data.}
+    \item The {\tt Website} object created by the {\tt extractWebsiteFromDoc} method is passed over to the {\tt AppendSiteToFile} method in {\tt WebScraper} class. {\tt Website} is appended to the file {\tt data\_real\_data\_file.txt} in a format that integrates this data set to fit with the rest of the program.
+    \item After the {\tt AppendSiteToFile} method has finished the {\tt WebScraper} class continue with extracting links from the current html document. It does so by again using a method in the {\tt DocumentHelper} class called {\tt extractLinksFromDoc}. This method returns an Elements collection which contains all the link Element objects. The {\tt WebScraper} then loops over these links, and if a link is valid and not already in the {\tt HashSet<String> visitedSites}, recursively parse it to the {\tt fetchWebsiteRecursive} method and also add it in the {\tt visitedSites}, thereby traversing to the next website and execute the whole process again. If the recursive call finish, it will go all the way back to the {\tt WebCrawler} class and fetch the next default url and recursively start from there.
 \end{itemize}
-
 
 \subsection{Testing}
 To ensure that the functionality of the {\tt WebCrawler} is doing as intended, basic unit tests have been created which test that the correct information is extracted from a html document. For this purpose a test html document with a title, some links and few words has been setup in the unit test class {\tt WebCrawlerTest}. This unit test class contains the following test methods:
 \begin{itemize}
-\item {\tt correctTitle()};
-\item {\tt correctNumberOfWords()};
-\item {\tt correctUrl()};
-\item {\tt correctNumberOfLinks()}.
+    \item {\tt correctTitle()};
+    \item {\tt correctNumberOfWords()};
+    \item {\tt correctUrl()};
+    \item {\tt correctNumberOfLinks()}.
 \end{itemize}
 
 The unit test {\tt correctNumberOfWords } reviled that the initial functionality of the {\tt WebCrawler} was not handling the <h1-3> tags correctly if they contained other tags besides the text. This led to changes in the code, so it now loops through the child tags of a <h1-3> tag, and only extracting words from child if it is in a text format. Using the {\tt org.jsoup.Jsoup} library, it means that only words from a child node of type TextNode are extracted.
 
-
 \subsection{Reflection and considerations}
-There are several adjustments that became apparent after trying to run the WebCrawler. Example, program could be optimized in a way that WebCrawler would disregard links that lead to information that do not distinguish and is not particularly interesting, like contact, login or links to webpages that contains information about the companies that provide technical support to the webpage erc.\\  
+There are several adjustments that became apparent after trying to run the WebCrawler. Example, program could be optimized in a way that WebCrawler would disregard links that lead to information that do not distinguish and is not particularly interesting, like contact, login or links to webpages that contains information about the companies that provide technical support to the webpage erc.\\
 Large web crawlers like used by Google, are more likely to be interested to reach out to everything available on the internet, however one developing their own web crawler would consider to limit the search due to limited resources, like memory or time. The Web Crawler is retrieving websites recursively and first goes as far as it can from the initial website and starts to return back once it is not possible to go any further (there are no more links on the website reached). In the dataset that was created over running Web Crawler for little under six hours and once it ‘left’ the first default url homepage, it never returned back to fetch the second default link.\\
 There are different ways to optimize the Web Crawler, depending on the use case. One cold be interested in a specific domains, like hotels, airline information and could restrict web crawler to search information only in the domains of interest by not letting it traverse away from the default host domains.
-If one would be interested to crawl specific websites, the html documents of these websites could be analyzed, to understand where the information one is looking for is located, instead of the current setting, where the WebCrawler is only looking for information located in <h1-3> tags. 
+If one would be interested to crawl specific websites, the html documents of these websites could be analyzed, to understand where the information one is looking for is located, instead of the current setting, where the WebCrawler is only looking for information located in <h1-3> tags.
 
 %How to reference surce\footnotemark.
-
-

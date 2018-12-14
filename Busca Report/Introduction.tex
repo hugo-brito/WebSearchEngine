@@ -1,59 +1,64 @@
 \section{Introduction}
 \label{sec:Introduction}
-The goal of this project is to develop search engine as part of the Introductory Programming course at the IT University of Copenhagen. Sections 2- 4 are reporting the solutions on the mandatory tasks posted in the project description, namely Faster Queries using an Inverted Index, Refined Queries and Ranking Algorithms. Each of the mandatory tasks contain description of the\\ 
-
+The goal of this project is to develop a search engine as part of the Introductory Programming course at the IT University of Copenhagen. Chapters 1 to 4 are reporting the solutions on the mandatory tasks detailed in the project description, namely the changes in the FileHelper class, Faster Queries using an Inverted Index, Refined Queries and Ranking Algorithms. Each of the mandatory tasks contain description of the:
 \begin{itemize}
-\item Taks, which is introduction of the task that have to be solved in the given section;
-\item Basic Approach, which describes the solution;
-\item Technical description, explaining the software architecture used in the solution;
-\item Testing considerations, considering the corresctness of the solution;
-\item  Benchmark/ Reflection, includes benchmarking results or other conclusions based on the observations or theoretical considerations;
+    \item Task, which consists of an introduction to the task that had to be solved in the given chapter;
+    \item Basic Approach, which describes through a holistic lens and with natural language the approach taken as well as the solution;
+    \item Technical description, which explains the software architecture used in the solution;
+    \item Testing considerations, which comprises of how the group verified the correctness of the solution;
+    \item  Benchmark/Reflection, which includes benchmarking results or other conclusions based on the observations or theoretical considerations;
 \end{itemize}
-
-Besides the mandatory tasks, the challenge of the implementating OkapiBM25 algorithm for the task Ranking Algorithms have been solved as well. Some extensions also have been implemented, namely:
+Besides the mandatory tasks, the challenge of the implementing the OkapiBM25 algorithm for the task Ranking Algorithms has also been implemented. Some extensions also have been implemented, namely:
 \begin{itemize}
     \item Changes to the client GUI
+    \item Auto-complete feature
     \item Implementation of the WebCrawler
 \end{itemize}
 
 \section{GitHub}
 \label{sec:GitHub}
+The group took inspiration from GitFlow to organise itself and to take full advantages of the benefits of using branches, pull requests, etc.
 
 \section{Project Delivery}
 \label{sec:Project Delivery}
 
-The project documentation have been submitted via learnit.dk and the source code that accompanties this report as a singel zip dile called ip18groupR.zip has been handed alongside with this report.
-The code is also available on ITU's GitHub: https://github.itu.dk/wilr/ip18groupR\\
+The project documentation has been submitted via learnit.dk and the source code that accompanies this report as a single zip file called ip18groupR.zip has been handed in alongside with this report. The code is also available on ITU's GitHub: \url{https://github.itu.dk/wilr/ip18groupR}\\
 To start the program one should:
 \begin{enumerate}
     \item Download the zip file;
     \item Select directory for saving the file;
     \item Open the Command Promt;
-    \item Find the directory, where programm files have been saved;
+    \item Find the directory, where program files have been saved;
     \item Build the Gradlew by calling  \textit{./gradlew} for Linux users (L) or \textit{gradlew} for Mac and Windows users;
-    \item To start the server as a  Spring boot application use the command \textit{gradlew runWeb};
-    \item After the server is started, open a browser and type in \textit{http://localhost:8080/};
-    \item Start searching by typing in search queries in the search textbox shown on the HTML page and press Enter on the keyboard or \textit{Busca} button;
+    \item To start the server as a Spring boot application use the command \textit{gradlew runWeb};
+    \item After the server is started, open a browser and type in \url{http://localhost:8080/};
+    \item Start searching by typing in search queries in the search field shown on the HTML page and press Enter on the keyboard or \textit{Busca} button;
     \item To have an overlook on other tasks performed by gradlew, call \textit{gradlew tasks};
 \end{enumerate}
 
-How to change the index file:
+How to change/use different databases of websites:
 \begin{itemize}
-    \item Easiest way to change the index file is to open the \textit{configuration.properties} file and change the database property to a different file;
+    \item The easiest way to change the index file is to open the \textit{configuration.properties} file and change the database property to a different file;
     \item Other way to change the index file is to give the file path as arguments \textit{(args w/ --args)} when calling the gradle task \textit{runWeb}
 \end{itemize}
 
 How to start the extension WebCrawler one should:
 \begin{itemize}
-
-\item Call the gradlew task by writing the command  \textit{gradlew startWebCrawler};
-\item Every time the WebCrawler have visited a web page it will append it to the \textit{real\_data\_file.txt in the data};
-\item One has to make sure there are no previous WebCrawler running into the background, as it will continue to add results to the \textit{real\_data\_file.txt in the data};
-\item In order to search throught the WebCralwer results, the \textit{real\_data\_file.txt in the data} have to be used as index file for the search engine;
-\item In order to search throught the historical WebCralwer results where data set have been build for under six hours, the \textit{real\_data\_file\_20181213.txt in the data} have to be used as index file for the search engine;
-
+    \item Call the gradlew task by writing the command  \textit{gradlew startWebCrawler};
+    \item Every time the WebCrawler have visited a web page it will append it to the \textit{real\_data\_file.txt in the data};
+    \item One has to make sure there are no previous WebCrawler running into the background, as it will continue to add results to the \textit{real\_data\_file.txt in the data};
+    \item In order to search through the WebCralwer results, the \textit{real\_data\_file.txt in the data} have to be used as index file for the search engine;
+    \item In order to search through the historical WebCralwer results where data set have been build for under six hours, the \textit{real\_data\_file\_20181213.txt in the data} have to be used as index file for the search engine;
 \end{itemize}
 
 \section{Statement of Contribution}
 \label{sec:Statement of Contribution}
-All authors contributed equally to all parts of the mandatory tasks. Ashley Rose Parsons-Trew took up the challange of implementing OkapiBM25 algorithm for the task Ranking Algorithms, Hugo Brito made the graphic design and the client GUI extension, Ieva worked with the WebCrawler extension and Jonas Hartmann Andersen enabled the team to successfully work whith this GitHub.
+All authors contributed equally to all parts of the mandatory tasks.\\
+Regarding the challenges and extensions:
+\begin{itemize}
+    \item The Web Crawler was designed, implemented and documented by Ieva.
+    \item The Graphical User Interface was prototyped, designed, implemented and documented by Hugo.
+    \item The Auto-Complete feature was built by Ashley and Hugo.
+    \item The Okapi BM25 ranking algorithm was the product of Ashley's, Hugo and Jonas' collaboration.
+\end{itemize}
+Jonas also took the extra task of enabling the team to successfully work with GitHub.

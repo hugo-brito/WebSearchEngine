@@ -24,7 +24,7 @@ public class WebCrawler {
         urlsToLookAt = this.getUrlsToLookAt();
     }
     /**
-     * Static void main method to start a WebCrawler
+     * Static void main method to start a WebCrawler.
      * @param args
      */
     public static void main(String[] args){
@@ -39,16 +39,11 @@ public class WebCrawler {
      * in the webScraper class.
      */
     public void crawl()  {
-        //Clean up
         deleteFileIfExist();
         HashSet<String> visitedSites =  new HashSet<>();
         for (String url:urlsToLookAt) {
             try {
-                //URL is form Java library, it "understands" how urls are composed and can
-                //fetch you things you want form it.
                 URL linkUrl = new URL(url);
-                //We get both host and path, to compare theese values with new sites later on, to know,
-                //if we already seen this case. To avoid http and https lookups.
                 String urlValue = linkUrl.getHost() + linkUrl.getPath();
                 visitedSites.add(urlValue);
                 scraper.fetchWebsiteRecursive(url,visitedSites);
@@ -88,8 +83,6 @@ public class WebCrawler {
      */
     private List<String> getUrlsToLookAt(){
         List<String> defaultUrls = new ArrayList<> ();
-        //Urls should not end with "/", because the rest of the logic will remove the "/" if the url ends with it
-        // before putting it into visitedSites.
         defaultUrls.add("https://www.nytimes.com");
         defaultUrls.add("https://tv2.dk");
         defaultUrls.add("https://www.dr.dk");
